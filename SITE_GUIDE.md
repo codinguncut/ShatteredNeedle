@@ -23,15 +23,17 @@ This file is the durable editorial and implementation contract for future `index
 ## Results Presentation
 
 - Weighted score is the primary metric.
-- Show a horizontal score bar chart sorted by exact weighted score descending.
-- Distinguish portable, historical, and query-only results by color.
+- Show a vertical score bar chart sorted by exact weighted score descending, with narrow bars and
+  small tilted x-axis labels.
+- The score chart is single-series: all bars use one color. Do NOT color bars by protocol
+  (portable / historical / query-only) or by any other dimension; there is no chart color legend.
 - Keep diagnostic and failed statuses visible; never imply they are portable end-to-end scores.
-- Show the recorded model variant and a concise run note. Use `default` when no named variant was
-  selected and `not recorded` when historical evidence cannot establish the setting.
+- Show the recorded model variant and a concise run note. `variant` is the reasoning-effort profile
+  used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Include interrupted or failed model attempts as unscored rows when they consumed meaningful runtime
   or cost; keep them out of the score chart.
-- Retain the sortable table for approximate cost, time, and status information. Protocol is encoded
-  by chart color and belongs in chart tooltips and methodology notes, not the primary table.
+- Retain the sortable table for approximate cost, time, and status information. Protocol belongs in
+  chart tooltips and methodology notes, not in bar color or the primary table.
 - Display weighted scores as whole percentages in the chart and table while sorting by exact values.
 
 ## Copy And Methodology

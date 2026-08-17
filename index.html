@@ -76,9 +76,7 @@
     .status.warn { color: var(--amber); background: #fff5df }
     .status.bad { color: var(--red); background: #fff0ee }
     .note { margin: 11px 0 0; color: var(--muted); font-size: 12px }
-    .chart-wrap { height: 430px; margin-bottom: 12px; padding: 18px 20px 12px; border: 1px solid var(--line); border-radius: 6px }
-    .chart-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 22px; color: var(--muted); font-size: 12px }
-    .chart-legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 6px; border-radius: 2px; background: var(--legend-color); vertical-align: 0 }
+    .chart-wrap { height: 460px; margin-bottom: 22px; padding: 18px 20px 12px; border: 1px solid var(--line); border-radius: 6px }
     .chart-error { display: none; margin: 0; color: var(--red); font-size: 13px }
     .weights { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 6px; background: var(--soft); font-size: 13px }
     .weights strong { margin-left: 5px }
@@ -111,7 +109,7 @@
       .section-head { display: block }
       .section-head p { margin-top: 8px }
       .grid, .steps { grid-template-columns: 1fr }
-      .chart-wrap { height: 390px; padding-inline: 10px }
+      .chart-wrap { height: 420px; padding-inline: 10px }
       .facts strong { min-width: 125px }
       .foot { display: block }
       .foot span { display: block; margin-top: 5px }
@@ -151,7 +149,7 @@
         <div><strong>~305k</strong><span>corpus tokens</span></div>
         <div><strong>12</strong><span>cases</span></div>
         <div><strong>307</strong><span>questions</span></div>
-        <div><strong id="displayed-run-count">12</strong><span>displayed runs</span></div>
+        <div><strong id="displayed-run-count">13</strong><span>displayed runs</span></div>
       </div>
 
       <section id="results">
@@ -160,13 +158,8 @@
           <p>Weighted score is primary. Culprit synthesis receives 55% of the weight; resolution and provenance make up the remainder.</p>
         </div>
         <div class="chart-wrap">
-          <canvas id="score-chart" role="img" aria-label="Horizontal bar chart of weighted score by model"></canvas>
+          <canvas id="score-chart" role="img" aria-label="Vertical bar chart of weighted score by model, highest first"></canvas>
           <p class="chart-error" id="chart-error">The score chart could not be loaded. The complete results remain available in the table.</p>
-        </div>
-        <div class="chart-legend" aria-label="Chart legend">
-          <span style="--legend-color:#155eef">Portable</span>
-          <span style="--legend-color:#6b7280">Historical</span>
-          <span style="--legend-color:#d18b00">Query-only diagnostic</span>
         </div>
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
@@ -175,7 +168,7 @@
             <tbody></tbody>
           </table>
         </div>
-        <p class="note">Variant is the recorded reasoning profile; default means no named variant was selected, and historical Claude variants were not recorded. Wall time is cumulative active phase time, rounded to the nearest minute; gaps between attempts are excluded. Historical runs used the byte-identical corpus and frozen gold with earlier prompts. Claude time excludes the WEAVE-to-QUERY handoff. Sol cost and time include the original WEAVE that produced its reused fabric plus the clarified QUERY, but not the superseded first QUERY. Query-only results are not end-to-end scores. Approximate costs are included for scale. * Terra time is incomplete; DeepSeek is a lower bound that excludes later repair and failed QUERY activity.</p>
+        <p class="note">Variant is the reasoning-effort profile used for the run. Wall time is cumulative active phase time, rounded to the nearest minute; gaps between attempts are excluded. Historical runs used the byte-identical corpus and frozen gold with earlier prompts. Claude time excludes the WEAVE-to-QUERY handoff. Sol cost and time include the original WEAVE that produced its reused fabric plus the clarified QUERY, but not the superseded first QUERY. Query-only results are not end-to-end scores. Approximate costs are included for scale. * Terra time is incomplete; DeepSeek is a lower bound that excludes later repair and failed QUERY activity.</p>
         <div class="weights" aria-label="Score weights">
           <span>Culprit <strong>55%</strong></span>
           <span>Resolution <strong>20%</strong></span>
@@ -312,17 +305,19 @@
       const renderChart = (results) => {
         if (!window.Chart) throw new Error("Chart.js did not load");
         const chartResults = results.filter((result) => result.weighted_score !== null);
-        const colors = {portable: "#155eef", historical: "#6b7280", "query-only": "#d18b00"};
+        // Single-series magnitude chart: one color, no legend. Score is the whole story;
+        // protocol/variant live in the tooltip and the table, not in the bar color.
         const barLabels = {
           id: "barLabels",
           afterDatasetsDraw(chart) {
             const {ctx} = chart;
             ctx.save();
             ctx.fillStyle = "#333";
-            ctx.font = '600 12px "SFMono-Regular", Consolas, monospace';
-            ctx.textBaseline = "middle";
+            ctx.font = '600 10px "SFMono-Regular", Consolas, monospace';
+            ctx.textAlign = "center";
+            ctx.textBaseline = "bottom";
             chart.getDatasetMeta(0).data.forEach((bar, index) => {
-              ctx.fillText(`${Math.round(chart.data.datasets[0].data[index])}%`, bar.x + 7, bar.y);
+              ctx.fillText(`${Math.round(chart.data.datasets[0].data[index])}%`, bar.x, bar.y - 4);
             });
             ctx.restore();
           }
@@ -334,19 +329,19 @@
             labels: chartResults.map((result) => result.model),
             datasets: [{
               data: chartResults.map((result) => result.weighted_score * 100),
-              backgroundColor: chartResults.map((result) => colors[result.protocol]),
+              backgroundColor: "#155eef",
               borderWidth: 0,
-              borderRadius: 2,
-              barPercentage: 0.72,
-              categoryPercentage: 0.86
+              borderRadius: 3,
+              borderSkipped: false,
+              barPercentage: 0.5,
+              categoryPercentage: 0.9
             }]
           },
           options: {
-            indexAxis: "y",
             responsive: true,
             maintainAspectRatio: false,
             animation: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? false : undefined,
-            layout: {padding: {right: 38}},
+            layout: {padding: {top: 22}},
             plugins: {
               legend: {display: false},
               tooltip: {
@@ -360,8 +355,8 @@
               }
             },
             scales: {
-              x: {beginAtZero: true, max: 108, grid: {color: "#e8e8e8"}, ticks: {callback: (value) => value <= 100 ? `${value}%` : ""}},
-              y: {grid: {display: false}, ticks: {color: "#333", font: {size: 12, weight: 600}}}
+              x: {grid: {display: false}, ticks: {color: "#333", font: {size: 10}, maxRotation: 55, minRotation: 55, autoSkip: false}},
+              y: {beginAtZero: true, max: 108, grid: {color: "#e8e8e8"}, ticks: {callback: (value) => value <= 100 ? `${value}%` : ""}}
             }
           },
           plugins: [barLabels]

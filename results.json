@@ -1,236 +1,412 @@
 {
-  "schema_version": 1,
-  "benchmark": "Shattered Needle v1",
-  "updated": "2026-08-17",
-  "score_weights": {
-    "culprit": 0.55,
-    "resolution": 0.20,
-    "identity_provenance": 0.10,
-    "ownership_provenance": 0.08,
-    "finding_provenance": 0.07
-  },
-  "results": [
-    {
-      "id": "glm-5-3",
-      "model": "GLM-5.3",
-      "variant": "default",
-      "protocol": "portable",
-      "note": "Resumed WEAVE; active time excludes the gap.",
-      "weighted_score": 1.0,
-      "flat_accuracy": 1.0,
-      "overall": "307/307",
-      "score_breakdown": {
-        "culprit": "12/12",
-        "resolution": "103/103",
-        "identity_provenance": "103/103",
-        "ownership_provenance": "53/53",
-        "finding_provenance": "36/36"
-      },
-      "cost": {"usd": 11.01, "label": "~$11.01 proxy", "kind": "proxy", "complete": true},
-      "wall_time": {"seconds": 4528, "label": "75 min", "complete": true},
-      "status": {"label": "complete", "tone": "good"}
+    "schema_version": 1,
+    "benchmark": "Shattered Needle v1",
+    "updated": "2026-08-17",
+    "score_weights": {
+        "culprit": 0.55,
+        "resolution": 0.2,
+        "identity_provenance": 0.1,
+        "ownership_provenance": 0.08,
+        "finding_provenance": 0.07
     },
-    {
-      "id": "gemini-3-7-flash",
-      "model": "Gemini 3.7 Flash",
-      "variant": "default",
-      "protocol": "portable",
-      "note": "Completed without resume.",
-      "weighted_score": 1.0,
-      "flat_accuracy": 1.0,
-      "overall": "307/307",
-      "score_breakdown": {
-        "culprit": "12/12",
-        "resolution": "103/103",
-        "identity_provenance": "103/103",
-        "ownership_provenance": "53/53",
-        "finding_provenance": "36/36"
-      },
-      "cost": {"usd": 2.40, "label": "$2.40 billed", "kind": "billed", "complete": true},
-      "wall_time": {"seconds": 2238, "label": "37 min", "complete": true},
-      "status": {"label": "complete", "tone": "good"}
-    },
-    {
-      "id": "claude-opus-4-8",
-      "model": "Claude Opus 4.8",
-      "variant": "not recorded",
-      "protocol": "historical",
-      "note": "Historical prompts and Claude Code subagents.",
-      "weighted_score": 1.0,
-      "flat_accuracy": 1.0,
-      "overall": "307/307",
-      "score_breakdown": {
-        "culprit": "12/12",
-        "resolution": "103/103",
-        "identity_provenance": "103/103",
-        "ownership_provenance": "53/53",
-        "finding_provenance": "36/36"
-      },
-      "cost": {"usd": 12.56, "label": "~$12.56", "kind": "estimated", "complete": true},
-      "wall_time": {"seconds": 1440.957, "label": "24 min", "complete": true},
-      "status": {"label": "complete", "tone": "good"}
-    },
-    {
-      "id": "gpt-5-6-sol-clarified",
-      "model": "GPT-5.6 Sol, clarified fabric",
-      "variant": "default",
-      "protocol": "query-only",
-      "note": "Clarified QUERY over reused fabric; diagnostic only.",
-      "weighted_score": 0.9971,
-      "flat_accuracy": 0.9935,
-      "overall": "305/307",
-      "score_breakdown": {
-        "culprit": "12/12",
-        "resolution": "102/103",
-        "identity_provenance": "102/103",
-        "ownership_provenance": "53/53",
-        "finding_provenance": "36/36"
-      },
-      "cost": {"usd": 44.72, "label": "~$44.72", "kind": "estimated", "complete": true},
-      "wall_time": {"seconds": 2011.43, "label": "34 min", "complete": true},
-      "status": {"label": "diagnostic", "tone": "warn"}
-    },
-    {
-      "id": "claude-sonnet-5",
-      "model": "Claude Sonnet 5",
-      "variant": "not recorded",
-      "protocol": "historical",
-      "note": "Historical prompts and Claude Code subagents.",
-      "weighted_score": 0.9483,
-      "flat_accuracy": 0.9870,
-      "overall": "303/307",
-      "score_breakdown": {
-        "culprit": "11/12",
-        "resolution": "103/103",
-        "identity_provenance": "103/103",
-        "ownership_provenance": "53/53",
-        "finding_provenance": "33/36"
-      },
-      "cost": {"usd": 5.78, "label": "~$5.78", "kind": "estimated", "complete": true},
-      "wall_time": {"seconds": 1953.428, "label": "33 min", "complete": true},
-      "status": {"label": "complete", "tone": "good"}
-    },
-    {
-      "id": "gpt-5-6-terra",
-      "model": "GPT-5.6 Terra",
-      "variant": "default",
-      "protocol": "portable",
-      "note": "Resumed after manual stop; time is incomplete.",
-      "weighted_score": 0.5749,
-      "flat_accuracy": 0.9316,
-      "overall": "286/307",
-      "score_breakdown": {
-        "culprit": "3/12",
-        "resolution": "103/103",
-        "identity_provenance": "92/103",
-        "ownership_provenance": "53/53",
-        "finding_provenance": "35/36"
-      },
-      "cost": {"usd": 7.00, "label": "~$7.00", "kind": "estimated", "complete": true},
-      "wall_time": {"seconds": 2067.56, "label": "34 min*", "complete": false},
-      "status": {"label": "resumed", "tone": "warn"}
-    },
-    {
-      "id": "minimax-m3",
-      "model": "MiniMax M3",
-      "variant": "thinking (16k)",
-      "protocol": "portable",
-      "note": "Resumed QUERY after an interrupted first attempt.",
-      "weighted_score": 0.5183,
-      "flat_accuracy": 0.5440,
-      "overall": "167/307",
-      "score_breakdown": {
-        "culprit": "6/12",
-        "resolution": "55/103",
-        "identity_provenance": "55/103",
-        "ownership_provenance": "37/53",
-        "finding_provenance": "14/36"
-      },
-      "cost": {"usd": 3.36, "label": "~$3.36", "kind": "estimated", "complete": true},
-      "wall_time": {"seconds": 14920.96, "label": "249 min", "complete": true},
-      "status": {"label": "resumed", "tone": "warn"}
-    },
-    {
-      "id": "gpt-5-6-luna",
-      "model": "GPT-5.6 Luna",
-      "variant": "default",
-      "protocol": "portable",
-      "note": "Completed without resume.",
-      "weighted_score": 0.1090,
-      "flat_accuracy": 0.2280,
-      "overall": "70/307",
-      "score_breakdown": {
-        "culprit": "0/12",
-        "resolution": "18/103",
-        "identity_provenance": "18/103",
-        "ownership_provenance": "22/53",
-        "finding_provenance": "12/36"
-      },
-      "cost": {"usd": 0.78, "label": "~$0.78", "kind": "estimated", "complete": true},
-      "wall_time": {"seconds": 1812, "label": "30 min", "complete": true},
-      "status": {"label": "complete", "tone": "good"}
-    },
-    {
-      "id": "claude-haiku-4-5",
-      "model": "Claude Haiku 4.5",
-      "variant": "not recorded",
-      "protocol": "historical",
-      "note": "Historical prompts and Claude Code subagents.",
-      "weighted_score": 0.0175,
-      "flat_accuracy": 0.0293,
-      "overall": "9/307",
-      "score_breakdown": {
-        "culprit": "0/12",
-        "resolution": "6/103",
-        "identity_provenance": "0/103",
-        "ownership_provenance": "0/53",
-        "finding_provenance": "3/36"
-      },
-      "cost": {"usd": 1.01, "label": "~$1.01", "kind": "estimated", "complete": true},
-      "wall_time": {"seconds": 691.360, "label": "12 min", "complete": true},
-      "status": {"label": "complete", "tone": "good"}
-    },
-    {
-      "id": "deepseek-v4-flash",
-      "model": "DeepSeek V4 Flash",
-      "variant": "default",
-      "protocol": "portable",
-      "note": "QUERY failed after repaired WEAVE; cost and time are lower bounds.",
-      "weighted_score": null,
-      "flat_accuracy": null,
-      "overall": null,
-      "score_breakdown": null,
-      "cost": {"usd": 3.54, "label": "$3.54+ billed", "kind": "billed", "complete": false},
-      "wall_time": {"seconds": 7024.51, "label": "117 min+", "complete": false},
-      "status": {"label": "QUERY failed", "tone": "bad"}
-    },
-    {
-      "id": "qwen3-8-27b-attempt-2",
-      "model": "Qwen3.8 27B, attempt 2",
-      "variant": "xhigh",
-      "protocol": "portable",
-      "note": "WEAVE stopped after 60/877 documents; no queryable fabric.",
-      "weighted_score": null,
-      "flat_accuracy": null,
-      "overall": null,
-      "score_breakdown": null,
-      "cost": {"usd": 2.8185456, "label": "$2.82 billed", "kind": "billed", "complete": true},
-      "wall_time": {"seconds": 5886.52, "label": "98 min", "complete": true},
-      "status": {"label": "WEAVE interrupted", "tone": "bad"}
-    },
-    {
-      "id": "qwen3-8-27b-attempt-1",
-      "model": "Qwen3.8 27B, attempt 1",
-      "variant": "xhigh",
-      "protocol": "portable",
-      "note": "WEAVE interrupted; orphaned process was later terminated.",
-      "weighted_score": null,
-      "flat_accuracy": null,
-      "overall": null,
-      "score_breakdown": null,
-      "cost": {"usd": 5.2755352, "label": "$5.28 billed", "kind": "billed", "complete": true},
-      "wall_time": {"seconds": 6448.0, "label": "107 min", "complete": true},
-      "status": {"label": "WEAVE interrupted", "tone": "bad"}
-    }
-  ]
+    "results": [
+        {
+            "id": "glm-5-3",
+            "model": "GLM-5.3",
+            "variant": "high",
+            "protocol": "portable",
+            "note": "Resumed WEAVE; active time excludes the gap.",
+            "weighted_score": 1.0,
+            "flat_accuracy": 1.0,
+            "overall": "307/307",
+            "score_breakdown": {
+                "culprit": "12/12",
+                "resolution": "103/103",
+                "identity_provenance": "103/103",
+                "ownership_provenance": "53/53",
+                "finding_provenance": "36/36"
+            },
+            "cost": {
+                "usd": 11.01,
+                "label": "~$11.01 proxy",
+                "kind": "proxy",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 4528,
+                "label": "75 min",
+                "complete": true
+            },
+            "status": {
+                "label": "complete",
+                "tone": "good"
+            }
+        },
+        {
+            "id": "gemini-3-7-flash",
+            "model": "Gemini 3.7 Flash",
+            "variant": "high",
+            "protocol": "portable",
+            "note": "Completed without resume.",
+            "weighted_score": 1.0,
+            "flat_accuracy": 1.0,
+            "overall": "307/307",
+            "score_breakdown": {
+                "culprit": "12/12",
+                "resolution": "103/103",
+                "identity_provenance": "103/103",
+                "ownership_provenance": "53/53",
+                "finding_provenance": "36/36"
+            },
+            "cost": {
+                "usd": 2.4,
+                "label": "$2.40 billed",
+                "kind": "billed",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 2238,
+                "label": "37 min",
+                "complete": true
+            },
+            "status": {
+                "label": "complete",
+                "tone": "good"
+            }
+        },
+        {
+            "id": "claude-opus-4-8",
+            "model": "Claude Opus 4.8",
+            "variant": "high",
+            "protocol": "historical",
+            "note": "Historical prompts and Claude Code subagents.",
+            "weighted_score": 1.0,
+            "flat_accuracy": 1.0,
+            "overall": "307/307",
+            "score_breakdown": {
+                "culprit": "12/12",
+                "resolution": "103/103",
+                "identity_provenance": "103/103",
+                "ownership_provenance": "53/53",
+                "finding_provenance": "36/36"
+            },
+            "cost": {
+                "usd": 12.56,
+                "label": "~$12.56",
+                "kind": "estimated",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 1440.957,
+                "label": "24 min",
+                "complete": true
+            },
+            "status": {
+                "label": "complete",
+                "tone": "good"
+            }
+        },
+        {
+            "id": "gpt-5-6-sol-clarified",
+            "model": "GPT-5.6 Sol, clarified fabric",
+            "variant": "high",
+            "protocol": "query-only",
+            "note": "Clarified QUERY over reused fabric; diagnostic only.",
+            "weighted_score": 0.9971,
+            "flat_accuracy": 0.9935,
+            "overall": "305/307",
+            "score_breakdown": {
+                "culprit": "12/12",
+                "resolution": "102/103",
+                "identity_provenance": "102/103",
+                "ownership_provenance": "53/53",
+                "finding_provenance": "36/36"
+            },
+            "cost": {
+                "usd": 44.72,
+                "label": "~$44.72",
+                "kind": "estimated",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 2011.43,
+                "label": "34 min",
+                "complete": true
+            },
+            "status": {
+                "label": "diagnostic",
+                "tone": "warn"
+            }
+        },
+        {
+            "id": "grok-4-6",
+            "model": "Grok 4.6",
+            "variant": "high",
+            "protocol": "portable",
+            "note": "Completed without resume.",
+            "weighted_score": 0.9542,
+            "flat_accuracy": 0.9967,
+            "overall": "306/307",
+            "score_breakdown": {
+                "culprit": "11/12",
+                "resolution": "103/103",
+                "identity_provenance": "103/103",
+                "ownership_provenance": "53/53",
+                "finding_provenance": "36/36"
+            },
+            "cost": {
+                "usd": 10.11,
+                "label": "~$10.11",
+                "kind": "estimated",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 1871.42,
+                "label": "31 min",
+                "complete": true
+            },
+            "status": {
+                "label": "complete",
+                "tone": "good"
+            }
+        },
+        {
+            "id": "claude-sonnet-5",
+            "model": "Claude Sonnet 5",
+            "variant": "high",
+            "protocol": "historical",
+            "note": "Historical prompts and Claude Code subagents.",
+            "weighted_score": 0.9483,
+            "flat_accuracy": 0.987,
+            "overall": "303/307",
+            "score_breakdown": {
+                "culprit": "11/12",
+                "resolution": "103/103",
+                "identity_provenance": "103/103",
+                "ownership_provenance": "53/53",
+                "finding_provenance": "33/36"
+            },
+            "cost": {
+                "usd": 5.78,
+                "label": "~$5.78",
+                "kind": "estimated",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 1953.428,
+                "label": "33 min",
+                "complete": true
+            },
+            "status": {
+                "label": "complete",
+                "tone": "good"
+            }
+        },
+        {
+            "id": "gpt-5-6-terra",
+            "model": "GPT-5.6 Terra",
+            "variant": "high",
+            "protocol": "portable",
+            "note": "Resumed after manual stop; time is incomplete.",
+            "weighted_score": 0.5749,
+            "flat_accuracy": 0.9316,
+            "overall": "286/307",
+            "score_breakdown": {
+                "culprit": "3/12",
+                "resolution": "103/103",
+                "identity_provenance": "92/103",
+                "ownership_provenance": "53/53",
+                "finding_provenance": "35/36"
+            },
+            "cost": {
+                "usd": 7.0,
+                "label": "~$7.00",
+                "kind": "estimated",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 2067.56,
+                "label": "34 min*",
+                "complete": false
+            },
+            "status": {
+                "label": "resumed",
+                "tone": "warn"
+            }
+        },
+        {
+            "id": "minimax-m3",
+            "model": "MiniMax M3",
+            "variant": "thinking (16k)",
+            "protocol": "portable",
+            "note": "Resumed QUERY after an interrupted first attempt.",
+            "weighted_score": 0.5183,
+            "flat_accuracy": 0.544,
+            "overall": "167/307",
+            "score_breakdown": {
+                "culprit": "6/12",
+                "resolution": "55/103",
+                "identity_provenance": "55/103",
+                "ownership_provenance": "37/53",
+                "finding_provenance": "14/36"
+            },
+            "cost": {
+                "usd": 3.36,
+                "label": "~$3.36",
+                "kind": "estimated",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 14920.96,
+                "label": "249 min",
+                "complete": true
+            },
+            "status": {
+                "label": "resumed",
+                "tone": "warn"
+            }
+        },
+        {
+            "id": "gpt-5-6-luna",
+            "model": "GPT-5.6 Luna",
+            "variant": "high",
+            "protocol": "portable",
+            "note": "Completed without resume.",
+            "weighted_score": 0.109,
+            "flat_accuracy": 0.228,
+            "overall": "70/307",
+            "score_breakdown": {
+                "culprit": "0/12",
+                "resolution": "18/103",
+                "identity_provenance": "18/103",
+                "ownership_provenance": "22/53",
+                "finding_provenance": "12/36"
+            },
+            "cost": {
+                "usd": 0.78,
+                "label": "~$0.78",
+                "kind": "estimated",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 1812,
+                "label": "30 min",
+                "complete": true
+            },
+            "status": {
+                "label": "complete",
+                "tone": "good"
+            }
+        },
+        {
+            "id": "claude-haiku-4-5",
+            "model": "Claude Haiku 4.5",
+            "variant": "high",
+            "protocol": "historical",
+            "note": "Historical prompts and Claude Code subagents.",
+            "weighted_score": 0.0175,
+            "flat_accuracy": 0.0293,
+            "overall": "9/307",
+            "score_breakdown": {
+                "culprit": "0/12",
+                "resolution": "6/103",
+                "identity_provenance": "0/103",
+                "ownership_provenance": "0/53",
+                "finding_provenance": "3/36"
+            },
+            "cost": {
+                "usd": 1.01,
+                "label": "~$1.01",
+                "kind": "estimated",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 691.36,
+                "label": "12 min",
+                "complete": true
+            },
+            "status": {
+                "label": "complete",
+                "tone": "good"
+            }
+        },
+        {
+            "id": "deepseek-v4-flash",
+            "model": "DeepSeek V4 Flash",
+            "variant": "high",
+            "protocol": "portable",
+            "note": "QUERY failed after repaired WEAVE; cost and time are lower bounds.",
+            "weighted_score": null,
+            "flat_accuracy": null,
+            "overall": null,
+            "score_breakdown": null,
+            "cost": {
+                "usd": 3.54,
+                "label": "$3.54+ billed",
+                "kind": "billed",
+                "complete": false
+            },
+            "wall_time": {
+                "seconds": 7024.51,
+                "label": "117 min+",
+                "complete": false
+            },
+            "status": {
+                "label": "QUERY failed",
+                "tone": "bad"
+            }
+        },
+        {
+            "id": "qwen3-8-27b-attempt-2",
+            "model": "Qwen3.8 27B, attempt 2",
+            "variant": "xhigh",
+            "protocol": "portable",
+            "note": "WEAVE stopped after 60/877 documents; no queryable fabric.",
+            "weighted_score": null,
+            "flat_accuracy": null,
+            "overall": null,
+            "score_breakdown": null,
+            "cost": {
+                "usd": 2.8185456,
+                "label": "$2.82 billed",
+                "kind": "billed",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 5886.52,
+                "label": "98 min",
+                "complete": true
+            },
+            "status": {
+                "label": "WEAVE interrupted",
+                "tone": "bad"
+            }
+        },
+        {
+            "id": "qwen3-8-27b-attempt-1",
+            "model": "Qwen3.8 27B, attempt 1",
+            "variant": "xhigh",
+            "protocol": "portable",
+            "note": "WEAVE interrupted; orphaned process was later terminated.",
+            "weighted_score": null,
+            "flat_accuracy": null,
+            "overall": null,
+            "score_breakdown": null,
+            "cost": {
+                "usd": 5.2755352,
+                "label": "$5.28 billed",
+                "kind": "billed",
+                "complete": true
+            },
+            "wall_time": {
+                "seconds": 6448.0,
+                "label": "107 min",
+                "complete": true
+            },
+            "status": {
+                "label": "WEAVE interrupted",
+                "tone": "bad"
+            }
+        }
+    ]
 }
