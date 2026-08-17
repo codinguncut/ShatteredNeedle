@@ -19,6 +19,12 @@ This file is the durable editorial and implementation contract for future `index
   primary table, rounded to the nearest $0.10.
 - Keep incomplete timing and cost measurements marked as incomplete.
 - Do not add a scored bar for a run whose `weighted_score` is `null`.
+- Retiring or superseding a run is a `results.json` edit, never a file move in the benchmark repo's
+  `runs/` archive (that archive does not feed this site). To drop a run from the score chart set its
+  `weighted_score` to `null`; to keep it visible but flagged, add or adjust its `status`/note; to
+  remove it entirely, delete the row and decrement the displayed run count. Do this only on a
+  deliberate decision — a within-version corpus fix that leaves the gold answer key, question set, and
+  accepted answers unchanged does not by itself retire prior runs.
 
 ## Results Presentation
 
