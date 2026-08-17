@@ -65,6 +65,8 @@
     tbody tr:hover { background: #fafafa }
     .model { font-family: Inter, ui-sans-serif, sans-serif; font-size: 14px; font-weight: 650 }
     .type { color: var(--muted) }
+    #results-table .run-note { min-width: 220px; max-width: 300px; color: var(--muted); text-align: left; white-space: normal }
+    #results-table th:last-child { text-align: left }
     .score { font-weight: 700 }
     .perfect { color: var(--green) }
     .failed { color: var(--red) }
@@ -73,6 +75,10 @@
     .status.warn { color: var(--amber); background: #fff5df }
     .status.bad { color: var(--red); background: #fff0ee }
     .note { margin: 11px 0 0; color: var(--muted); font-size: 12px }
+    .chart-wrap { height: 430px; margin-bottom: 12px; padding: 18px 20px 12px; border: 1px solid var(--line); border-radius: 6px }
+    .chart-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 22px; color: var(--muted); font-size: 12px }
+    .chart-legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 6px; border-radius: 2px; background: var(--legend-color); vertical-align: 0 }
+    .chart-error { display: none; margin: 0; color: var(--red); font-size: 13px }
     .weights { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 6px; background: var(--soft); font-size: 13px }
     .weights strong { margin-left: 5px }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px }
@@ -104,6 +110,7 @@
       .section-head { display: block }
       .section-head p { margin-top: 8px }
       .grid, .steps { grid-template-columns: 1fr }
+      .chart-wrap { height: 390px; padding-inline: 10px }
       .facts strong { min-width: 125px }
       .foot { display: block }
       .foot span { display: block; margin-top: 5px }
@@ -127,9 +134,9 @@
   <main id="top">
     <div class="wrap">
       <header class="hero">
-        <p class="kicker">FabricBench / frozen instance v1.0</p>
+        <p class="kicker">Shattered Needle v1 / frozen instance</p>
         <h1>Shattered Needle</h1>
-        <p class="lede">A benchmark of whether an agent can organize a large corpus before seeing the questions, then recover answers from its frozen knowledge base without the source documents.</p>
+        <p class="lede">A needle-in-a-haystack task turned inside out. The answer is not a span to locate &mdash; the needle is <strong>shattered</strong> into fragments scattered across a corpus larger than the agent's context, and success requires reassembling those fragments into persistent, reusable knowledge.</p>
         <div class="meta">
           <span class="badge">Frozen</span>
           <span>Mechanical grading</span>
@@ -143,7 +150,7 @@
         <div><strong>~305k</strong><span>corpus tokens</span></div>
         <div><strong>12</strong><span>cases</span></div>
         <div><strong>307</strong><span>questions</span></div>
-        <div><strong>10</strong><span>displayed runs</span></div>
+        <div><strong id="displayed-run-count">12</strong><span>displayed runs</span></div>
       </div>
 
       <section id="results">
@@ -151,24 +158,23 @@
           <h2>Results</h2>
           <p>Weighted score is primary. Culprit synthesis receives 55% of the weight; resolution and provenance make up the remainder.</p>
         </div>
+        <div class="chart-wrap">
+          <canvas id="score-chart" role="img" aria-label="Horizontal bar chart of weighted score by model"></canvas>
+          <p class="chart-error" id="chart-error">The score chart could not be loaded. The complete results remain available in the table.</p>
+        </div>
+        <div class="chart-legend" aria-label="Chart legend">
+          <span style="--legend-color:#155eef">Portable</span>
+          <span style="--legend-color:#6b7280">Historical</span>
+          <span style="--legend-color:#d18b00">Query-only diagnostic</span>
+        </div>
+        <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
           <table id="results-table">
-            <thead><tr><th><button type="button" data-col="0" data-type="text">Model / run</button></th><th><button type="button" data-col="1" data-type="text">Protocol</button></th><th aria-sort="descending"><button type="button" data-col="2" data-type="number">Weighted</button></th><th><button type="button" data-col="3" data-type="number">API cost</button></th><th><button type="button" data-col="4" data-type="number">Wall time</button></th><th><button type="button" data-col="5" data-type="text">Status</button></th></tr></thead>
-            <tbody>
-              <tr><td class="model">GLM-5.3</td><td class="type">portable</td><td class="score perfect" data-sort="100">100%</td><td>~$11.01 proxy</td><td data-sort="4528">1h 15m 28s</td><td><span class="status good">complete</span></td></tr>
-              <tr><td class="model">Gemini 3.7 Flash</td><td class="type">portable</td><td class="score perfect" data-sort="100">100%</td><td>$2.40 billed</td><td data-sort="2238">37m 18s</td><td><span class="status good">complete</span></td></tr>
-              <tr><td class="model">Claude Opus 4.8</td><td class="type">historical</td><td class="score perfect" data-sort="100">100%</td><td>~$12.56</td><td data-sort="-1">not captured</td><td><span class="status good">complete</span></td></tr>
-              <tr><td class="model">GPT-5.6 Sol, clarified fabric</td><td class="type">query-only</td><td class="score" data-sort="99.71">100%</td><td>~$3.26</td><td data-sort="403">6m 43s</td><td><span class="status warn">diagnostic</span></td></tr>
-              <tr><td class="model">Claude Sonnet 5</td><td class="type">historical</td><td class="score" data-sort="94.83">95%</td><td>~$5.78</td><td data-sort="-1">not captured</td><td><span class="status good">complete</span></td></tr>
-              <tr><td class="model">GPT-5.6 Terra</td><td class="type">portable</td><td class="score" data-sort="57.49">57%</td><td>~$7.00</td><td data-sort="2068">34m 28s*</td><td><span class="status warn">resumed</span></td></tr>
-              <tr><td class="model">MiniMax M3</td><td class="type">portable</td><td class="score" data-sort="51.83">52%</td><td>~$3.36</td><td data-sort="10583">2h 56m 23s*</td><td><span class="status warn">resumed</span></td></tr>
-              <tr><td class="model">GPT-5.6 Luna</td><td class="type">portable</td><td class="score" data-sort="10.90">11%</td><td>~$0.78</td><td data-sort="1812">30m 12s</td><td><span class="status good">complete</span></td></tr>
-              <tr><td class="model">Claude Haiku 4.5</td><td class="type">historical</td><td class="score" data-sort="1.75">2%</td><td>~$1.01</td><td data-sort="-1">not captured</td><td><span class="status good">complete</span></td></tr>
-              <tr><td class="model">DeepSeek V4 Flash</td><td class="type">portable</td><td class="failed">no score</td><td>$3.54+ billed</td><td data-sort="7025">1h 57m 5s+</td><td><span class="status bad">QUERY failed</span></td></tr>
-            </tbody>
+            <thead><tr><th><button type="button" data-col="0" data-type="text">Model / run</button></th><th><button type="button" data-col="1" data-type="text">Variant</button></th><th aria-sort="descending"><button type="button" data-col="2" data-type="number">Score</button></th><th><button type="button" data-col="3" data-type="number">Approx. cost</button></th><th><button type="button" data-col="4" data-type="number">Wall time</button></th><th><button type="button" data-col="5" data-type="text">Status</button></th><th><button type="button" data-col="6" data-type="text">Notes</button></th></tr></thead>
+            <tbody></tbody>
           </table>
         </div>
-        <p class="note">Historical runs used the byte-identical corpus and frozen gold with earlier prompts. Query-only results are not end-to-end scores. API figures are estimates, not charges paid. * Resumed wall time is incomplete; DeepSeek time excludes later manual repair.</p>
+        <p class="note">Variant is the recorded reasoning profile; default means no named variant was selected, and historical Claude variants were not recorded. Wall time is cumulative active phase time, rounded to the nearest minute; gaps between attempts are excluded. Historical runs used the byte-identical corpus and frozen gold with earlier prompts. Claude time excludes the WEAVE-to-QUERY handoff. Sol cost and time include the original WEAVE that produced its reused fabric plus the clarified QUERY, but not the superseded first QUERY. Query-only results are not end-to-end scores. Approximate costs are included for scale. * Terra time is incomplete; DeepSeek is a lower bound that excludes later repair and failed QUERY activity.</p>
         <div class="weights" aria-label="Score weights">
           <span>Culprit <strong>55%</strong></span>
           <span>Resolution <strong>20%</strong></span>
@@ -183,11 +189,11 @@
         <div class="grid">
           <div>
             <h3>What it measures</h3>
-            <p>An agent reads scattered fictional records, resolves aliases and relationships, joins evidence across files, and preserves provenance. The held-out quiz tests what the resulting knowledge base can recover.</p>
-            <p>The knowledge representation is unrestricted. Only answers from the frozen artifact are scored.</p>
+            <p><strong>Shattered Needle evaluates an agent's ability to construct and maintain useful knowledge over a long-running investigation.</strong> The agent processes a large corpus over an extended trajectory, using a persistent knowledge base as external memory under a bounded working context. After the investigation, it must use the knowledge base it constructed to answer held-out questions that were not available while it was processing the corpus.</p>
+            <p>Grading is mechanical and representation-agnostic: the agent is free to organize its knowledge base however it likes, and is scored on what that knowledge base recovers, never on its format.</p>
           </div>
           <ul class="facts">
-            <li><strong>Instance</strong> v1.0 / run21</li>
+            <li><strong>Instance</strong> Shattered Needle v1</li>
             <li><strong>Corpus</strong> 877 irregular documents</li>
             <li><strong>Cases</strong> 12 interleaved investigations</li>
             <li><strong>Evidence</strong> six factors per culprit</li>
@@ -216,27 +222,17 @@
             <div class="table-wrap" role="region" aria-label="Score breakdown" tabindex="0">
               <table>
                 <thead><tr><th>Model / run</th><th>Resolution</th><th>ID provenance</th><th>Owner provenance</th><th>Finding provenance</th></tr></thead>
-                <tbody>
-                  <tr><td class="model">GLM-5.3</td><td>103/103</td><td>103/103</td><td>53/53</td><td>36/36</td></tr>
-                  <tr><td class="model">Gemini 3.7 Flash</td><td>103/103</td><td>103/103</td><td>53/53</td><td>36/36</td></tr>
-                  <tr><td class="model">Claude Opus 4.8</td><td>103/103</td><td>103/103</td><td>53/53</td><td>36/36</td></tr>
-                  <tr><td class="model">Claude Sonnet 5</td><td>103/103</td><td>103/103</td><td>53/53</td><td>33/36</td></tr>
-                  <tr><td class="model">GPT-5.6 Terra</td><td>103/103</td><td>92/103</td><td>53/53</td><td>35/36</td></tr>
-                  <tr><td class="model">MiniMax M3</td><td>55/103</td><td>55/103</td><td>37/53</td><td>14/36</td></tr>
-                  <tr><td class="model">GPT-5.6 Luna</td><td>18/103</td><td>18/103</td><td>22/53</td><td>12/36</td></tr>
-                  <tr><td class="model">Claude Haiku 4.5</td><td>6/103</td><td>0/103</td><td>0/53</td><td>3/36</td></tr>
-                  <tr><td class="model">GPT-5.6 Sol, clarified fabric</td><td>102/103</td><td>102/103</td><td>53/53</td><td>36/36</td></tr>
-                </tbody>
+                <tbody id="breakdown-body"></tbody>
               </table>
             </div>
           </details>
           <details>
             <summary>Run comparability</summary>
-            <div><p>Portable runs use the packaged harness. Historical Claude runs used pre-clarification prompts and in-session Claude Code subagents, but the byte-identical corpus and frozen gold. Terra and MiniMax resumed after interruption. The clarified-fabric Sol result isolates QUERY behavior and is not an end-to-end run.</p></div>
+            <div><p>Portable runs use the packaged harness. Historical Claude runs used pre-clarification prompts and in-session Claude Code subagents, but the byte-identical corpus and frozen gold. Terra and MiniMax resumed after interruption. The clarified-fabric Sol result isolates QUERY behavior and is not an end-to-end run; its resource totals include the prerequisite WEAVE from the original run.</p></div>
           </details>
           <details>
-            <summary>DeepSeek and interrupted runs</summary>
-            <div><p>DeepSeek completed coverage of all 877 documents after operator repair and deterministic consolidation, but three autonomous same-model QUERY attempts failed. A separate corpus-free, operator-assisted diagnostic recovered 289/307 answers (89% weighted, 10/12 culprits); it is not an official end-to-end score.</p></div>
+            <summary>Failed and interrupted runs</summary>
+            <div><p>DeepSeek completed coverage of all 877 documents after operator repair and deterministic consolidation, but three autonomous same-model QUERY attempts failed. A separate corpus-free, operator-assisted diagnostic recovered 289/307 answers (89% weighted, 10/12 culprits); it is not an official end-to-end score.</p><p>Two Qwen3.8 27B xhigh attempts were interrupted during WEAVE and produced no queryable frozen fabric. The later attempt reached 60/877 documents; an earlier launch left an orphaned process that was terminated when discovered. Neither attempt advanced to QUERY or received a score.</p></div>
           </details>
           <details>
             <summary>Pricing and token accounting</summary>
@@ -258,13 +254,118 @@
   </main>
 
   <footer>
-    <div class="wrap foot"><strong>Shattered Needle v1.0</strong><span>FabricBench / run21 / mechanical offline grading</span></div>
+    <div class="wrap foot"><strong>Shattered Needle v1</strong><span>Mechanical offline grading</span></div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script>
-    (() => {
+    (async () => {
       const table = document.querySelector("#results-table");
       const body = table.tBodies[0];
       const headers = [...table.tHead.querySelectorAll("th")];
+
+      const cell = (text, className, sortValue) => {
+        const item = document.createElement("td");
+        item.textContent = text;
+        if (className) item.className = className;
+        if (sortValue !== undefined) item.dataset.sort = sortValue;
+        return item;
+      };
+
+      const renderTable = (results) => {
+        results.forEach((result) => {
+          const row = document.createElement("tr");
+          row.append(cell(result.model, "model"));
+          row.append(cell(result.variant, "type"));
+          if (result.weighted_score === null) {
+            row.append(cell("no score", "failed"));
+          } else {
+            const percent = result.weighted_score * 100;
+            row.append(cell(`${Math.round(percent)}%`, percent === 100 ? "score perfect" : "score", percent));
+          }
+          row.append(cell(`$${(Math.round(result.cost.usd * 10) / 10).toFixed(1)}`, "", result.cost.usd));
+          row.append(cell(result.wall_time.label, "", result.wall_time.seconds));
+          const statusCell = cell("");
+          const status = document.createElement("span");
+          status.className = `status ${result.status.tone}`;
+          status.textContent = result.status.label;
+          statusCell.append(status);
+          row.append(statusCell);
+          row.append(cell(result.note, "run-note"));
+          body.append(row);
+        });
+      };
+
+      const renderBreakdown = (results) => {
+        const breakdownBody = document.querySelector("#breakdown-body");
+        results.filter((result) => result.score_breakdown).forEach((result) => {
+          const row = document.createElement("tr");
+          row.append(cell(result.model, "model"));
+          row.append(cell(result.score_breakdown.resolution));
+          row.append(cell(result.score_breakdown.identity_provenance));
+          row.append(cell(result.score_breakdown.ownership_provenance));
+          row.append(cell(result.score_breakdown.finding_provenance));
+          breakdownBody.append(row);
+        });
+      };
+
+      const renderChart = (results) => {
+        if (!window.Chart) throw new Error("Chart.js did not load");
+        const chartResults = results.filter((result) => result.weighted_score !== null);
+        const colors = {portable: "#155eef", historical: "#6b7280", "query-only": "#d18b00"};
+        const barLabels = {
+          id: "barLabels",
+          afterDatasetsDraw(chart) {
+            const {ctx} = chart;
+            ctx.save();
+            ctx.fillStyle = "#333";
+            ctx.font = '600 12px "SFMono-Regular", Consolas, monospace';
+            ctx.textBaseline = "middle";
+            chart.getDatasetMeta(0).data.forEach((bar, index) => {
+              ctx.fillText(`${Math.round(chart.data.datasets[0].data[index])}%`, bar.x + 7, bar.y);
+            });
+            ctx.restore();
+          }
+        };
+
+        new Chart(document.querySelector("#score-chart"), {
+          type: "bar",
+          data: {
+            labels: chartResults.map((result) => result.model),
+            datasets: [{
+              data: chartResults.map((result) => result.weighted_score * 100),
+              backgroundColor: chartResults.map((result) => colors[result.protocol]),
+              borderWidth: 0,
+              borderRadius: 2,
+              barPercentage: 0.72,
+              categoryPercentage: 0.86
+            }]
+          },
+          options: {
+            indexAxis: "y",
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? false : undefined,
+            layout: {padding: {right: 38}},
+            plugins: {
+              legend: {display: false},
+              tooltip: {
+                callbacks: {
+                  label: (context) => `Weighted score: ${context.raw.toFixed(2)}%`,
+                  afterLabel: (context) => {
+                    const result = chartResults[context.dataIndex];
+                    return [`Protocol: ${result.protocol}`, `Variant: ${result.variant}`, `Approx. cost: $${(Math.round(result.cost.usd * 10) / 10).toFixed(1)}`, `Wall time: ${result.wall_time.label}`, `Status: ${result.status.label}`];
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {beginAtZero: true, max: 108, grid: {color: "#e8e8e8"}, ticks: {callback: (value) => value <= 100 ? `${value}%` : ""}},
+              y: {grid: {display: false}, ticks: {color: "#333", font: {size: 12, weight: 600}}}
+            }
+          },
+          plugins: [barLabels]
+        });
+      };
 
       const value = (row, column, type) => {
         const cell = row.cells[column];
@@ -276,7 +377,7 @@
         return text.toLocaleLowerCase();
       };
 
-      headers.forEach((header) => {
+      const bindSorting = () => headers.forEach((header) => {
         header.querySelector("button").addEventListener("click", (event) => {
           const button = event.currentTarget;
           const column = Number(button.dataset.col);
@@ -297,6 +398,33 @@
           rows.forEach((row) => body.appendChild(row));
         });
       });
+
+      try {
+        const response = await fetch("./results.json");
+        if (!response.ok) throw new Error(`results.json returned ${response.status}`);
+        const payload = await response.json();
+        const results = payload.results;
+        document.querySelector("#displayed-run-count").textContent = results.length;
+        renderTable(results);
+        renderBreakdown(results);
+        bindSorting();
+        try {
+          renderChart(results);
+        } catch (error) {
+          console.error(error);
+          document.querySelector("#score-chart").hidden = true;
+          document.querySelector("#chart-error").style.display = "block";
+        }
+      } catch (error) {
+        console.error(error);
+        const row = document.createElement("tr");
+        const errorCell = cell("Results could not be loaded.", "failed");
+        errorCell.colSpan = 7;
+        row.append(errorCell);
+        body.append(row);
+        document.querySelector("#score-chart").hidden = true;
+        document.querySelector("#chart-error").style.display = "block";
+      }
     })();
   </script>
 </body>
