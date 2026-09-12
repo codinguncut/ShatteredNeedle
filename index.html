@@ -44,7 +44,7 @@
     .lede { max-width: 760px; margin-bottom: 24px; color: #333; font-size: clamp(18px, 2.4vw, 22px); line-height: 1.45 }
     .meta { display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--muted); font-size: 13px }
     .badge { padding: 2px 8px; color: var(--green); border: 1px solid #a8d8c3; border-radius: 999px; background: #f0fbf6; font-weight: 650 }
-    .summary { display: grid; grid-template-columns: repeat(5, 1fr); border-block: 1px solid var(--line) }
+    .summary { display: grid; grid-template-columns: repeat(6, 1fr); border-block: 1px solid var(--line) }
     .summary div { padding: 18px 16px 18px 0 }
     .summary strong { display: block; font-size: 23px; line-height: 1.2 }
     .summary span { color: var(--muted); font-size: 12px }
@@ -64,6 +64,7 @@
     th:first-child, td:first-child { text-align: left }
     tbody tr:last-child td { border-bottom: 0 }
     tbody tr:hover { background: #fafafa }
+    tbody tr.projected { background: #fffbf2 }
     .model { font-family: Inter, ui-sans-serif, sans-serif; font-size: 14px; font-weight: 650 }
     .type { color: var(--muted) }
     #results-table .run-note { min-width: 220px; max-width: 300px; color: var(--muted); text-align: left; white-space: normal }
@@ -133,49 +134,52 @@
   <main id="top">
     <div class="wrap">
       <header class="hero">
-        <p class="kicker">Shattered Needle v1 / frozen instance</p>
+        <p class="kicker">Shattered Needle v3.3 / frozen instance</p>
         <h1>Shattered Needle</h1>
-        <p class="lede">A needle-in-a-haystack task turned inside out. The answer is not a span to locate &mdash; the needle is <strong>shattered</strong> into fragments scattered across a corpus larger than the agent's context, and success requires reassembling those fragments into persistent, reusable knowledge.</p>
+        <p class="lede">Shattered Needle benchmarks anticipatory knowledge organization under compression: an agent ingests documents across several isolated sessions into a persistent <strong>fabric</strong>, then answers previously unseen questions using only that fabric.</p>
+        <p>A needle-in-a-haystack task turned inside out. The answer is not a span to locate &mdash; the needle is <strong>shattered</strong> into fragments scattered across the corpus, and success requires reassembling those fragments into durable, reusable knowledge.</p>
         <div class="meta">
           <span class="badge">Frozen</span>
           <span>Mechanical grading</span>
           <span>Same-model WEAVE and QUERY</span>
-          <span>Results updated 17 August 2026</span>
+          <span>Results updated <time id="results-updated">12 September 2026</time></span>
         </div>
       </header>
 
       <div class="summary" aria-label="Benchmark summary">
-        <div><strong>877</strong><span>documents</span></div>
-        <div><strong>~305k</strong><span>corpus tokens</span></div>
+        <div><strong>800</strong><span>documents</span></div>
+        <div><strong>~208k</strong><span>corpus tokens</span></div>
         <div><strong>12</strong><span>cases</span></div>
-        <div><strong>307</strong><span>questions</span></div>
-        <div><strong id="displayed-run-count">13</strong><span>displayed runs</span></div>
+        <div><strong>76</strong><span>questions</span></div>
+        <div><strong id="measured-run-count">8</strong><span>measured runs</span></div>
+        <div><strong id="projected-run-count">3</strong><span>projected rows</span></div>
       </div>
 
       <section id="results">
         <div class="section-head">
           <h2>Results</h2>
-          <p>Weighted score is primary. Culprit synthesis receives 55% of the weight; resolution and provenance make up the remainder.</p>
+          <p>Weighted score is primary. Rows are ordered by score descending, then active wall time ascending. Projections are visibly marked and are not measured v3.3 runs.</p>
         </div>
         <div class="chart-wrap">
-          <canvas id="score-chart" role="img" aria-label="Vertical bar chart of weighted score by model, highest first"></canvas>
+          <canvas id="score-chart" role="img" aria-label="Vertical bar chart of measured v3.3 weighted score by model, highest first"></canvas>
           <p class="chart-error" id="chart-error">The score chart could not be loaded. The complete results remain available in the table.</p>
         </div>
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
           <table id="results-table">
-            <thead><tr><th><button type="button" data-col="0" data-type="text">Model / run</button></th><th><button type="button" data-col="1" data-type="text">Variant</button></th><th aria-sort="descending"><button type="button" data-col="2" data-type="number">Score</button></th><th><button type="button" data-col="3" data-type="number">Approx. cost</button></th><th><button type="button" data-col="4" data-type="number">Wall time</button></th><th><button type="button" data-col="5" data-type="text">Status</button></th><th><button type="button" data-col="6" data-type="text">Notes</button></th></tr></thead>
+            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="text">Variant</button></th><th><button type="button" data-col="2" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="3" data-type="number">Score</button></th><th><button type="button" data-col="4" data-type="number">Actual cost</button></th><th><button type="button" data-col="5" data-type="number">Est. cost</button></th><th><button type="button" data-col="6" data-type="number">Wall time</button></th><th><button type="button" data-col="7" data-type="text">Status</button></th><th><button type="button" data-col="8" data-type="text">Notes</button></th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
-        <p class="note">Variant is the reasoning-effort profile used for the run. Wall time is cumulative active phase time, rounded to the nearest minute; gaps between attempts are excluded. Historical runs used the byte-identical corpus and frozen gold with earlier prompts. Claude time excludes the WEAVE-to-QUERY handoff. Sol cost and time include the original WEAVE that produced its reused fabric plus the clarified QUERY, but not the superseded first QUERY. Query-only results are not end-to-end scores. Approximate costs are included for scale. * Terra time is incomplete; DeepSeek is a lower bound that excludes later repair and failed QUERY activity.</p>
-        <div class="weights" aria-label="Score weights">
-          <span>Culprit <strong>55%</strong></span>
-          <span>Resolution <strong>20%</strong></span>
-          <span>Identity provenance <strong>10%</strong></span>
-          <span>Ownership provenance <strong>8%</strong></span>
-          <span>Finding provenance <strong>7%</strong></span>
+        <p class="note">Runs counts completed measured draws; each run contains six ingest passes and one corpus-free query. Actual cost is provider-billed and remains blank for unmetered plans; estimated cost applies the documented token-rate table. Wall time is cumulative active phase time, excluding gaps. Claude projections carry forward the latest comparable same-model whodunnit score, wall time, and estimated cost; they have zero v3.3 runs, no v3.3 billing, and do not appear in the measured-score chart.</p>
+        <div class="weights" aria-label="Relative score weights">
+          <span>Culprit <strong>55</strong></span>
+          <span>Resolution <strong>20</strong></span>
+          <span>Condition <strong>10</strong></span>
+          <span>Identity provenance <strong>10</strong></span>
+          <span>Finding provenance <strong>7</strong></span>
         </div>
+        <p class="note">Relative weights are normalized by the grader.</p>
       </section>
 
       <section id="benchmark">
@@ -185,12 +189,13 @@
             <h3>What it measures</h3>
             <p><strong>Shattered Needle evaluates an agent's ability to construct and maintain useful knowledge over a long-running investigation.</strong> The agent processes a large corpus over an extended trajectory, using a persistent knowledge base as external memory under a bounded working context. After the investigation, it must use the knowledge base it constructed to answer held-out questions that were not available while it was processing the corpus.</p>
             <p>Grading is mechanical and representation-agnostic: the agent is free to organize its knowledge base however it likes, and is scored on what that knowledge base recovers, never on its format.</p>
+            <p>The wider research suite applies the same protocol to investigative, OCR-noised procedural, and chronology-heavy narrative corpora. This site keeps one top-level leaderboard rather than adding separate per-corpus rankings.</p>
           </div>
           <ul class="facts">
-            <li><strong>Instance</strong> Shattered Needle v1</li>
-            <li><strong>Corpus</strong> 877 irregular documents</li>
+            <li><strong>Instance</strong> Shattered Needle v3.3</li>
+            <li><strong>Corpus</strong> 800 irregular documents</li>
             <li><strong>Cases</strong> 12 interleaved investigations</li>
-            <li><strong>Evidence</strong> six factors per culprit</li>
+            <li><strong>Disclosure</strong> six isolated tranches</li>
             <li><strong>Grading</strong> deterministic, including provenance</li>
           </ul>
         </div>
@@ -204,7 +209,7 @@
         <div class="steps">
           <article class="step"><span class="mono">01 / WEAVE</span><h3>Build</h3><p>Read the corpus and write a persistent knowledge base. No questions are visible.</p></article>
           <article class="step"><span class="mono">02 / FREEZE</span><h3>Remove sources</h3><p>End the session, freeze the artifact, and physically remove the corpus.</p></article>
-          <article class="step"><span class="mono">03 / QUERY</span><h3>Recover</h3><p>A fresh session of the same model answers 307 questions from the artifact alone.</p></article>
+          <article class="step"><span class="mono">03 / QUERY</span><h3>Recover</h3><p>A fresh session of the same model answers 76 questions from the artifact alone.</p></article>
         </div>
       </section>
 
@@ -215,25 +220,25 @@
             <summary>Full score breakdown</summary>
             <div class="table-wrap" role="region" aria-label="Score breakdown" tabindex="0">
               <table>
-                <thead><tr><th>Model / run</th><th>Resolution</th><th>ID provenance</th><th>Owner provenance</th><th>Finding provenance</th></tr></thead>
+                <thead><tr><th>Model</th><th>Culprit</th><th>Resolution</th><th>Condition</th><th>ID provenance</th><th>Finding provenance</th></tr></thead>
                 <tbody id="breakdown-body"></tbody>
               </table>
             </div>
           </details>
           <details>
             <summary>Run comparability</summary>
-            <div><p>Portable runs use the packaged harness. Historical Claude runs used pre-clarification prompts and in-session Claude Code subagents, but the byte-identical corpus and frozen gold. Terra and MiniMax resumed after interruption. The clarified-fabric Sol result isolates QUERY behavior and is not an end-to-end run; its resource totals include the prerequisite WEAVE from the original run.</p></div>
+            <div><p>Measured rows use the same six-tranche harness, frozen corpus, task contract, and mechanical grader. Projected Claude rows are planning estimates, not official v3.3 results: Fable 5.1 and Opus 5 carry forward their measured v3 scores; Sonnet 5 carries forward its latest comparable v2 score.</p></div>
           </details>
           <details>
             <summary>Failed and interrupted runs</summary>
-            <div><p>DeepSeek completed coverage of all 877 documents after operator repair and deterministic consolidation, but three autonomous same-model QUERY attempts failed. A separate corpus-free, operator-assisted diagnostic recovered 289/307 answers (89% weighted, 10/12 culprits); it is not an official end-to-end score.</p><p>Two Qwen3.8 27B xhigh attempts were interrupted during WEAVE and produced no queryable frozen fabric. The later attempt reached 60/877 documents; an earlier launch left an orphaned process that was terminated when discovered. Neither attempt advanced to QUERY or received a score.</p></div>
+            <div><p>Interrupted v3.3 cells are excluded until they produce a completed, mechanically scored QUERY. Current resumable cells include K3, Qwen3.8 Max, Gemini 3.8 Flash, and GLM-5.3 Flash. Their partial work, cost, and time are not averaged into the leaderboard.</p></div>
           </details>
           <details>
             <summary>Pricing and token accounting</summary>
             <div>
-              <p>OpenRouter values are reported bills. Other values apply public standard API rates retrieved on 17 August 2026 to measured usage:</p>
+              <p>Actual OpenRouter and xAI values are reported bills. Estimated values apply the public standard token rates recorded by the benchmark to measured usage:</p>
               <code class="formula">input + cache writes + cache reads + (output + separately reported reasoning)</code>
-              <p>Anthropic includes extended-thinking tokens in <code>output_tokens</code>. Claude estimates include five-minute cache writes and cache hits recovered from the original transcripts. GLM-5.3 uses GLM-5.2 rates as a proxy because no 5.3 pay-as-you-go tariff was listed.</p>
+              <p>Unmetered subscription runs have no actual billed amount. Their estimated column gives a pay-per-token equivalent. Estimates are lower bounds when a provider applies a per-request long-context surcharge that aggregate token totals cannot reconstruct.</p>
               <p>Sources: <a href="https://platform.openai.com/docs/pricing">OpenAI</a>, <a href="https://platform.claude.com/docs/en/about-claude/pricing">Anthropic</a>, <a href="https://platform.minimax.io/docs/guides/pricing-paygo">MiniMax</a>, <a href="https://docs.z.ai/guides/overview/pricing">Z.AI</a>, and <a href="https://openrouter.ai/">OpenRouter</a>.</p>
             </div>
           </details>
@@ -242,13 +247,13 @@
             <div><p>A private generator starts from target propositions, lowers them through a function-free Horn derivation graph, and realizes only the leaves as natural-language documents. The forward engine verifies solvability and uniqueness. Distractors are certified not to license an alternative derivation, and all corpus files are frozen by SHA-256 manifest.</p></div>
           </details>
         </div>
-        <div class="caveat"><strong>Interpretation</strong>This is one frozen instance, not a population-level model ranking. Three perfect runs show that v1 has reached the frontier ceiling; later versions need larger and harder instances.</div>
+        <div class="caveat"><strong>Interpretation</strong>This is one frozen instance, not a population-level model ranking. Projected rows support planning only and must not be cited as measured v3.3 performance.</div>
       </section>
     </div>
   </main>
 
   <footer>
-    <div class="wrap foot"><strong>Shattered Needle v1</strong><span>Mechanical offline grading</span></div>
+    <div class="wrap foot"><strong>Shattered Needle v3.3</strong><span>Mechanical offline grading</span></div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script>
@@ -265,19 +270,34 @@
         return item;
       };
 
+      const money = (value, prefix = "") => value === null ? "—" : `${prefix}$${value.toFixed(2)}`;
+      const duration = (seconds, estimated) => {
+        if (seconds === null) return "—";
+        const minutes = Math.round(seconds / 60);
+        const label = minutes >= 60 ? `${Math.floor(minutes / 60)}h ${minutes % 60}m` : `${minutes} min`;
+        return `${estimated ? "~" : ""}${label}`;
+      };
+      const percent = (value) => value === null ? "—" : `${(value * 100).toFixed(1)}%`;
+
       const renderTable = (results) => {
         results.forEach((result) => {
           const row = document.createElement("tr");
+          if (result.score_estimated) row.className = "projected";
+          row.dataset.wall = result.wall_time.seconds ?? Number.POSITIVE_INFINITY;
           row.append(cell(result.model, "model"));
           row.append(cell(result.variant, "type"));
+          row.append(cell(result.runs, "", result.runs));
           if (result.weighted_score === null) {
             row.append(cell("no score", "failed"));
           } else {
             const percent = result.weighted_score * 100;
-            row.append(cell(`${Math.round(percent)}%`, percent === 100 ? "score perfect" : "score", percent));
+            const label = `${result.score_estimated ? "est. " : ""}${percent.toFixed(1)}%`;
+            row.append(cell(label, percent === 100 ? "score perfect" : "score", percent));
           }
-          row.append(cell(`$${(Math.round(result.cost.usd * 10) / 10).toFixed(1)}`, "", result.cost.usd));
-          row.append(cell(result.wall_time.label, "", result.wall_time.seconds));
+          const actualLabel = result.cost.actual_unmetered ? "not metered" : money(result.cost.actual_usd);
+          row.append(cell(actualLabel, "", result.cost.actual_usd ?? undefined));
+          row.append(cell(money(result.cost.estimated_usd, result.cost.estimated_from_prior_run ? "~" : ""), "", result.cost.estimated_usd ?? undefined));
+          row.append(cell(duration(result.wall_time.seconds, result.wall_time.estimated_from_prior_run), "", result.wall_time.seconds ?? undefined));
           const statusCell = cell("");
           const status = document.createElement("span");
           status.className = `status ${result.status.tone}`;
@@ -294,17 +314,18 @@
         results.filter((result) => result.score_breakdown).forEach((result) => {
           const row = document.createElement("tr");
           row.append(cell(result.model, "model"));
-          row.append(cell(result.score_breakdown.resolution));
-          row.append(cell(result.score_breakdown.identity_provenance));
-          row.append(cell(result.score_breakdown.ownership_provenance));
-          row.append(cell(result.score_breakdown.finding_provenance));
+          row.append(cell(percent(result.score_breakdown.culprit)));
+          row.append(cell(percent(result.score_breakdown.resolution)));
+          row.append(cell(percent(result.score_breakdown.condition)));
+          row.append(cell(percent(result.score_breakdown.identity_provenance)));
+          row.append(cell(percent(result.score_breakdown.finding_provenance)));
           breakdownBody.append(row);
         });
       };
 
       const renderChart = (results) => {
         if (!window.Chart) throw new Error("Chart.js did not load");
-        const chartResults = results.filter((result) => result.weighted_score !== null);
+        const chartResults = results.filter((result) => result.weighted_score !== null && !result.score_estimated);
         // Single-series magnitude chart: one color, no legend. Score is the whole story;
         // protocol/variant live in the tooltip and the table, not in the bar color.
         const barLabels = {
@@ -349,7 +370,7 @@
                   label: (context) => `Weighted score: ${context.raw.toFixed(2)}%`,
                   afterLabel: (context) => {
                     const result = chartResults[context.dataIndex];
-                    return [`Protocol: ${result.protocol}`, `Variant: ${result.variant}`, `Approx. cost: $${(Math.round(result.cost.usd * 10) / 10).toFixed(1)}`, `Wall time: ${result.wall_time.label}`, `Status: ${result.status.label}`];
+                    return [`Variant: ${result.variant}`, `Actual cost: ${result.cost.actual_unmetered ? "not metered" : money(result.cost.actual_usd)}`, `Estimated cost: ${money(result.cost.estimated_usd)}`, `Wall time: ${duration(result.wall_time.seconds, false)}`, `Status: ${result.status.label}`];
                   }
                 }
               }
@@ -385,7 +406,11 @@
           rows.sort((a, b) => {
             const left = value(a, column, type);
             const right = value(b, column, type);
-            if (typeof left === "number") return (left - right) * direction;
+            if (typeof left === "number") {
+              const primary = (left - right) * direction;
+              if (primary !== 0 || column !== 3) return primary;
+              return Number(a.dataset.wall) - Number(b.dataset.wall);
+            }
             return left.localeCompare(right) * direction;
           });
 
@@ -400,7 +425,9 @@
         if (!response.ok) throw new Error(`results.json returned ${response.status}`);
         const payload = await response.json();
         const results = payload.results;
-        document.querySelector("#displayed-run-count").textContent = results.length;
+        document.querySelector("#measured-run-count").textContent = payload.measured_runs;
+        document.querySelector("#projected-run-count").textContent = payload.projected_rows;
+        document.querySelector("#results-updated").textContent = new Date(`${payload.updated}T00:00:00Z`).toLocaleDateString("en-GB", {day: "numeric", month: "long", year: "numeric", timeZone: "UTC"});
         renderTable(results);
         renderBreakdown(results);
         bindSorting();
@@ -415,7 +442,7 @@
         console.error(error);
         const row = document.createElement("tr");
         const errorCell = cell("Results could not be loaded.", "failed");
-        errorCell.colSpan = 7;
+        errorCell.colSpan = 9;
         row.append(errorCell);
         body.append(row);
         document.querySelector("#score-chart").hidden = true;

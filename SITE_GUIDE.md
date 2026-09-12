@@ -1,10 +1,10 @@
-# Shattered Needle v1 Website Guide
+# Shattered Needle v3.3 Website Guide
 
 This file is the durable editorial and implementation contract for future `index.html` updates.
 
 ## Identity
 
-- The public benchmark name is **Shattered Needle v1**.
+- The public benchmark name is **Shattered Needle v3.3**.
 - Do not expose internal project names, experiment labels, or generation identifiers.
 - Keep the site terse, neutral, and results-first.
 - Preserve the canonical opening copy from the repository README: "A needle-in-a-haystack task
@@ -13,11 +13,14 @@ This file is the durable editorial and implementation contract for future `index
 ## Data
 
 - `results.json` is the single source of truth for every displayed run.
+- Regenerate it from run artifacts with `consolidate_leaderboard.py --site-out`; do not hand-edit scores.
 - The main table, score chart, detailed breakdown, and displayed-run count must be rendered from it.
 - Store exact scores and seconds in JSON. Round only in presentation.
 - Retain exact cost and accounting basis in JSON, but show only a neutral approximate amount in the
   primary table, rounded to the nearest $0.10.
 - Keep incomplete timing and cost measurements marked as incomplete.
+- Keep projected rows explicitly separate from measured runs in the generator and visibly labelled on the site.
+- A projected row has no v3.3 actual cost. Its score, wall time, and estimated cost must name the prior run version used.
 - Do not add a scored bar for a run whose `weighted_score` is `null`.
 - Retiring or superseding a run is a `results.json` edit, never a file move in the benchmark repo's
   `runs/` archive (that archive does not feed this site). To drop a run from the score chart set its
@@ -29,7 +32,7 @@ This file is the durable editorial and implementation contract for future `index
 ## Results Presentation
 
 - Weighted score is the primary metric.
-- Show a vertical score bar chart sorted by exact weighted score descending, with narrow bars and
+- Show a vertical score bar chart of measured runs sorted by exact weighted score descending, with narrow bars and
   small tilted x-axis labels.
 - The score chart is single-series: all bars use one color. Do NOT color bars by protocol
   (portable / historical / query-only) or by any other dimension; there is no chart color legend.
@@ -38,6 +41,7 @@ This file is the durable editorial and implementation contract for future `index
   used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Include interrupted or failed model attempts as unscored rows when they consumed meaningful runtime
   or cost; keep them out of the score chart.
+- Keep projected rows out of the measured-score chart; they may appear in the table with an `est.` score prefix.
 - Retain the sortable table for approximate cost, time, and status information. Protocol belongs in
   chart tooltips and methodology notes, not in bar color or the primary table.
 - Display weighted scores as whole percentages in the chart and table while sorting by exact values.
@@ -48,6 +52,7 @@ This file is the durable editorial and implementation contract for future `index
 - State that QUERY receives the frozen knowledge base and no source corpus.
 - State that grading is mechanical and representation-agnostic.
 - Describe this release as one frozen instance, not a population-level model ranking.
+- Never cite carry-forward projections as measured v3.3 performance.
 - Avoid claims broader than the measured capability: anticipatory knowledge organization under
   compression, cross-document synthesis, provenance recovery, and long-horizon coherence.
 
