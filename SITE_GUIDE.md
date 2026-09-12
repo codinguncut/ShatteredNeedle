@@ -16,8 +16,9 @@ This file is the durable editorial and implementation contract for future `index
 - Regenerate it from run artifacts with `consolidate_leaderboard.py --site-out`; do not hand-edit scores.
 - The main table, score chart, detailed breakdown, and displayed-run count must be rendered from it.
 - Store exact scores and seconds in JSON. Round only in presentation.
-- Retain exact cost and accounting basis in JSON, but show only a neutral approximate amount in the
-  primary table, rounded to the nearest $0.10.
+- Retain exact cost and accounting basis in JSON. Show one Cost column: prefer actual provider billing,
+  otherwise show the token-rate estimate with an `e` suffix.
+- Show wall-clock time in minutes, never mixed hour/minute notation.
 - Keep incomplete timing and cost measurements marked as incomplete.
 - Keep projected rows explicitly separate from measured runs in the generator and visibly labelled on the site.
 - A projected row has no v3.3 actual cost. Its score, wall time, and estimated cost must name the prior run version used.
@@ -32,13 +33,14 @@ This file is the durable editorial and implementation contract for future `index
 ## Results Presentation
 
 - Weighted score is the primary metric.
-- Show a vertical score bar chart of measured runs sorted by exact weighted score descending, with narrow bars and
-  small tilted x-axis labels.
+- Show a vertical score bar chart below the results table, sorted by exact weighted score descending,
+  with narrow bars and small tilted x-axis labels.
 - The score chart is single-series: all bars use one color. Do NOT color bars by protocol
   (portable / historical / query-only) or by any other dimension; there is no chart color legend.
 - Keep diagnostic and failed statuses visible; never imply they are portable end-to-end scores.
-- Show the recorded model variant and a concise run note. `variant` is the reasoning-effort profile
-  used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
+- Show the recorded model variant. Leave ordinary measured-run notes blank; use short notes only for
+  noteworthy conditions such as a resumed run or the source version of a projection. `variant` is the
+  reasoning-effort profile used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Include interrupted or failed model attempts as unscored rows when they consumed meaningful runtime
   or cost; keep them out of the score chart.
 - Keep projected rows out of the measured-score chart; they may appear in the table with an `est.` score prefix.

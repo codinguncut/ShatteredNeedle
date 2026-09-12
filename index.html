@@ -79,8 +79,6 @@
     .note { margin: 11px 0 0; color: var(--muted); font-size: 12px }
     .chart-wrap { height: 460px; margin-bottom: 22px; padding: 18px 20px 12px; border: 1px solid var(--line); border-radius: 6px }
     .chart-error { display: none; margin: 0; color: var(--red); font-size: 13px }
-    .weights { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 6px; background: var(--soft); font-size: 13px }
-    .weights strong { margin-left: 5px }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px }
     .facts { margin: 0; padding: 0; list-style: none }
     .facts li { padding: 11px 0; border-top: 1px solid var(--line) }
@@ -160,26 +158,18 @@
           <h2>Results</h2>
           <p>Weighted score is primary. Rows are ordered by score descending, then active wall time ascending. Projections are visibly marked and are not measured v3.3 runs.</p>
         </div>
+        <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
+        <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
+          <table id="results-table">
+            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="text">Variant</button></th><th><button type="button" data-col="2" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="3" data-type="number">Score</button></th><th><button type="button" data-col="4" data-type="number">Cost</button></th><th><button type="button" data-col="5" data-type="number">Wall time</button></th><th><button type="button" data-col="6" data-type="text">Status</button></th><th><button type="button" data-col="7" data-type="text">Notes</button></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
         <div class="chart-wrap">
           <canvas id="score-chart" role="img" aria-label="Vertical bar chart of measured v3.3 weighted score by model, highest first"></canvas>
           <p class="chart-error" id="chart-error">The score chart could not be loaded. The complete results remain available in the table.</p>
         </div>
-        <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
-        <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
-          <table id="results-table">
-            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="text">Variant</button></th><th><button type="button" data-col="2" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="3" data-type="number">Score</button></th><th><button type="button" data-col="4" data-type="number">Actual cost</button></th><th><button type="button" data-col="5" data-type="number">Est. cost</button></th><th><button type="button" data-col="6" data-type="number">Wall time</button></th><th><button type="button" data-col="7" data-type="text">Status</button></th><th><button type="button" data-col="8" data-type="text">Notes</button></th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <p class="note">Runs counts completed measured draws; each run contains six ingest passes and one corpus-free query. Actual cost is provider-billed and remains blank for unmetered plans; estimated cost applies the documented token-rate table. Wall time is cumulative active phase time, excluding gaps. Claude projections carry forward the latest comparable same-model whodunnit score, wall time, and estimated cost; they have zero v3.3 runs, no v3.3 billing, and do not appear in the measured-score chart.</p>
-        <div class="weights" aria-label="Relative score weights">
-          <span>Culprit <strong>55</strong></span>
-          <span>Resolution <strong>20</strong></span>
-          <span>Condition <strong>10</strong></span>
-          <span>Identity provenance <strong>10</strong></span>
-          <span>Finding provenance <strong>7</strong></span>
-        </div>
-        <p class="note">Relative weights are normalized by the grader.</p>
+        <p class="note">Runs counts completed measured draws; each run contains six ingest passes and one corpus-free query. Cost uses provider billing when available; an <strong>e</strong> suffix marks a token-rate estimate. Wall time is cumulative active phase time in minutes, excluding gaps. Claude projections carry forward the latest comparable same-model whodunnit score, wall time, and estimated cost; they have zero v3.3 runs, no v3.3 billing, and do not appear in the measured-score chart.</p>
       </section>
 
       <section id="benchmark">
@@ -238,7 +228,7 @@
             <div>
               <p>Actual OpenRouter and xAI values are reported bills. Estimated values apply the public standard token rates recorded by the benchmark to measured usage:</p>
               <code class="formula">input + cache writes + cache reads + (output + separately reported reasoning)</code>
-              <p>Unmetered subscription runs have no actual billed amount. Their estimated column gives a pay-per-token equivalent. Estimates are lower bounds when a provider applies a per-request long-context surcharge that aggregate token totals cannot reconstruct.</p>
+              <p>Unmetered subscription runs have no actual billed amount. Their Cost value is a pay-per-token equivalent marked with an <strong>e</strong> suffix. Estimates are lower bounds when a provider applies a per-request long-context surcharge that aggregate token totals cannot reconstruct.</p>
               <p>Sources: <a href="https://platform.openai.com/docs/pricing">OpenAI</a>, <a href="https://platform.claude.com/docs/en/about-claude/pricing">Anthropic</a>, <a href="https://platform.minimax.io/docs/guides/pricing-paygo">MiniMax</a>, <a href="https://docs.z.ai/guides/overview/pricing">Z.AI</a>, and <a href="https://openrouter.ai/">OpenRouter</a>.</p>
             </div>
           </details>
@@ -270,12 +260,11 @@
         return item;
       };
 
-      const money = (value, prefix = "") => value === null ? "—" : `${prefix}$${value.toFixed(2)}`;
+      const money = (value, estimated = false) => value === null ? "—" : `$${value.toFixed(2)}${estimated ? "e" : ""}`;
       const duration = (seconds, estimated) => {
         if (seconds === null) return "—";
         const minutes = Math.round(seconds / 60);
-        const label = minutes >= 60 ? `${Math.floor(minutes / 60)}h ${minutes % 60}m` : `${minutes} min`;
-        return `${estimated ? "~" : ""}${label}`;
+        return `${estimated ? "~" : ""}${minutes} min`;
       };
       const percent = (value) => value === null ? "—" : `${(value * 100).toFixed(1)}%`;
 
@@ -294,9 +283,9 @@
             const label = `${result.score_estimated ? "est. " : ""}${percent.toFixed(1)}%`;
             row.append(cell(label, percent === 100 ? "score perfect" : "score", percent));
           }
-          const actualLabel = result.cost.actual_unmetered ? "not metered" : money(result.cost.actual_usd);
-          row.append(cell(actualLabel, "", result.cost.actual_usd ?? undefined));
-          row.append(cell(money(result.cost.estimated_usd, result.cost.estimated_from_prior_run ? "~" : ""), "", result.cost.estimated_usd ?? undefined));
+          const hasActualCost = Number.isFinite(result.cost.actual_usd);
+          const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
+          row.append(cell(money(displayedCost, !hasActualCost), "", displayedCost ?? undefined));
           row.append(cell(duration(result.wall_time.seconds, result.wall_time.estimated_from_prior_run), "", result.wall_time.seconds ?? undefined));
           const statusCell = cell("");
           const status = document.createElement("span");
@@ -370,7 +359,9 @@
                   label: (context) => `Weighted score: ${context.raw.toFixed(2)}%`,
                   afterLabel: (context) => {
                     const result = chartResults[context.dataIndex];
-                    return [`Variant: ${result.variant}`, `Actual cost: ${result.cost.actual_unmetered ? "not metered" : money(result.cost.actual_usd)}`, `Estimated cost: ${money(result.cost.estimated_usd)}`, `Wall time: ${duration(result.wall_time.seconds, false)}`, `Status: ${result.status.label}`];
+                    const hasActualCost = Number.isFinite(result.cost.actual_usd);
+                    const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
+                    return [`Variant: ${result.variant}`, `Cost: ${money(displayedCost, !hasActualCost)}`, `Wall time: ${duration(result.wall_time.seconds, false)}`, `Status: ${result.status.label}`];
                   }
                 }
               }
@@ -442,7 +433,7 @@
         console.error(error);
         const row = document.createElement("tr");
         const errorCell = cell("Results could not be loaded.", "failed");
-        errorCell.colSpan = 9;
+        errorCell.colSpan = 8;
         row.append(errorCell);
         body.append(row);
         document.querySelector("#score-chart").hidden = true;
