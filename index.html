@@ -159,7 +159,7 @@
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
           <table id="results-table">
-            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="text">Variant</button></th><th><button type="button" data-col="2" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="3" data-type="number">Score</button></th><th><button type="button" data-col="4" data-type="number">Cost</button></th><th><button type="button" data-col="5" data-type="number">Wall time</button></th><th><button type="button" data-col="6" data-type="text">Status</button></th><th><button type="button" data-col="7" data-type="text">Notes</button></th></tr></thead>
+            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="text">Variant</button></th><th><button type="button" data-col="2" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="3" data-type="number">Score</button></th><th><button type="button" data-col="4" data-type="number">API cost</button></th><th><button type="button" data-col="5" data-type="number">Wall time</button></th><th><button type="button" data-col="6" data-type="text">Status</button></th><th><button type="button" data-col="7" data-type="text">Notes</button></th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -167,7 +167,7 @@
           <canvas id="score-chart" role="img" aria-label="Vertical bar chart of completed v3.3 test scores by model, highest first"></canvas>
           <p class="chart-error" id="chart-error">The score chart could not be loaded. The complete results remain available in the table.</p>
         </div>
-        <p class="note">Runs counts completed tests; each run contains six ingest passes and one corpus-free query. Cost uses provider billing when available; an <strong>e</strong> suffix marks a token-rate estimate. Wall time is cumulative active phase time in minutes, excluding gaps. Claude estimates carry forward the latest comparable same-model score, time, and estimated cost; they have zero v3.3 runs and do not appear in the chart.</p>
+        <p class="note">Runs counts completed tests; each run contains six ingest passes and one corpus-free query. API cost uses provider billing when available and a token-rate equivalent otherwise. Wall time is cumulative active phase time in minutes, excluding gaps. Claude estimates carry forward the latest comparable same-model score, time, and API cost; they have zero v3.3 runs and do not appear in the chart.</p>
       </section>
 
       <section id="benchmark">
@@ -225,7 +225,7 @@
             <div>
               <p>Actual OpenRouter and xAI values are reported bills. Estimated values apply the public standard token rates recorded by the benchmark to captured usage:</p>
               <code class="formula">input + cache writes + cache reads + (output + separately reported reasoning)</code>
-              <p>Unmetered subscription runs have no actual billed amount. Their Cost value is a pay-per-token equivalent marked with an <strong>e</strong> suffix. Estimates are lower bounds when a provider applies a per-request long-context surcharge that aggregate token totals cannot reconstruct.</p>
+              <p>Unmetered subscription runs have no actual billed amount. Their API cost is a pay-per-token equivalent. These values are lower bounds when a provider applies a per-request long-context surcharge that aggregate token totals cannot reconstruct.</p>
               <p>Sources: <a href="https://platform.openai.com/docs/pricing">OpenAI</a>, <a href="https://platform.claude.com/docs/en/about-claude/pricing">Anthropic</a>, <a href="https://platform.minimax.io/docs/guides/pricing-paygo">MiniMax</a>, <a href="https://docs.z.ai/guides/overview/pricing">Z.AI</a>, and <a href="https://openrouter.ai/">OpenRouter</a>.</p>
             </div>
           </details>
@@ -257,7 +257,7 @@
         return item;
       };
 
-      const money = (value, estimated = false) => value === null ? "—" : `$${value.toFixed(2)}${estimated ? "e" : ""}`;
+      const money = (value) => value === null ? "—" : `$${value.toFixed(2)}`;
       const duration = (seconds, estimated) => {
         if (seconds === null) return "—";
         const minutes = Math.round(seconds / 60);
@@ -273,7 +273,7 @@
           const modelCell = cell(result.model, "model");
           const harness = document.createElement("span");
           harness.className = "harness";
-          harness.textContent = `${result.harness} harness`;
+          harness.textContent = result.harness;
           modelCell.append(harness);
           row.append(modelCell);
           row.append(cell(result.variant, "type"));
@@ -287,7 +287,7 @@
           }
           const hasActualCost = Number.isFinite(result.cost.actual_usd);
           const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
-          row.append(cell(money(displayedCost, !hasActualCost), "", displayedCost ?? undefined));
+          row.append(cell(money(displayedCost), "", displayedCost ?? undefined));
           row.append(cell(duration(result.wall_time.seconds, result.wall_time.estimated_from_prior_run), "", result.wall_time.seconds ?? undefined));
           const statusCell = cell("");
           const status = document.createElement("span");
@@ -363,7 +363,7 @@
                     const result = chartResults[context.dataIndex];
                     const hasActualCost = Number.isFinite(result.cost.actual_usd);
                     const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
-                    return [`Harness: ${result.harness}`, `Variant: ${result.variant}`, `Cost: ${money(displayedCost, !hasActualCost)}`, `Wall time: ${duration(result.wall_time.seconds, false)}`, `Status: ${result.status.label}`];
+                    return [`Harness: ${result.harness}`, `Variant: ${result.variant}`, `API cost: ${money(displayedCost)}`, `Wall time: ${duration(result.wall_time.seconds, false)}`, `Status: ${result.status.label}`];
                   }
                 }
               }

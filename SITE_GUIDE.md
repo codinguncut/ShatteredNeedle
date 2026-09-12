@@ -18,8 +18,8 @@ This file is the durable editorial and implementation contract for future `index
 - Derive the headline corpus, document, approximate-token, and held-out-question inventory from all
   committed canonical corpus bundles; do not hard-code one corpus's counts.
 - Store exact scores and seconds in JSON. Round only in presentation.
-- Retain exact cost and accounting basis in JSON. Show one Cost column: prefer actual provider billing,
-  otherwise show the token-rate estimate with an `e` suffix.
+- Retain exact cost and accounting basis in JSON. Show one API cost column: prefer actual provider
+  billing, otherwise show the token-rate equivalent without a special suffix.
 - Show wall-clock time in minutes, never mixed hour/minute notation.
 - Keep incomplete timing and cost measurements marked as incomplete.
 - Keep estimated rows explicitly separate from completed tests in the generator and visibly labelled on the site.
