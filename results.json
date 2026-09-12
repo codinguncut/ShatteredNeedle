@@ -13,11 +13,18 @@
     "identity_provenance": 0.1,
     "finding_provenance": 0.07
   },
+  "suite": {
+    "corpora": 3,
+    "documents": 1244,
+    "approximate_corpus_tokens": 249512,
+    "held_out_questions": 177
+  },
   "results": [
     {
       "id": "claude-fable-5-1",
       "model": "Claude Fable 5.1",
       "model_id": "claude-fable-5-1",
+      "harness": "Claude Code",
       "variant": "high",
       "runs": 0,
       "weighted_score": 1.0,
@@ -34,7 +41,7 @@
         "estimated_from_prior_run": true
       },
       "status": {
-        "label": "projected",
+        "label": "estimated",
         "tone": "warn"
       },
       "note": "from v3",
@@ -44,6 +51,7 @@
       "id": "openai-gpt-6-astra",
       "model": "GPT-6 Astra",
       "model_id": "openai/gpt-6-astra",
+      "harness": "Claude Code",
       "variant": "high",
       "runs": 1,
       "weighted_score": 1.0,
@@ -66,7 +74,7 @@
         "estimated_from_prior_run": false
       },
       "status": {
-        "label": "measured",
+        "label": "tested",
         "tone": "good"
       },
       "note": ""
@@ -75,6 +83,7 @@
       "id": "claude-opus-5",
       "model": "Claude Opus 5",
       "model_id": "claude-opus-5",
+      "harness": "Claude Code",
       "variant": "high",
       "runs": 0,
       "weighted_score": 1.0,
@@ -91,7 +100,7 @@
         "estimated_from_prior_run": true
       },
       "status": {
-        "label": "projected",
+        "label": "estimated",
         "tone": "warn"
       },
       "note": "from v3",
@@ -101,6 +110,7 @@
       "id": "openrouter-meta-muse-spark-1.3-contributor",
       "model": "Muse Spark 1.3 Contributor",
       "model_id": "openrouter/meta/muse-spark-1.3-contributor",
+      "harness": "OpenCode",
       "variant": "high",
       "runs": 1,
       "weighted_score": 0.998,
@@ -123,7 +133,7 @@
         "estimated_from_prior_run": false
       },
       "status": {
-        "label": "measured",
+        "label": "tested",
         "tone": "good"
       },
       "note": ""
@@ -132,6 +142,7 @@
       "id": "zai-coding-plan-glm-5.3",
       "model": "GLM-5.3",
       "model_id": "zai-coding-plan/glm-5.3",
+      "harness": "OpenCode",
       "variant": "high",
       "runs": 1,
       "weighted_score": 0.998,
@@ -154,7 +165,7 @@
         "estimated_from_prior_run": false
       },
       "status": {
-        "label": "measured",
+        "label": "tested",
         "tone": "good"
       },
       "note": ""
@@ -163,6 +174,7 @@
       "id": "openai-gpt-5.6-sol",
       "model": "GPT-5.6 Sol",
       "model_id": "openai/gpt-5.6-sol",
+      "harness": "Claude Code",
       "variant": "high",
       "runs": 1,
       "weighted_score": 0.998,
@@ -185,7 +197,7 @@
         "estimated_from_prior_run": false
       },
       "status": {
-        "label": "measured",
+        "label": "tested",
         "tone": "good"
       },
       "note": ""
@@ -194,6 +206,7 @@
       "id": "openai-gpt-5.6-terra",
       "model": "GPT-5.6 Terra",
       "model_id": "openai/gpt-5.6-terra",
+      "harness": "Claude Code",
       "variant": "high",
       "runs": 1,
       "weighted_score": 0.9431,
@@ -216,7 +229,7 @@
         "estimated_from_prior_run": false
       },
       "status": {
-        "label": "measured",
+        "label": "tested",
         "tone": "good"
       },
       "note": ""
@@ -225,6 +238,7 @@
       "id": "openai-gpt-5.6-luna",
       "model": "GPT-5.6 Luna",
       "model_id": "openai/gpt-5.6-luna",
+      "harness": "Claude Code",
       "variant": "high",
       "runs": 1,
       "weighted_score": 0.9124,
@@ -247,7 +261,7 @@
         "estimated_from_prior_run": false
       },
       "status": {
-        "label": "measured",
+        "label": "tested",
         "tone": "good"
       },
       "note": ""
@@ -256,6 +270,7 @@
       "id": "xai-grok-4.6",
       "model": "Grok 4.6",
       "model_id": "xai/grok-4.6",
+      "harness": "OpenCode",
       "variant": "high",
       "runs": 1,
       "weighted_score": 0.9059,
@@ -278,7 +293,7 @@
         "estimated_from_prior_run": false
       },
       "status": {
-        "label": "measured",
+        "label": "tested",
         "tone": "good"
       },
       "note": ""
@@ -287,6 +302,7 @@
       "id": "openrouter-deepseek-deepseek-v4.1-flash",
       "model": "DeepSeek V4.1 Flash",
       "model_id": "openrouter/deepseek/deepseek-v4.1-flash",
+      "harness": "OpenCode",
       "variant": "high",
       "runs": 1,
       "weighted_score": 0.8999,
@@ -309,7 +325,7 @@
         "estimated_from_prior_run": false
       },
       "status": {
-        "label": "measured",
+        "label": "tested",
         "tone": "good"
       },
       "note": ""
@@ -318,6 +334,7 @@
       "id": "claude-sonnet-5",
       "model": "Claude Sonnet 5",
       "model_id": "claude-sonnet-5",
+      "harness": "Claude Code",
       "variant": "high",
       "runs": 0,
       "weighted_score": 0.8905,
@@ -334,7 +351,7 @@
         "estimated_from_prior_run": true
       },
       "status": {
-        "label": "projected",
+        "label": "estimated",
         "tone": "warn"
       },
       "note": "from v2",
