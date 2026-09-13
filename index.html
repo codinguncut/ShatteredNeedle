@@ -173,7 +173,7 @@
           </table>
         </div>
         <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version and do not appear in the chart. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
-        <p class="note">Among completed table rows, cost and wall-time values outside the mean ± 1 population standard deviation are highlighted: green and ↓ for lower, red and ↑ for higher.</p>
+        <p class="note">Across all displayed rows, including carried-forward Claude entries, values outside ±1 population standard deviation are highlighted: green and ↓ for lower, red and ↑ for higher. Cost is calculated in log space and includes both Muse pricing scenarios; wall time uses ordinary arithmetic values.</p>
       </section>
 
       <section id="benchmark">
@@ -279,6 +279,13 @@
         return {low: mean - stddev, high: mean + stddev};
       };
 
+      const logDistribution = (values) => {
+        const logs = values.filter((value) => Number.isFinite(value) && value > 0).map(Math.log);
+        const mean = logs.reduce((sum, value) => sum + value, 0) / logs.length;
+        const stddev = Math.sqrt(logs.reduce((sum, value) => sum + (value - mean) ** 2, 0) / logs.length);
+        return {low: Math.exp(mean - stddev), high: Math.exp(mean + stddev)};
+      };
+
       const outlierClass = (value, stats) => {
         if (!Number.isFinite(value)) return "";
         if (value < stats.low) return "metric-low";
@@ -287,12 +294,15 @@
       };
 
       const renderTable = (results) => {
-        const measured = results.filter((result) => result.runs > 0 && !result.score_estimated);
         const costOf = (result) => Number.isFinite(result.cost.actual_usd)
           ? result.cost.actual_usd
           : result.cost.estimated_usd;
-        const costStats = distribution(measured.map(costOf));
-        const wallStats = distribution(measured.map((result) => result.wall_time.seconds));
+        const costValues = results.flatMap((result) => [
+          costOf(result),
+          ...(Number.isFinite(result.cost.standard_usd) ? [result.cost.standard_usd] : [])
+        ]);
+        const costStats = logDistribution(costValues);
+        const wallStats = distribution(results.map((result) => result.wall_time.seconds));
         results.forEach((result) => {
           const row = document.createElement("tr");
           row.dataset.wall = result.wall_time.seconds ?? Number.POSITIVE_INFINITY;
@@ -312,11 +322,11 @@
           }
           const hasActualCost = Number.isFinite(result.cost.actual_usd);
           const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
-          const costClass = result.runs > 0 ? outlierClass(displayedCost, costStats) : "";
+          const costClass = outlierClass(displayedCost, costStats);
           const costCell = cell(money(displayedCost), costClass, displayedCost ?? undefined);
           if (costClass) costCell.title = costClass === "metric-low" ? "Below mean - σ" : "Above mean + σ";
           row.append(costCell);
-          const wallClass = result.runs > 0 ? outlierClass(result.wall_time.seconds, wallStats) : "";
+          const wallClass = outlierClass(result.wall_time.seconds, wallStats);
           const wallCell = cell(duration(result.wall_time.seconds), wallClass, result.wall_time.seconds ?? undefined);
           if (wallClass) wallCell.title = wallClass === "metric-low" ? "Below mean - σ" : "Above mean + σ";
           row.append(wallCell);

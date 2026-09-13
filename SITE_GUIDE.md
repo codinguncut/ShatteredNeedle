@@ -61,9 +61,10 @@ This file is the durable editorial and implementation contract for future `index
   score/time formatting as other models.
 - Retain the sortable table for approximate cost and time information. Protocol belongs in
   chart tooltips and methodology notes, not in bar color or the primary table.
-- For completed v3.3 table rows, calculate the mean and population standard deviation of displayed
-  cost and mean wall time. Mark values below mean - 1 standard deviation in green and values above
-  mean + 1 standard deviation in red; include a non-color cue. Describe these as values outside the
+- For all displayed rows, including carried-forward Claude entries, calculate a ±1 population standard
+  deviation comparison band. Calculate cost in log space and include both Muse pricing scenarios in its
+  population; calculate mean wall time on the ordinary arithmetic scale. Mark values below the band in
+  green and values above it in red; include a non-color cue. Describe these as values outside the
   comparison band rather than statistical outliers.
 - Display weighted scores as whole percentages in the chart and table while sorting by exact values.
 
