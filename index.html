@@ -71,6 +71,10 @@
     .score { font-weight: 700 }
     .perfect { color: var(--green) }
     .failed { color: var(--red) }
+    .metric-low { color: var(--green); background: #f0fbf6; font-weight: 700 }
+    .metric-high { color: var(--red); background: #fff3f1; font-weight: 700 }
+    .metric-low::after { content: " ↓" }
+    .metric-high::after { content: " ↑" }
     .note { margin: 11px 0 0; color: var(--muted); font-size: 12px }
     .chart-intro { margin: 0 0 12px }
     .chart-intro h3 { margin-bottom: 3px }
@@ -156,7 +160,7 @@
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="chart-intro">
           <h3>Performance vs. API cost</h3>
-          <p>Higher and farther left is better: stronger results at lower cost. Both axes are logarithmic and the chart starts at 85% weighted score; the dotted line connects the cost-efficiency frontier. Hover or tap a point for run details.</p>
+          <p>Higher and farther left is better: stronger results at lower cost. Both axes are logarithmic and the chart starts at 85% weighted score. Muse appears at both contributor and standard commercial pricing; the dotted frontier excludes the contributor-priced point. Hover or tap a point for run details.</p>
         </div>
         <div class="chart-wrap">
           <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for completed v3.3 tests"></canvas>
@@ -169,6 +173,7 @@
           </table>
         </div>
         <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version and do not appear in the chart. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
+        <p class="note">Among completed table rows, cost and wall-time values outside the mean ± 1 population standard deviation are highlighted: green and ↓ for lower, red and ↑ for higher.</p>
       </section>
 
       <section id="benchmark">
@@ -267,7 +272,27 @@
       };
       const percent = (value) => value === null ? "—" : `${(value * 100).toFixed(1)}%`;
 
+      const distribution = (values) => {
+        const finite = values.filter(Number.isFinite);
+        const mean = finite.reduce((sum, value) => sum + value, 0) / finite.length;
+        const stddev = Math.sqrt(finite.reduce((sum, value) => sum + (value - mean) ** 2, 0) / finite.length);
+        return {low: mean - stddev, high: mean + stddev};
+      };
+
+      const outlierClass = (value, stats) => {
+        if (!Number.isFinite(value)) return "";
+        if (value < stats.low) return "metric-low";
+        if (value > stats.high) return "metric-high";
+        return "";
+      };
+
       const renderTable = (results) => {
+        const measured = results.filter((result) => result.runs > 0 && !result.score_estimated);
+        const costOf = (result) => Number.isFinite(result.cost.actual_usd)
+          ? result.cost.actual_usd
+          : result.cost.estimated_usd;
+        const costStats = distribution(measured.map(costOf));
+        const wallStats = distribution(measured.map((result) => result.wall_time.seconds));
         results.forEach((result) => {
           const row = document.createElement("tr");
           row.dataset.wall = result.wall_time.seconds ?? Number.POSITIVE_INFINITY;
@@ -287,8 +312,14 @@
           }
           const hasActualCost = Number.isFinite(result.cost.actual_usd);
           const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
-          row.append(cell(money(displayedCost), "", displayedCost ?? undefined));
-          row.append(cell(duration(result.wall_time.seconds), "", result.wall_time.seconds ?? undefined));
+          const costClass = result.runs > 0 ? outlierClass(displayedCost, costStats) : "";
+          const costCell = cell(money(displayedCost), costClass, displayedCost ?? undefined);
+          if (costClass) costCell.title = costClass === "metric-low" ? "Below mean - σ" : "Above mean + σ";
+          row.append(costCell);
+          const wallClass = result.runs > 0 ? outlierClass(result.wall_time.seconds, wallStats) : "";
+          const wallCell = cell(duration(result.wall_time.seconds), wallClass, result.wall_time.seconds ?? undefined);
+          if (wallClass) wallCell.title = wallClass === "metric-low" ? "Below mean - σ" : "Above mean + σ";
+          row.append(wallCell);
           row.append(cell(result.note, "run-note"));
           body.append(row);
         });
@@ -310,9 +341,20 @@
 
       const renderChart = (results) => {
         if (!window.Chart) throw new Error("Chart.js did not load");
-        const chartResults = results.filter((result) => {
+        const measuredResults = results.filter((result) => {
           const cost = Number.isFinite(result.cost.actual_usd) ? result.cost.actual_usd : result.cost.estimated_usd;
           return result.weighted_score !== null && !result.score_estimated && Number.isFinite(cost);
+        });
+        const chartResults = measuredResults.flatMap((result) => {
+          if (!Number.isFinite(result.cost.standard_usd)) return [result];
+          return [{...result, paretoEligible: false, pricingLabel: "Contributor pricing; excluded from frontier"}, {
+            ...result,
+            model: "Muse Spark 1.3",
+            model_id: result.cost.standard_model_id,
+            variant: `${result.variant}, standard pricing`,
+            cost: {...result.cost, actual_usd: null, estimated_usd: result.cost.standard_usd},
+            pricingLabel: "Same measured usage repriced at standard commercial rates"
+          }];
         });
         const providerColor = (result) => {
           const id = result.model_id;
@@ -333,7 +375,8 @@
           result
         }));
         let bestScore = -Infinity;
-        const frontier = [...points]
+        const frontier = points
+          .filter((point) => point.y >= 85 && point.result.paretoEligible !== false)
           .sort((a, b) => a.x - b.x || b.y - a.y)
           .filter((point) => {
             if (point.y <= bestScore) return false;
@@ -416,7 +459,12 @@
                     const result = chartResults[context.dataIndex];
                     const hasActualCost = Number.isFinite(result.cost.actual_usd);
                     const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
-                    return [`Harness: ${result.harness}`, `API cost: ${money(displayedCost)}`, `Wall time: ${duration(result.wall_time.seconds)}`];
+                    return [
+                      `Harness: ${result.harness}`,
+                      `API cost: ${money(displayedCost)}`,
+                      `Wall time: ${duration(result.wall_time.seconds)}`,
+                      ...(result.pricingLabel ? [`Pricing: ${result.pricingLabel}`] : [])
+                    ];
                   }
                 }
               }

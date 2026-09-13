@@ -107,6 +107,38 @@
       "estimate_source": "Shattered Needle v3"
     },
     {
+      "id": "zai-coding-plan-glm-5.3",
+      "model": "GLM-5.3",
+      "model_id": "zai-coding-plan/glm-5.3",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 2,
+      "weighted_score": 0.999,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 1.0,
+        "culprit": 1.0,
+        "finding_provenance": 0.9855,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": null,
+        "estimated_usd": 5.1442,
+        "actual_unmetered": true,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 3625.35,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "openrouter-meta-muse-spark-1.3-contributor",
       "model": "Muse Spark 1.3 Contributor",
       "model_id": "openrouter/meta/muse-spark-1.3-contributor",
@@ -126,42 +158,13 @@
         "actual_usd": 0.37,
         "estimated_usd": 0.372,
         "actual_unmetered": false,
-        "estimated_from_prior_run": false
+        "estimated_from_prior_run": false,
+        "standard_usd": 7.2648,
+        "standard_model_id": "openrouter/meta/muse-spark-1.3",
+        "standard_basis": "same measured usage repriced at OpenRouter standard rates"
       },
       "wall_time": {
         "seconds": 3798.79,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
-      "id": "zai-coding-plan-glm-5.3",
-      "model": "GLM-5.3",
-      "model_id": "zai-coding-plan/glm-5.3",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.998,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 1.0,
-        "culprit": 1.0,
-        "finding_provenance": 0.971,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": null,
-        "estimated_usd": 5.2548,
-        "actual_unmetered": true,
-        "estimated_from_prior_run": false
-      },
-      "wall_time": {
-        "seconds": 4290.63,
         "estimated_from_prior_run": false
       },
       "status": {

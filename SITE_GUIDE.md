@@ -41,7 +41,10 @@ This file is the durable editorial and implementation contract for future `index
   axis and weighted score on the vertical axis. Use logarithmic scales for both axes and disclose that
   choice beside the chart. Fix the weighted-score minimum at 85%; lower-scoring runs remain in the
   table but are outside the plot. Higher and farther left is better. Connect the nondominated points
-  with a restrained dotted Pareto-frontier line; do not add quadrant overlays.
+  with a restrained dotted Pareto-frontier line; do not add quadrant overlays. Plot the measured Muse
+  result twice, once at contributor pricing and once repriced from the same token usage at standard
+  commercial rates. Exclude the contributor-priced point, but not the standard-price point, from the
+  frontier calculation.
 - Color chart points by model provider using the Artificial Analysis palette: Anthropic
   terracotta, OpenAI black, Meta/Kimi/GLM blue, xAI violet, Google green, Alibaba orange, and
   DeepSeek royal blue. Do not color points by protocol.
@@ -58,6 +61,10 @@ This file is the durable editorial and implementation contract for future `index
   score/time formatting as other models.
 - Retain the sortable table for approximate cost and time information. Protocol belongs in
   chart tooltips and methodology notes, not in bar color or the primary table.
+- For completed v3.3 table rows, calculate the mean and population standard deviation of displayed
+  cost and mean wall time. Mark values below mean - 1 standard deviation in green and values above
+  mean + 1 standard deviation in red; include a non-color cue. Describe these as values outside the
+  comparison band rather than statistical outliers.
 - Display weighted scores as whole percentages in the chart and table while sorting by exact values.
 
 ## Copy And Methodology
