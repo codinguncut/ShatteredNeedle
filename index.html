@@ -66,14 +66,16 @@
     tbody tr:hover { background: #fafafa }
     .model { font-family: Inter, ui-sans-serif, sans-serif; font-size: 14px; font-weight: 650 }
     .harness { display: block; margin-top: 3px; color: var(--muted); font-family: Inter, ui-sans-serif, sans-serif; font-size: 10.5px; font-weight: 400 }
-    .type { color: var(--muted) }
     #results-table .run-note { min-width: 220px; max-width: 300px; color: var(--muted); text-align: left; white-space: normal }
     #results-table th:last-child { text-align: left }
     .score { font-weight: 700 }
     .perfect { color: var(--green) }
     .failed { color: var(--red) }
     .note { margin: 11px 0 0; color: var(--muted); font-size: 12px }
-    .chart-wrap { height: 460px; margin-bottom: 22px; padding: 18px 20px 12px; border: 1px solid var(--line); border-radius: 6px }
+    .chart-intro { margin: 34px 0 12px }
+    .chart-intro h3 { margin-bottom: 3px }
+    .chart-intro p { margin: 0; color: var(--muted); font-size: 13px }
+    .chart-wrap { height: 500px; margin-bottom: 22px; padding: 18px 20px 12px; border: 1px solid var(--line); border-radius: 6px }
     .chart-error { display: none; margin: 0; color: var(--red); font-size: 13px }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px }
     .facts { margin: 0; padding: 0; list-style: none }
@@ -103,7 +105,7 @@
       .section-head { display: block }
       .section-head p { margin-top: 8px }
       .grid, .steps { grid-template-columns: 1fr }
-      .chart-wrap { height: 420px; padding-inline: 10px }
+      .chart-wrap { height: 430px; padding-inline: 10px }
       .facts strong { min-width: 125px }
       .foot { display: block }
       .foot span { display: block; margin-top: 5px }
@@ -154,13 +156,17 @@
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
           <table id="results-table">
-            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="text">Variant</button></th><th><button type="button" data-col="2" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="3" data-type="number">Score</button></th><th><button type="button" data-col="4" data-type="number">API cost</button></th><th><button type="button" data-col="5" data-type="number">Wall time</button></th><th><button type="button" data-col="6" data-type="text">Notes</button></th></tr></thead>
+            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="2" data-type="number">Score</button></th><th><button type="button" data-col="3" data-type="number">API cost</button></th><th><button type="button" data-col="4" data-type="number">Wall time</button></th><th><button type="button" data-col="5" data-type="text">Notes</button></th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
+        <div class="chart-intro">
+          <h3>Performance vs. API cost</h3>
+          <p>Higher and farther left is better: stronger results at lower cost. The dashed line connects the cost-efficiency frontier. Hover or tap a point for run details.</p>
+        </div>
         <div class="chart-wrap">
-          <canvas id="score-chart" role="img" aria-label="Vertical bar chart of completed v3.3 test scores by model, highest first"></canvas>
-          <p class="chart-error" id="chart-error">The score chart could not be loaded. The complete results remain available in the table.</p>
+          <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for completed v3.3 tests"></canvas>
+          <p class="chart-error" id="chart-error">The performance and cost chart could not be loaded. The complete results remain available in the table.</p>
         </div>
         <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version and do not appear in the chart. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
       </section>
@@ -213,7 +219,7 @@
           </details>
           <details>
             <summary>Failed and interrupted runs</summary>
-            <div><p>An interrupted test is excluded until it finishes and receives a score. Gemini 3.8 Flash has completed 4 of 6 reading passes. Qwen3.8 Max has completed 1 of 6. Their partial scores, costs, and times are not included.</p></div>
+            <div><p>An interrupted test is excluded until it finishes and receives a score. Qwen3.8 Max has completed 1 of 6 reading passes. Its partial score, cost, and time are not included.</p></div>
           </details>
           <details>
             <summary>Pricing and token accounting</summary>
@@ -252,7 +258,8 @@
         return item;
       };
 
-      const money = (value) => value === null ? "—" : `$${value.toFixed(2)}`;
+      const modelLabel = (result) => `${result.model} (${result.variant})`;
+      const money = (value) => value === null ? "—" : `$${value.toFixed(1)}`;
       const duration = (seconds) => {
         if (seconds === null) return "—";
         const minutes = Math.round(seconds / 60);
@@ -264,13 +271,12 @@
         results.forEach((result) => {
           const row = document.createElement("tr");
           row.dataset.wall = result.wall_time.seconds ?? Number.POSITIVE_INFINITY;
-          const modelCell = cell(result.model, "model");
+          const modelCell = cell(modelLabel(result), "model");
           const harness = document.createElement("span");
           harness.className = "harness";
           harness.textContent = result.harness;
           modelCell.append(harness);
           row.append(modelCell);
-          row.append(cell(result.variant, "type"));
           row.append(cell(result.runs, "", result.runs));
           if (result.weighted_score === null) {
             row.append(cell("no score", "failed"));
@@ -292,7 +298,7 @@
         const breakdownBody = document.querySelector("#breakdown-body");
         results.filter((result) => result.score_breakdown).forEach((result) => {
           const row = document.createElement("tr");
-          row.append(cell(result.model, "model"));
+          row.append(cell(modelLabel(result), "model"));
           row.append(cell(percent(result.score_breakdown.culprit)));
           row.append(cell(percent(result.score_breakdown.resolution)));
           row.append(cell(percent(result.score_breakdown.condition)));
@@ -304,64 +310,115 @@
 
       const renderChart = (results) => {
         if (!window.Chart) throw new Error("Chart.js did not load");
-        const chartResults = results.filter((result) => result.weighted_score !== null && !result.score_estimated);
-        // Single-series magnitude chart: one color, no legend. Score is the whole story;
-        // protocol/variant live in the tooltip and the table, not in the bar color.
-        const barLabels = {
-          id: "barLabels",
+        const chartResults = results.filter((result) => {
+          const cost = Number.isFinite(result.cost.actual_usd) ? result.cost.actual_usd : result.cost.estimated_usd;
+          return result.weighted_score !== null && !result.score_estimated && Number.isFinite(cost);
+        });
+        const providerColor = (result) => {
+          const id = result.model_id;
+          if (id.startsWith("claude-")) return "#ce7a5d";
+          if (id.startsWith("openai/")) return "#202020";
+          if (id.startsWith("openrouter/meta/")) return "#078bed";
+          if (id.startsWith("zai-coding-plan/")) return "#287fe8";
+          if (id.startsWith("xai/")) return "#7168d4";
+          if (id.startsWith("kimi-for-coding/")) return "#0b82e9";
+          if (id.startsWith("openrouter/google/")) return "#34a853";
+          if (id.includes("/qwen/") || id.startsWith("alibaba-token-plan/")) return "#ff6818";
+          if (id.startsWith("openrouter/deepseek/")) return "#2944df";
+          return "#155eef";
+        };
+        const points = chartResults.map((result) => ({
+          x: Number.isFinite(result.cost.actual_usd) ? result.cost.actual_usd : result.cost.estimated_usd,
+          y: result.weighted_score * 100,
+          result
+        }));
+        const minimumScore = Math.min(...points.map((point) => point.y));
+        const pointLabels = {
+          id: "pointLabels",
           afterDatasetsDraw(chart) {
+            if (chart.width < 560) return;
             const {ctx} = chart;
+            const occupied = [];
             ctx.save();
             ctx.fillStyle = "#333";
-            ctx.font = '600 10px "SFMono-Regular", Consolas, monospace';
-            ctx.textAlign = "center";
-            ctx.textBaseline = "bottom";
-            chart.getDatasetMeta(0).data.forEach((bar, index) => {
-              ctx.fillText(`${Math.round(chart.data.datasets[0].data[index])}%`, bar.x, bar.y - 4);
+            ctx.font = '600 9px "SFMono-Regular", Consolas, monospace';
+            ctx.textBaseline = "middle";
+            chart.getDatasetMeta(0).data.forEach((point, index) => {
+              const label = modelLabel(chartResults[index]);
+              const width = ctx.measureText(label).width;
+              const candidates = [
+                {x: point.x + 10, y: point.y - 11, align: "left"},
+                {x: point.x + 10, y: point.y + 12, align: "left"},
+                {x: point.x - 10, y: point.y - 11, align: "right"},
+                {x: point.x - 10, y: point.y + 12, align: "right"}
+              ];
+              const choice = candidates.find((candidate) => {
+                const left = candidate.align === "left" ? candidate.x : candidate.x - width;
+                const box = {left, right: left + width, top: candidate.y - 6, bottom: candidate.y + 6};
+                if (box.left < chart.chartArea.left || box.right > chart.chartArea.right ||
+                    box.top < chart.chartArea.top || box.bottom > chart.chartArea.bottom) return false;
+                if (occupied.some((item) => box.left < item.right + 4 && box.right + 4 > item.left &&
+                    box.top < item.bottom + 3 && box.bottom + 3 > item.top)) return false;
+                occupied.push(box);
+                return true;
+              });
+              if (!choice) return;
+              ctx.textAlign = choice.align;
+              ctx.fillText(label, choice.x, choice.y);
             });
             ctx.restore();
           }
         };
 
         new Chart(document.querySelector("#score-chart"), {
-          type: "bar",
+          type: "scatter",
           data: {
-            labels: chartResults.map((result) => result.model),
             datasets: [{
-              data: chartResults.map((result) => result.weighted_score * 100),
-              backgroundColor: "#155eef",
-              borderWidth: 0,
-              borderRadius: 3,
-              borderSkipped: false,
-              barPercentage: 0.5,
-              categoryPercentage: 0.9
+              data: points,
+              backgroundColor: chartResults.map(providerColor),
+              borderColor: "#fff",
+              borderWidth: 2,
+              pointRadius: 7,
+              pointHoverRadius: 9
             }]
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
             animation: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? false : undefined,
-            layout: {padding: {top: 22}},
+            layout: {padding: 8},
             plugins: {
               legend: {display: false},
               tooltip: {
                 callbacks: {
-                  label: (context) => `Weighted score: ${context.raw.toFixed(2)}%`,
+                  title: (items) => modelLabel(chartResults[items[0].dataIndex]),
+                  label: (context) => `Weighted score: ${context.raw.y.toFixed(2)}%`,
                   afterLabel: (context) => {
                     const result = chartResults[context.dataIndex];
                     const hasActualCost = Number.isFinite(result.cost.actual_usd);
                     const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
-                    return [`Harness: ${result.harness}`, `Variant: ${result.variant}`, `API cost: ${money(displayedCost)}`, `Wall time: ${duration(result.wall_time.seconds)}`];
+                    return [`Harness: ${result.harness}`, `API cost: ${money(displayedCost)}`, `Wall time: ${duration(result.wall_time.seconds)}`];
                   }
                 }
               }
             },
             scales: {
-              x: {grid: {display: false}, ticks: {color: "#333", font: {size: 10}, maxRotation: 55, minRotation: 55, autoSkip: false}},
-              y: {beginAtZero: true, max: 108, grid: {color: "#e8e8e8"}, ticks: {callback: (value) => value <= 100 ? `${value}%` : ""}}
+              x: {
+                beginAtZero: true,
+                grid: {color: "#ededed"},
+                title: {display: true, text: "API cost (USD, lower is better)"},
+                ticks: {color: "#555", callback: (value) => `$${value}`}
+              },
+              y: {
+                min: Math.max(0, Math.floor(minimumScore / 10) * 10 - 5),
+                max: 103,
+                grid: {color: "#e8e8e8"},
+                title: {display: true, text: "Weighted score (higher is better)"},
+                ticks: {color: "#555", callback: (value) => `${value}%`}
+              }
             }
           },
-          plugins: [barLabels]
+          plugins: [pointLabels]
         });
       };
 
@@ -389,7 +446,7 @@
             const right = value(b, column, type);
             if (typeof left === "number") {
               const primary = (left - right) * direction;
-              if (primary !== 0 || column !== 3) return primary;
+              if (primary !== 0 || column !== 2) return primary;
               return Number(a.dataset.wall) - Number(b.dataset.wall);
             }
             return left.localeCompare(right) * direction;
@@ -425,7 +482,7 @@
         console.error(error);
         const row = document.createElement("tr");
         const errorCell = cell("Results could not be loaded.", "failed");
-        errorCell.colSpan = 7;
+        errorCell.colSpan = 6;
         row.append(errorCell);
         body.append(row);
         document.querySelector("#score-chart").hidden = true;

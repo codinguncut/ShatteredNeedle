@@ -19,7 +19,8 @@ This file is the durable editorial and implementation contract for future `index
   committed canonical corpus bundles; do not hard-code one corpus's counts.
 - Store exact scores and seconds in JSON. Round only in presentation.
 - Retain exact cost and accounting basis in JSON. Show one API cost column: prefer actual provider
-  billing, otherwise show the token-rate equivalent without a special suffix.
+  billing, otherwise show the token-rate equivalent without a special suffix. Round displayed costs
+  to the nearest $0.10.
 - Show wall-clock time in minutes, never mixed hour/minute notation.
 - Keep incomplete timing and cost measurements marked as incomplete.
 - Keep carried-forward rows explicitly separate from completed tests in the generator. On the site,
@@ -36,16 +37,18 @@ This file is the durable editorial and implementation contract for future `index
 ## Results Presentation
 
 - Weighted score is the primary metric.
-- Show a vertical score bar chart below the results table, sorted by exact weighted score descending,
-  with narrow bars and small tilted x-axis labels.
-- The score chart is single-series: all bars use one color. Do NOT color bars by protocol
-  (portable / historical / query-only) or by any other dimension; there is no chart color legend.
+- Show a performance-versus-cost scatter plot below the results table, with API cost on the horizontal
+  axis and weighted score on the vertical axis. Higher and farther left is better. Connect the
+  nondominated points with a restrained dashed Pareto-frontier line; do not add quadrant overlays.
+- Color chart points by model provider using the Artificial Analysis palette: Anthropic
+  terracotta, OpenAI black, Meta/Kimi/GLM blue, xAI violet, Google green, Alibaba orange, and
+  DeepSeek royal blue. Do not color points by protocol.
 - Keep diagnostic and failed rows clearly described in notes; never imply they are completed scores.
 - Show the execution harness beneath the model name in small secondary type: Claude Code for OpenAI
   models and Claude estimates, OpenCode for all others.
-- Show the recorded model variant. Leave ordinary tested-run notes blank; use short notes only for
-  the source version of a carried-forward result. Do not expose resume history on the website.
-  `variant` is the
+- Show the recorded model variant in parentheses after the model name, not in a separate column.
+  Leave ordinary tested-run notes blank; use short notes only for the source version of a
+  carried-forward result. Do not expose resume history on the website. `variant` is the
   reasoning-effort profile used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Include interrupted or failed model attempts as unscored rows when they consumed meaningful runtime
   or cost; keep them out of the score chart.

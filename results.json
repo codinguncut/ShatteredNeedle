@@ -420,8 +420,40 @@
       },
       "note": "from v2",
       "estimate_source": "Shattered Needle v2"
+    },
+    {
+      "id": "openrouter-google-gemini-3.8-flash",
+      "model": "Gemini 3.8 Flash",
+      "model_id": "openrouter/google/gemini-3.8-flash",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 1,
+      "weighted_score": 0.4709,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.75,
+        "culprit": 0.083,
+        "finding_provenance": 0.853,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": 9.61,
+        "estimated_usd": 9.6084,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 8331.0,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
     }
   ],
-  "measured_runs": 10,
+  "measured_runs": 11,
   "projected_rows": 3
 }
