@@ -220,7 +220,7 @@
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": null,
+        "estimated_usd": 5.5435,
         "actual_unmetered": true,
         "estimated_from_prior_run": false
       },
