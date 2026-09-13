@@ -156,7 +156,7 @@
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="chart-intro">
           <h3>Performance vs. API cost</h3>
-          <p>Higher and farther left is better: stronger results at lower cost. Both axes are logarithmic; the dotted line connects the cost-efficiency frontier. Hover or tap a point for run details.</p>
+          <p>Higher and farther left is better: stronger results at lower cost. Both axes are logarithmic and the chart starts at 85% weighted score; the dotted line connects the cost-efficiency frontier. Hover or tap a point for run details.</p>
         </div>
         <div class="chart-wrap">
           <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for completed v3.3 tests"></canvas>
@@ -340,7 +340,6 @@
             bestScore = point.y;
             return true;
           });
-        const minimumScore = Math.min(...points.map((point) => point.y));
         const pointLabels = {
           id: "pointLabels",
           afterDatasetsDraw(chart) {
@@ -431,7 +430,7 @@
               },
               y: {
                 type: "logarithmic",
-                min: Math.max(1, Math.floor(minimumScore / 10) * 10),
+                min: 85,
                 max: 105,
                 grid: {color: "#e8e8e8"},
                 title: {display: true, text: "Weighted score (log scale, higher is better)"},
