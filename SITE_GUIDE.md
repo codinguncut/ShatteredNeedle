@@ -64,8 +64,8 @@ This file is the durable editorial and implementation contract for future `index
 - For all displayed rows, including carried-forward Claude entries, calculate a ±1 population standard
   deviation comparison band. Calculate cost in log space and include both Muse pricing scenarios in its
   population; calculate mean wall time on the ordinary arithmetic scale. Mark values below the band in
-  green and values above it in red; include a non-color cue. Describe these as values outside the
-  comparison band rather than statistical outliers.
+  green and values above it in red. Do not add arrows or other markers that disrupt numeric alignment.
+  Describe these as values outside the comparison band rather than statistical outliers.
 - Display weighted scores as whole percentages in the chart and table while sorting by exact values.
 
 ## Copy And Methodology

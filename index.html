@@ -73,8 +73,6 @@
     .failed { color: var(--red) }
     .metric-low { color: var(--green); background: #f0fbf6; font-weight: 700 }
     .metric-high { color: var(--red); background: #fff3f1; font-weight: 700 }
-    .metric-low::after { content: " ↓" }
-    .metric-high::after { content: " ↑" }
     .note { margin: 11px 0 0; color: var(--muted); font-size: 12px }
     .chart-intro { margin: 0 0 12px }
     .chart-intro h3 { margin-bottom: 3px }
@@ -173,7 +171,7 @@
           </table>
         </div>
         <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version and do not appear in the chart. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
-        <p class="note">Across all displayed rows, including carried-forward Claude entries, values outside ±1 population standard deviation are highlighted: green and ↓ for lower, red and ↑ for higher. Cost is calculated in log space and includes both Muse pricing scenarios; wall time uses ordinary arithmetic values.</p>
+        <p class="note">Across all displayed rows, including carried-forward Claude entries, values outside ±1 population standard deviation are highlighted: green for lower and red for higher. Cost is calculated in log space and includes both Muse pricing scenarios; wall time uses ordinary arithmetic values.</p>
       </section>
 
       <section id="benchmark">
@@ -324,11 +322,9 @@
           const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
           const costClass = outlierClass(displayedCost, costStats);
           const costCell = cell(money(displayedCost), costClass, displayedCost ?? undefined);
-          if (costClass) costCell.title = costClass === "metric-low" ? "Below mean - σ" : "Above mean + σ";
           row.append(costCell);
           const wallClass = outlierClass(result.wall_time.seconds, wallStats);
           const wallCell = cell(duration(result.wall_time.seconds), wallClass, result.wall_time.seconds ?? undefined);
-          if (wallClass) wallCell.title = wallClass === "metric-low" ? "Below mean - σ" : "Above mean + σ";
           row.append(wallCell);
           row.append(cell(result.note, "run-note"));
           body.append(row);
