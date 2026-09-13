@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Shattered Needle evaluates whether an agent can build durable knowledge before seeing the questions.">
+  <meta name="description" content="Shattered Needle compares how well AI models read difficult documents, organize the facts, and answer questions later.">
   <meta name="theme-color" content="#ffffff">
   <title>Shattered Needle</title>
 
@@ -64,7 +64,6 @@
     th:first-child, td:first-child { text-align: left }
     tbody tr:last-child td { border-bottom: 0 }
     tbody tr:hover { background: #fafafa }
-    tbody tr.projected { background: #fffbf2 }
     .model { font-family: Inter, ui-sans-serif, sans-serif; font-size: 14px; font-weight: 650 }
     .harness { display: block; margin-top: 3px; color: var(--muted); font-family: Inter, ui-sans-serif, sans-serif; font-size: 10.5px; font-weight: 400 }
     .type { color: var(--muted) }
@@ -73,10 +72,6 @@
     .score { font-weight: 700 }
     .perfect { color: var(--green) }
     .failed { color: var(--red) }
-    .status { display: inline-block; padding: 2px 7px; border-radius: 999px; background: #eee; font-size: 10px; font-weight: 650 }
-    .status.good { color: var(--green); background: #eaf8f1 }
-    .status.warn { color: var(--amber); background: #fff5df }
-    .status.bad { color: var(--red); background: #fff0ee }
     .note { margin: 11px 0 0; color: var(--muted); font-size: 12px }
     .chart-wrap { height: 460px; margin-bottom: 22px; padding: 18px 20px 12px; border: 1px solid var(--line); border-radius: 6px }
     .chart-error { display: none; margin: 0; color: var(--red); font-size: 13px }
@@ -134,8 +129,8 @@
       <header class="hero">
         <p class="kicker">Shattered Needle v3.3 / frozen instance</p>
         <h1>Shattered Needle</h1>
-        <p class="lede">Shattered Needle benchmarks anticipatory knowledge organization under compression: an agent ingests documents across several isolated sessions into a persistent <strong>fabric</strong>, then answers previously unseen questions using only that fabric.</p>
-        <p>A needle-in-a-haystack task turned inside out. The answer is not a span to locate &mdash; the needle is <strong>shattered</strong> into fragments scattered across the corpus, and success requires reassembling those fragments into durable, reusable knowledge.</p>
+        <p class="lede">Shattered Needle compares AI models on a simple job: read many documents, organize what they say, and answer questions later.</p>
+        <p>The documents contain indirect, ambiguous, and contradictory information. No single document contains the full answer. The model must connect facts across documents and remember which sources support them.</p>
         <div class="meta">
           <span class="badge">Frozen</span>
           <span>Mechanical grading</span>
@@ -154,12 +149,12 @@
       <section id="results">
         <div class="section-head">
           <h2>Results</h2>
-          <p>These scores cover the frozen investigative v3.3 test. Rows are ordered by score descending, then active wall time ascending; carried-forward estimates are clearly marked.</p>
+          <p>These results come from one fixed investigative test. Higher scores are better. Ties are ordered by wall time.</p>
         </div>
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
           <table id="results-table">
-            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="text">Variant</button></th><th><button type="button" data-col="2" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="3" data-type="number">Score</button></th><th><button type="button" data-col="4" data-type="number">API cost</button></th><th><button type="button" data-col="5" data-type="number">Wall time</button></th><th><button type="button" data-col="6" data-type="text">Status</button></th><th><button type="button" data-col="7" data-type="text">Notes</button></th></tr></thead>
+            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="text">Variant</button></th><th><button type="button" data-col="2" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="3" data-type="number">Score</button></th><th><button type="button" data-col="4" data-type="number">API cost</button></th><th><button type="button" data-col="5" data-type="number">Wall time</button></th><th><button type="button" data-col="6" data-type="text">Notes</button></th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -167,7 +162,7 @@
           <canvas id="score-chart" role="img" aria-label="Vertical bar chart of completed v3.3 test scores by model, highest first"></canvas>
           <p class="chart-error" id="chart-error">The score chart could not be loaded. The complete results remain available in the table.</p>
         </div>
-        <p class="note">Runs counts completed tests; each run contains six ingest passes and one corpus-free query. API cost uses provider billing when available and a token-rate equivalent otherwise. Wall time is cumulative active phase time in minutes, excluding gaps. Claude estimates carry forward the latest comparable same-model score, time, and API cost; they have zero v3.3 runs and do not appear in the chart.</p>
+        <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version and do not appear in the chart. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
       </section>
 
       <section id="benchmark">
@@ -175,9 +170,9 @@
         <div class="grid">
           <div>
             <h3>What it measures</h3>
-            <p><strong>Shattered Needle evaluates an agent's ability to construct and maintain useful knowledge over a long-running investigation.</strong> The agent processes a large corpus over an extended trajectory, using a persistent knowledge base as external memory under a bounded working context. After the investigation, it must use the knowledge base it constructed to answer held-out questions that were not available while it was processing the corpus.</p>
-            <p>Grading is mechanical and representation-agnostic: the agent is free to organize its knowledge base however it likes, and is scored on what that knowledge base recovers, never on its format.</p>
-            <p>The wider research suite applies the same protocol to investigative, OCR-noised procedural, and chronology-heavy narrative corpora. This site keeps one top-level leaderboard rather than adding separate per-corpus rankings.</p>
+            <p><strong>Shattered Needle tests whether a model can turn difficult documents into useful knowledge.</strong> The documents include aliases, indirect references, corrections, and reports that disagree.</p>
+            <p>The questions are hidden while the model reads. Later, a fresh session must answer them from the model's saved knowledge base. It cannot reopen the source documents.</p>
+            <p>The model can organize its notes however it wants. A program checks the answers and their source references.</p>
           </div>
           <ul class="facts">
             <li><strong>Release</strong> Shattered Needle v3.3</li>
@@ -214,11 +209,11 @@
           </details>
           <details>
             <summary>Run comparability</summary>
-            <div><p>Tested rows use the same six-tranche process, frozen corpus, task contract, and mechanical grader. Estimated Claude entries are not completed v3.3 tests: Fable 5.1 and Opus 5 carry forward their tested v3 scores; Sonnet 5 carries forward its latest comparable v2 score.</p></div>
+            <div><p>Rows with 1 run completed the same v3.3 test. Rows with 0 runs are earlier results shown for context: Fable 5.1 and Opus 5 come from v3, and Sonnet 5 comes from v2.</p></div>
           </details>
           <details>
             <summary>Failed and interrupted runs</summary>
-            <div><p>Interrupted v3.3 cells are excluded until they produce a completed, mechanically scored QUERY. Current resumable cells include K3, Qwen3.8 Max, Gemini 3.8 Flash, and GLM-5.3 Flash. Their partial work, cost, and time are not averaged into the leaderboard.</p></div>
+            <div><p>An interrupted test is excluded until it finishes and receives a score. Gemini 3.8 Flash has completed 4 of 6 reading passes. Qwen3.8 Max has completed 1 of 6. Their partial scores, costs, and times are not included.</p></div>
           </details>
           <details>
             <summary>Pricing and token accounting</summary>
@@ -234,7 +229,7 @@
             <div><p>A private generator starts from target propositions, lowers them through a function-free Horn derivation graph, and realizes only the leaves as natural-language documents. The forward engine verifies solvability and uniqueness. Distractors are certified not to license an alternative derivation, and all corpus files are frozen by SHA-256 manifest.</p></div>
           </details>
         </div>
-        <div class="caveat"><strong>Interpretation</strong>This score table covers one frozen investigative instance, not a population-level model ranking. Estimated entries support planning only and are not completed v3.3 results.</div>
+        <div class="caveat"><strong>Interpretation</strong>This is one fixed investigative test, not an overall model ranking. Rows with 0 runs are earlier results, not completed v3.3 tests.</div>
       </section>
     </div>
   </main>
@@ -258,17 +253,16 @@
       };
 
       const money = (value) => value === null ? "—" : `$${value.toFixed(2)}`;
-      const duration = (seconds, estimated) => {
+      const duration = (seconds) => {
         if (seconds === null) return "—";
         const minutes = Math.round(seconds / 60);
-        return `${estimated ? "~" : ""}${minutes} min`;
+        return `${minutes} min`;
       };
       const percent = (value) => value === null ? "—" : `${(value * 100).toFixed(1)}%`;
 
       const renderTable = (results) => {
         results.forEach((result) => {
           const row = document.createElement("tr");
-          if (result.score_estimated) row.className = "projected";
           row.dataset.wall = result.wall_time.seconds ?? Number.POSITIVE_INFINITY;
           const modelCell = cell(result.model, "model");
           const harness = document.createElement("span");
@@ -282,19 +276,13 @@
             row.append(cell("no score", "failed"));
           } else {
             const percent = result.weighted_score * 100;
-            const label = `${result.score_estimated ? "est. " : ""}${percent.toFixed(1)}%`;
+            const label = `${percent.toFixed(1)}%`;
             row.append(cell(label, percent === 100 ? "score perfect" : "score", percent));
           }
           const hasActualCost = Number.isFinite(result.cost.actual_usd);
           const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
           row.append(cell(money(displayedCost), "", displayedCost ?? undefined));
-          row.append(cell(duration(result.wall_time.seconds, result.wall_time.estimated_from_prior_run), "", result.wall_time.seconds ?? undefined));
-          const statusCell = cell("");
-          const status = document.createElement("span");
-          status.className = `status ${result.status.tone}`;
-          status.textContent = result.status.label;
-          statusCell.append(status);
-          row.append(statusCell);
+          row.append(cell(duration(result.wall_time.seconds), "", result.wall_time.seconds ?? undefined));
           row.append(cell(result.note, "run-note"));
           body.append(row);
         });
@@ -363,7 +351,7 @@
                     const result = chartResults[context.dataIndex];
                     const hasActualCost = Number.isFinite(result.cost.actual_usd);
                     const displayedCost = hasActualCost ? result.cost.actual_usd : result.cost.estimated_usd;
-                    return [`Harness: ${result.harness}`, `Variant: ${result.variant}`, `API cost: ${money(displayedCost)}`, `Wall time: ${duration(result.wall_time.seconds, false)}`, `Status: ${result.status.label}`];
+                    return [`Harness: ${result.harness}`, `Variant: ${result.variant}`, `API cost: ${money(displayedCost)}`, `Wall time: ${duration(result.wall_time.seconds)}`];
                   }
                 }
               }
@@ -437,7 +425,7 @@
         console.error(error);
         const row = document.createElement("tr");
         const errorCell = cell("Results could not be loaded.", "failed");
-        errorCell.colSpan = 8;
+        errorCell.colSpan = 7;
         row.append(errorCell);
         body.append(row);
         document.querySelector("#score-chart").hidden = true;

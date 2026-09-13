@@ -7,8 +7,8 @@ This file is the durable editorial and implementation contract for future `index
 - The public benchmark name is **Shattered Needle v3.3**.
 - Do not expose internal project names, experiment labels, or generation identifiers.
 - Keep the site terse, neutral, and results-first.
-- Preserve the canonical opening copy from the repository README: "A needle-in-a-haystack task
-  turned inside out..."
+- Use short, concrete statements that explain the task to a general reader: models read difficult
+  documents, organize facts, and answer hidden questions later.
 
 ## Data
 
@@ -22,12 +22,13 @@ This file is the durable editorial and implementation contract for future `index
   billing, otherwise show the token-rate equivalent without a special suffix.
 - Show wall-clock time in minutes, never mixed hour/minute notation.
 - Keep incomplete timing and cost measurements marked as incomplete.
-- Keep estimated rows explicitly separate from completed tests in the generator and visibly labelled on the site.
+- Keep carried-forward rows explicitly separate from completed tests in the generator. On the site,
+  identify them through `Runs = 0` and a short source-version note, not special row styling.
 - An estimated row has no v3.3 actual cost. Its score, wall time, and estimated cost must name the prior run version used.
 - Do not add a scored bar for a run whose `weighted_score` is `null`.
 - Retiring or superseding a run is a `results.json` edit, never a file move in the benchmark repo's
   `runs/` archive (that archive does not feed this site). To drop a run from the score chart set its
-  `weighted_score` to `null`; to keep it visible but flagged, add or adjust its `status`/note; to
+  `weighted_score` to `null`; to keep it visible but flagged, adjust its note; to
   remove it entirely, delete the row and decrement the displayed run count. Do this only on a
   deliberate decision — a within-version corpus fix that leaves the gold answer key, question set, and
   accepted answers unchanged does not by itself retire prior runs.
@@ -39,16 +40,18 @@ This file is the durable editorial and implementation contract for future `index
   with narrow bars and small tilted x-axis labels.
 - The score chart is single-series: all bars use one color. Do NOT color bars by protocol
   (portable / historical / query-only) or by any other dimension; there is no chart color legend.
-- Keep diagnostic and failed statuses visible; never imply they are portable end-to-end scores.
+- Keep diagnostic and failed rows clearly described in notes; never imply they are completed scores.
 - Show the execution harness beneath the model name in small secondary type: Claude Code for OpenAI
   models and Claude estimates, OpenCode for all others.
 - Show the recorded model variant. Leave ordinary tested-run notes blank; use short notes only for
-  noteworthy conditions such as a resumed run or the source version of an estimate. `variant` is the
+  the source version of a carried-forward result. Do not expose resume history on the website.
+  `variant` is the
   reasoning-effort profile used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Include interrupted or failed model attempts as unscored rows when they consumed meaningful runtime
   or cost; keep them out of the score chart.
-- Keep estimated rows out of the completed-test chart; they may appear in the table with an `est.` score prefix.
-- Retain the sortable table for approximate cost, time, and status information. Protocol belongs in
+- Keep carried-forward rows out of the completed-test chart. Give them the same table styling and
+  score/time formatting as other models.
+- Retain the sortable table for approximate cost and time information. Protocol belongs in
   chart tooltips and methodology notes, not in bar color or the primary table.
 - Display weighted scores as whole percentages in the chart and table while sorting by exact values.
 
@@ -67,6 +70,6 @@ This file is the durable editorial and implementation contract for future `index
 - Keep the site usable on desktop and mobile.
 - Use the pinned Chart.js version already referenced by `index.html` unless deliberately upgrading it.
 - Keep chart tooltips informative but the visible chart uncluttered.
-- Preserve accessible table headings, status text, chart labels, and reduced-motion behavior.
+- Preserve accessible table headings, chart labels, and reduced-motion behavior.
 - Validate JSON parsing, HTML structure, internal links, JavaScript syntax, row order, and the absence
   of internal naming before publishing.
