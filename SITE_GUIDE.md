@@ -57,8 +57,9 @@ This file is the durable editorial and implementation contract for future `index
   reasoning-effort profile used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Include interrupted or failed model attempts as unscored rows when they consumed meaningful runtime
   or cost; keep them out of the score chart.
-- Keep carried-forward rows out of the completed-test chart. Give them the same table styling and
-  score/time formatting as other models.
+- Plot carried-forward Claude rows as hollow points in the performance-versus-cost chart and disclose
+  their source version in the tooltip. Keep any other carried-forward rows out of the chart. Give all
+  carried-forward rows the same table styling and score/time formatting as other models.
 - Retain the sortable table for approximate cost and time information. Protocol belongs in
   chart tooltips and methodology notes, not in bar color or the primary table.
 - For all displayed rows, including carried-forward Claude entries, calculate a ±1 population standard

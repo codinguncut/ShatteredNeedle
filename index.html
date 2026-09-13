@@ -158,10 +158,10 @@
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="chart-intro">
           <h3>Performance vs. API cost</h3>
-          <p>Higher and farther left is better: stronger results at lower cost. Both axes are logarithmic and the chart starts at 85% weighted score. Muse appears at both contributor and standard commercial pricing; the dotted frontier excludes the contributor-priced point. Hover or tap a point for run details.</p>
+          <p>Higher and farther left is better: stronger results at lower cost. Both axes are logarithmic and the chart starts at 85% weighted score. Hollow Claude points are carried forward from earlier benchmark versions. Muse appears at both contributor and standard commercial pricing; the dotted frontier excludes the contributor-priced point. Hover or tap a point for run details.</p>
         </div>
         <div class="chart-wrap">
-          <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for completed v3.3 tests"></canvas>
+          <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for completed v3.3 tests and carried-forward Claude results"></canvas>
           <p class="chart-error" id="chart-error">The performance and cost chart could not be loaded. The complete results remain available in the table.</p>
         </div>
         <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
@@ -170,7 +170,7 @@
             <tbody></tbody>
           </table>
         </div>
-        <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version and do not appear in the chart. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
+        <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version; the carried-forward Claude rows appear as hollow chart points. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
         <p class="note">Across all displayed rows, including carried-forward Claude entries, values outside ±1 population standard deviation are highlighted: green for lower and red for higher. Cost is calculated in log space and includes both Muse pricing scenarios; wall time uses ordinary arithmetic values.</p>
       </section>
 
@@ -347,11 +347,11 @@
 
       const renderChart = (results) => {
         if (!window.Chart) throw new Error("Chart.js did not load");
-        const measuredResults = results.filter((result) => {
+        const plottedResults = results.filter((result) => {
           const cost = Number.isFinite(result.cost.actual_usd) ? result.cost.actual_usd : result.cost.estimated_usd;
-          return result.weighted_score !== null && !result.score_estimated && Number.isFinite(cost);
+          return result.weighted_score !== null && Number.isFinite(cost);
         });
-        const chartResults = measuredResults.flatMap((result) => {
+        const chartResults = plottedResults.flatMap((result) => {
           if (!Number.isFinite(result.cost.standard_usd)) return [result];
           return [{...result, paretoEligible: false, pricingLabel: "Contributor pricing; excluded from frontier"}, {
             ...result,
@@ -431,8 +431,8 @@
           data: {
             datasets: [{
               data: points,
-              backgroundColor: chartResults.map(providerColor),
-               borderColor: "#fff",
+              backgroundColor: chartResults.map((result) => result.score_estimated ? "#fff" : providerColor(result)),
+               borderColor: chartResults.map((result) => result.score_estimated ? providerColor(result) : "#fff"),
                borderWidth: 2,
                pointRadius: 7,
                pointHoverRadius: 9,
@@ -469,6 +469,7 @@
                       `Harness: ${result.harness}`,
                       `API cost: ${money(displayedCost)}`,
                       `Wall time: ${duration(result.wall_time.seconds)}`,
+                      ...(result.score_estimated ? [`Result: Carried forward from ${result.estimate_source}`] : []),
                       ...(result.pricingLabel ? [`Pricing: ${result.pricingLabel}`] : [])
                     ];
                   }
