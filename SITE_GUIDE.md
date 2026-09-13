@@ -37,9 +37,10 @@ This file is the durable editorial and implementation contract for future `index
 ## Results Presentation
 
 - Weighted score is the primary metric.
-- Show a performance-versus-cost scatter plot below the results table, with API cost on the horizontal
-  axis and weighted score on the vertical axis. Higher and farther left is better. Connect the
-  nondominated points with a restrained dashed Pareto-frontier line; do not add quadrant overlays.
+- Show a performance-versus-cost scatter plot above the results table, with API cost on the horizontal
+  axis and weighted score on the vertical axis. Use logarithmic scales for both axes and disclose that
+  choice beside the chart. Higher and farther left is better. Connect the nondominated points with a
+  restrained dotted Pareto-frontier line; do not add quadrant overlays.
 - Color chart points by model provider using the Artificial Analysis palette: Anthropic
   terracotta, OpenAI black, Meta/Kimi/GLM blue, xAI violet, Google green, Alibaba orange, and
   DeepSeek royal blue. Do not color points by protocol.

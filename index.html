@@ -72,7 +72,7 @@
     .perfect { color: var(--green) }
     .failed { color: var(--red) }
     .note { margin: 11px 0 0; color: var(--muted); font-size: 12px }
-    .chart-intro { margin: 34px 0 12px }
+    .chart-intro { margin: 0 0 12px }
     .chart-intro h3 { margin-bottom: 3px }
     .chart-intro p { margin: 0; color: var(--muted); font-size: 13px }
     .chart-wrap { height: 500px; margin-bottom: 22px; padding: 18px 20px 12px; border: 1px solid var(--line); border-radius: 6px }
@@ -154,19 +154,19 @@
           <p>These results come from one fixed investigative test. Higher scores are better. Ties are ordered by wall time.</p>
         </div>
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
+        <div class="chart-intro">
+          <h3>Performance vs. API cost</h3>
+          <p>Higher and farther left is better: stronger results at lower cost. Both axes are logarithmic; the dotted line connects the cost-efficiency frontier. Hover or tap a point for run details.</p>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for completed v3.3 tests"></canvas>
+          <p class="chart-error" id="chart-error">The performance and cost chart could not be loaded. The complete results remain available in the table.</p>
+        </div>
         <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
           <table id="results-table">
             <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="2" data-type="number">Score</button></th><th><button type="button" data-col="3" data-type="number">API cost</button></th><th><button type="button" data-col="4" data-type="number">Wall time</button></th><th><button type="button" data-col="5" data-type="text">Notes</button></th></tr></thead>
             <tbody></tbody>
           </table>
-        </div>
-        <div class="chart-intro">
-          <h3>Performance vs. API cost</h3>
-          <p>Higher and farther left is better: stronger results at lower cost. The dashed line connects the cost-efficiency frontier. Hover or tap a point for run details.</p>
-        </div>
-        <div class="chart-wrap">
-          <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for completed v3.3 tests"></canvas>
-          <p class="chart-error" id="chart-error">The performance and cost chart could not be loaded. The complete results remain available in the table.</p>
         </div>
         <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version and do not appear in the chart. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
       </section>
@@ -332,6 +332,14 @@
           y: result.weighted_score * 100,
           result
         }));
+        let bestScore = -Infinity;
+        const frontier = [...points]
+          .sort((a, b) => a.x - b.x || b.y - a.y)
+          .filter((point) => {
+            if (point.y <= bestScore) return false;
+            bestScore = point.y;
+            return true;
+          });
         const minimumScore = Math.min(...points.map((point) => point.y));
         const pointLabels = {
           id: "pointLabels",
@@ -376,11 +384,22 @@
             datasets: [{
               data: points,
               backgroundColor: chartResults.map(providerColor),
-              borderColor: "#fff",
-              borderWidth: 2,
-              pointRadius: 7,
-              pointHoverRadius: 9
-            }]
+               borderColor: "#fff",
+               borderWidth: 2,
+               pointRadius: 7,
+               pointHoverRadius: 9,
+               order: 1
+             }, {
+               data: frontier,
+               showLine: true,
+               borderColor: "#777",
+               borderWidth: 1.5,
+               borderDash: [2, 5],
+               pointRadius: 0,
+               pointHoverRadius: 0,
+               tension: 0,
+               order: 2
+             }]
           },
           options: {
             responsive: true,
@@ -390,6 +409,7 @@
             plugins: {
               legend: {display: false},
               tooltip: {
+                filter: (context) => context.datasetIndex === 0,
                 callbacks: {
                   title: (items) => modelLabel(chartResults[items[0].dataIndex]),
                   label: (context) => `Weighted score: ${context.raw.y.toFixed(2)}%`,
@@ -404,16 +424,17 @@
             },
             scales: {
               x: {
-                beginAtZero: true,
+                type: "logarithmic",
                 grid: {color: "#ededed"},
-                title: {display: true, text: "API cost (USD, lower is better)"},
-                ticks: {color: "#555", callback: (value) => `$${value}`}
+                title: {display: true, text: "API cost in USD (log scale, lower is better)"},
+                ticks: {color: "#555", callback: (value) => `$${Number(value).toLocaleString("en-US", {maximumFractionDigits: 1})}`}
               },
               y: {
-                min: Math.max(0, Math.floor(minimumScore / 10) * 10 - 5),
-                max: 103,
+                type: "logarithmic",
+                min: Math.max(1, Math.floor(minimumScore / 10) * 10),
+                max: 105,
                 grid: {color: "#e8e8e8"},
-                title: {display: true, text: "Weighted score (higher is better)"},
+                title: {display: true, text: "Weighted score (log scale, higher is better)"},
                 ticks: {color: "#555", callback: (value) => `${value}%`}
               }
             }
