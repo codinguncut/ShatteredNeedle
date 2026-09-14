@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-09-13",
+  "updated": "2026-09-14",
   "sorting": [
     "weighted_score descending",
     "wall_time.seconds ascending"
@@ -174,38 +174,6 @@
       "note": ""
     },
     {
-      "id": "openai-gpt-5.6-sol",
-      "model": "GPT-5.6 Sol",
-      "model_id": "openai/gpt-5.6-sol",
-      "harness": "Claude Code",
-      "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.998,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 1.0,
-        "culprit": 1.0,
-        "finding_provenance": 0.971,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": null,
-        "estimated_usd": 35.0807,
-        "actual_unmetered": true,
-        "estimated_from_prior_run": false
-      },
-      "wall_time": {
-        "seconds": 5842.44,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
       "id": "kimi-for-coding-k3",
       "model": "Kimi K3",
       "model_id": "kimi-for-coding/k3",
@@ -238,29 +206,29 @@
       "note": ""
     },
     {
-      "id": "zai-coding-plan-glm-5.3-flash",
-      "model": "GLM-5.3 Flash",
-      "model_id": "zai-coding-plan/glm-5.3-flash",
-      "harness": "OpenCode",
+      "id": "openai-gpt-5.6-terra",
+      "model": "GPT-5.6 Terra",
+      "model_id": "openai/gpt-5.6-terra",
+      "harness": "Claude Code",
       "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.9533,
+      "runs": 2,
+      "weighted_score": 0.9706,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 1.0,
-        "culprit": 0.917,
-        "finding_provenance": 0.971,
+        "condition": 0.969,
+        "culprit": 0.9585,
+        "finding_provenance": 0.9415,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 0.4871,
+        "estimated_usd": 5.9938,
         "actual_unmetered": true,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 8730.51,
+        "seconds": 2556.54,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -270,29 +238,61 @@
       "note": ""
     },
     {
-      "id": "openai-gpt-5.6-terra",
-      "model": "GPT-5.6 Terra",
-      "model_id": "openai/gpt-5.6-terra",
+      "id": "openai-gpt-5.6-sol",
+      "model": "GPT-5.6 Sol",
+      "model_id": "openai/gpt-5.6-sol",
       "harness": "Claude Code",
       "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.9431,
+      "runs": 2,
+      "weighted_score": 0.954,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.938,
-        "culprit": 0.917,
-        "finding_provenance": 0.912,
+        "condition": 1.0,
+        "culprit": 0.9165,
+        "finding_provenance": 0.9855,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 6.8049,
+        "estimated_usd": 27.8636,
         "actual_unmetered": true,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 2545.68,
+        "seconds": 4412.31,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
+      "id": "zai-coding-plan-glm-5.3-flash",
+      "model": "GLM-5.3 Flash",
+      "model_id": "zai-coding-plan/glm-5.3-flash",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 2,
+      "weighted_score": 0.9523,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 1.0,
+        "culprit": 0.917,
+        "finding_provenance": 0.956,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": null,
+        "estimated_usd": 0.6132,
+        "actual_unmetered": true,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 7262.22,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -307,24 +307,24 @@
       "model_id": "openai/gpt-5.6-luna",
       "harness": "Claude Code",
       "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.9124,
+      "runs": 2,
+      "weighted_score": 0.9318,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.875,
+        "condition": 0.9375,
         "culprit": 0.917,
-        "finding_provenance": 0.912,
+        "finding_provenance": 0.9265,
         "identity_provenance": 1.0,
-        "resolution": 0.875
+        "resolution": 0.9375
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 1.3675,
+        "estimated_usd": 1.2675,
         "actual_unmetered": true,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 4166.59,
+        "seconds": 4514.06,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -339,24 +339,24 @@
       "model_id": "xai/grok-4.6",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.9059,
+      "runs": 2,
+      "weighted_score": 0.9276,
       "score_estimated": false,
       "score_breakdown": {
         "condition": 1.0,
-        "culprit": 0.833,
-        "finding_provenance": 0.941,
+        "culprit": 0.875,
+        "finding_provenance": 0.9265,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 8.32,
-        "estimated_usd": 8.3171,
+        "actual_usd": 8.7,
+        "estimated_usd": 8.7011,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 3158.26,
+        "seconds": 3433.285,
         "estimated_from_prior_run": false
       },
       "status": {
