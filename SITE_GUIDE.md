@@ -49,8 +49,8 @@ This file is the durable editorial and implementation contract for future `index
   terracotta, OpenAI black, Meta/Kimi/GLM blue, xAI violet, Google green, Alibaba orange, and
   DeepSeek royal blue. Do not color points by protocol.
 - Keep diagnostic and failed rows clearly described in notes; never imply they are completed scores.
-- Show the execution harness beneath the model name in small secondary type: Claude Code for OpenAI
-  models and Claude estimates, OpenCode for all others.
+- Show the execution harness beneath the model name in small secondary type: Claude Code for Anthropic
+  Claude models (`claude*`, including carried-forward estimates), OpenCode for all other models.
 - Show the recorded model variant in parentheses after the model name, not in a separate column.
   Leave ordinary tested-run notes blank; use short notes only for the source version of a
   carried-forward result. Do not expose resume history on the website. `variant` is the
