@@ -222,7 +222,7 @@
           </details>
           <details>
             <summary>Failed and interrupted runs</summary>
-            <div><p>An interrupted test is excluded until it finishes and receives a score. Qwen3.8 Max has completed 1 of 6 reading passes. Its partial score, cost, and time are not included.</p></div>
+            <div><p id="incomplete-note">Interrupted or failed tests are excluded from the table and chart until they finish and receive a score.</p></div>
           </details>
           <details>
             <summary>Pricing and token accounting</summary>
@@ -543,6 +543,11 @@
         document.querySelector("#corpus-token-count").textContent = `~${Math.round(payload.suite.approximate_corpus_tokens / 1000)}k`;
         document.querySelector("#question-count").textContent = payload.suite.held_out_questions.toLocaleString("en-US");
         document.querySelector("#results-updated").textContent = new Date(`${payload.updated}T00:00:00Z`).toLocaleDateString("en-GB", {day: "numeric", month: "long", year: "numeric", timeZone: "UTC"});
+        const incomplete = payload.incomplete || [];
+        const incompleteNote = document.querySelector("#incomplete-note");
+        if (incompleteNote && incomplete.length) {
+          incompleteNote.textContent = incomplete.map((item) => `${item.model} ${item.note}`).join(". ") + ".";
+        }
         renderTable(results);
         renderBreakdown(results);
         bindSorting();

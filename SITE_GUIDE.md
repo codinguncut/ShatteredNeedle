@@ -55,8 +55,9 @@ This file is the durable editorial and implementation contract for future `index
   Leave ordinary tested-run notes blank; use short notes only for the source version of a
   carried-forward result. Do not expose resume history on the website. `variant` is the
   reasoning-effort profile used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
-- Include interrupted or failed model attempts as unscored rows when they consumed meaningful runtime
-  or cost; keep them out of the score chart.
+- Omit interrupted or failed attempts from the table and chart. List them under Failed and
+  interrupted runs from `results.json` `incomplete`, with a short reason (did not complete, or
+  aborted after running too long).
 - Plot carried-forward Claude rows as hollow points in the performance-versus-cost chart and disclose
   their source version in the tooltip. Keep any other carried-forward rows out of the chart. Give all
   carried-forward rows the same table styling and score/time formatting as other models.
