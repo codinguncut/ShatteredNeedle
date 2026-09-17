@@ -38,8 +38,8 @@ This file is the durable editorial and implementation contract for future `index
 
 - Weighted score is the primary metric.
 - Show a performance-versus-cost scatter plot above the results table, with API cost on the horizontal
-  axis and weighted score on the vertical axis. Use logarithmic scales for both axes and disclose that
-  choice beside the chart. Fix the weighted-score minimum at 85%; lower-scoring runs remain in the
+  axis and weighted score on the vertical axis. Use a logarithmic cost axis and a linear score axis
+  from 88% to 100%; disclose that choice beside the chart. Lower-scoring runs remain in the
   table but are outside the plot. Higher and farther left is better. Connect the nondominated points
   with a restrained dotted Pareto-frontier line; do not add quadrant overlays. Plot the measured Muse
   result twice, once at contributor pricing and once repriced from the same token usage at standard

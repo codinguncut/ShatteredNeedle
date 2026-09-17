@@ -158,7 +158,7 @@
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="chart-intro">
           <h3>Performance vs. API cost</h3>
-          <p>Higher and farther left is better: stronger results at lower cost. Both axes are logarithmic and the chart starts at 85% weighted score. Hollow Claude points are carried forward from earlier benchmark versions. Muse appears at both contributor and standard commercial pricing; the dotted frontier excludes the contributor-priced point. Hover or tap a point for run details.</p>
+          <p>Higher and farther left is better: stronger results at lower cost. Cost is logarithmic; weighted score is linear from 88% to 100%. Hollow Claude points are carried forward from earlier benchmark versions. Muse appears at both contributor and standard commercial pricing; the dotted frontier excludes the contributor-priced point. Hover or tap a point for run details.</p>
         </div>
         <div class="chart-wrap">
           <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for completed v3.3 tests and carried-forward Claude results"></canvas>
@@ -349,7 +349,7 @@
         if (!window.Chart) throw new Error("Chart.js did not load");
         const plottedResults = results.filter((result) => {
           const cost = Number.isFinite(result.cost.actual_usd) ? result.cost.actual_usd : result.cost.estimated_usd;
-          return result.weighted_score !== null && Number.isFinite(cost);
+          return result.weighted_score !== null && result.weighted_score >= 0.88 && Number.isFinite(cost);
         });
         const chartResults = plottedResults.flatMap((result) => {
           if (!Number.isFinite(result.cost.standard_usd)) return [result];
@@ -382,7 +382,7 @@
         }));
         let bestScore = -Infinity;
         const frontier = points
-          .filter((point) => point.y >= 85 && point.result.paretoEligible !== false)
+           .filter((point) => point.y >= 88 && point.result.paretoEligible !== false)
           .sort((a, b) => a.x - b.x || b.y - a.y)
           .filter((point) => {
             if (point.y <= bestScore) return false;
@@ -483,12 +483,11 @@
                 title: {display: true, text: "API cost in USD (log scale, lower is better)"},
                 ticks: {color: "#555", callback: (value) => `$${Number(value).toLocaleString("en-US", {maximumFractionDigits: 1})}`}
               },
-              y: {
-                type: "logarithmic",
-                min: 85,
-                max: 105,
-                grid: {color: "#e8e8e8"},
-                title: {display: true, text: "Weighted score (log scale, higher is better)"},
+               y: {
+                 min: 88,
+                 max: 100,
+                 grid: {color: "#e8e8e8"},
+                 title: {display: true, text: "Weighted score (higher is better)"},
                 ticks: {color: "#555", callback: (value) => `${value}%`}
               }
             }
