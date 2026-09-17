@@ -395,30 +395,48 @@
             if (chart.width < 560) return;
             const {ctx} = chart;
             const occupied = [];
+            const inset = 4;
             ctx.save();
             ctx.fillStyle = "#333";
-            ctx.font = '600 9px "SFMono-Regular", Consolas, monospace';
+            ctx.font = '600 10px "SFMono-Regular", Consolas, monospace';
             ctx.textBaseline = "middle";
-            chart.getDatasetMeta(0).data.forEach((point, index) => {
+            chart.getDatasetMeta(0).data
+              .map((point, index) => ({point, index}))
+              .sort((a, b) => a.point.y - b.point.y)
+              .forEach(({point, index}) => {
               const label = modelLabel(chartResults[index]);
               const width = ctx.measureText(label).width;
-              const candidates = [
-                {x: point.x + 10, y: point.y - 11, align: "left"},
-                {x: point.x + 10, y: point.y + 12, align: "left"},
-                {x: point.x - 10, y: point.y - 11, align: "right"},
-                {x: point.x - 10, y: point.y + 12, align: "right"}
-              ];
-              const choice = candidates.find((candidate) => {
+              const nearTop = point.y - chart.chartArea.top < 22;
+              const offsets = nearTop
+                ? [[10, 16], [-10, 16], [10, 28], [-10, 28], [10, -14], [-10, -14], [12, 0], [-12, 0]]
+                : [[10, -14], [10, 16], [-10, -14], [-10, 16], [10, -26], [-10, -26], [12, 0], [-12, 0]];
+              const candidates = offsets.map(([dx, dy]) => ({
+                x: point.x + dx,
+                y: point.y + dy,
+                align: dx >= 0 ? "left" : "right"
+              }));
+              const fits = (box) =>
+                box.left >= inset && box.right <= chart.width - inset &&
+                box.top >= inset && box.bottom <= chart.height - inset &&
+                !occupied.some((item) => box.left < item.right + 4 && box.right + 4 > item.left &&
+                  box.top < item.bottom + 3 && box.bottom + 3 > item.top);
+              let choice = null;
+              for (const candidate of candidates) {
                 const left = candidate.align === "left" ? candidate.x : candidate.x - width;
-                const box = {left, right: left + width, top: candidate.y - 6, bottom: candidate.y + 6};
-                if (box.left < chart.chartArea.left || box.right > chart.chartArea.right ||
-                    box.top < chart.chartArea.top || box.bottom > chart.chartArea.bottom) return false;
-                if (occupied.some((item) => box.left < item.right + 4 && box.right + 4 > item.left &&
-                    box.top < item.bottom + 3 && box.bottom + 3 > item.top)) return false;
+                const box = {left, right: left + width, top: candidate.y - 7, bottom: candidate.y + 7};
+                if (!fits(box)) continue;
                 occupied.push(box);
-                return true;
-              });
-              if (!choice) return;
+                choice = candidate;
+                break;
+              }
+              if (!choice) {
+                const y = Math.min(Math.max(point.y + 16, inset + 7), chart.height - inset - 7);
+                const x = Math.min(point.x + 10, chart.width - inset - width);
+                const box = {left: x, right: x + width, top: y - 7, bottom: y + 7};
+                if (!fits(box)) return;
+                occupied.push(box);
+                choice = {x, y, align: "left"};
+              }
               ctx.textAlign = choice.align;
               ctx.fillText(label, choice.x, choice.y);
             });
@@ -453,7 +471,7 @@
             responsive: true,
             maintainAspectRatio: false,
             animation: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? false : undefined,
-            layout: {padding: 8},
+            layout: {padding: {top: 24, right: 96, bottom: 8, left: 8}},
             plugins: {
               legend: {display: false},
               tooltip: {
@@ -485,10 +503,14 @@
               },
                y: {
                  min: 88,
-                 max: 100,
+                 max: 102,
                  grid: {color: "#e8e8e8"},
                  title: {display: true, text: "Weighted score (higher is better)"},
-                ticks: {color: "#555", callback: (value) => `${value}%`}
+                ticks: {
+                  color: "#555",
+                  stepSize: 2,
+                  callback: (value) => (value >= 88 && value <= 100) ? `${value}%` : ""
+                }
               }
             }
           },
