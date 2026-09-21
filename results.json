@@ -2,6 +2,7 @@
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
   "updated": "2026-09-21",
+  "pricing_checked": "2026-09-21",
   "sorting": [
     "weighted_score descending",
     "wall_time.seconds ascending"
@@ -124,44 +125,14 @@
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 5.2816,
+        "estimated_usd": 3.433,
         "actual_unmetered": true,
-        "estimated_from_prior_run": false
+        "estimated_from_prior_run": false,
+        "estimated_model_id": "openrouter/z-ai/glm-5.3",
+        "estimated_basis": "same measured usage repriced at OpenRouter standard rates"
       },
       "wall_time": {
         "seconds": 3863.8633,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
-      "id": "kimi-for-coding-k3",
-      "model": "Kimi K3",
-      "model_id": "kimi-for-coding/k3",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.9899,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 0.938,
-        "culprit": 1.0,
-        "finding_provenance": 0.941,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": null,
-        "estimated_usd": 5.5435,
-        "actual_unmetered": true,
-        "estimated_from_prior_run": false
-      },
-      "wall_time": {
-        "seconds": 3588.03,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -204,7 +175,7 @@
     },
     {
       "id": "openrouter-moonshotai-kimi-k3",
-      "model": "Kimi K3 (OpenRouter)",
+      "model": "Kimi K3",
       "model_id": "openrouter/moonshotai/kimi-k3",
       "harness": "OpenCode",
       "variant": "high",
@@ -252,9 +223,11 @@
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 0.6525,
+        "estimated_usd": 0.3915,
         "actual_unmetered": true,
-        "estimated_from_prior_run": false
+        "estimated_from_prior_run": false,
+        "estimated_model_id": "openrouter/z-ai/glm-5.3-flash",
+        "estimated_basis": "same measured usage repriced at OpenRouter standard rates"
       },
       "wall_time": {
         "seconds": 7297.7467,
@@ -528,6 +501,6 @@
       "note": "was aborted after running too long"
     }
   ],
-  "measured_runs": 13,
+  "measured_runs": 12,
   "projected_rows": 3
 }

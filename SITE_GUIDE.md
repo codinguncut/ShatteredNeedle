@@ -21,6 +21,9 @@ This file is the durable editorial and implementation contract for future `index
 - Retain exact cost and accounting basis in JSON. Show one API cost column: prefer actual provider
   billing, otherwise show the token-rate equivalent without a special suffix. Round displayed costs
   to the nearest $0.10.
+- For GLM coding-plan runs, use OpenRouter API-equivalent rates and record the pricing model separately
+  from the execution model. Keep GPT estimates at first-party OpenAI rates. Record the pricing check date
+  in `results.json` and document verified rates and changes in `PRICING.md`.
 - Show wall-clock time in minutes, never mixed hour/minute notation.
 - Keep incomplete timing and cost measurements marked as incomplete.
 - Keep carried-forward rows explicitly separate from completed tests in the generator. On the site,
@@ -43,8 +46,8 @@ This file is the durable editorial and implementation contract for future `index
   labels stay readable. Lower-scoring runs remain in the table but are outside the plot. Higher and farther left is better. Connect the nondominated points
   with a restrained dotted Pareto-frontier line; do not add quadrant overlays. Plot the measured Muse
   result twice, once at contributor pricing and once repriced from the same token usage at standard
-  commercial rates. Exclude the contributor-priced point, but not the standard-price point, from the
-  frontier calculation.
+  commercial rates. Include both pricing scenarios in the frontier calculation; either may be dominated
+  by a cheaper, higher-scoring model.
 - Color chart points by model provider using the Artificial Analysis palette: Anthropic
   terracotta, OpenAI black, Meta/Kimi/GLM blue, xAI violet, Google green, Alibaba orange, and
   DeepSeek royal blue. Do not color points by protocol.

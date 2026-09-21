@@ -158,7 +158,7 @@
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="chart-intro">
           <h3>Performance vs. API cost</h3>
-          <p>Higher and farther left is better: stronger results at lower cost. Cost is logarithmic; weighted score is linear from 88% to 100%. Hollow Claude points are carried forward from earlier benchmark versions. Muse appears at both contributor and standard commercial pricing; the dotted frontier excludes the contributor-priced point. Hover or tap a point for run details.</p>
+          <p>Higher and farther left is better: stronger results at lower cost. Cost is logarithmic; weighted score is linear from 88% to 100%. Hollow Claude points are carried forward from earlier benchmark versions. Muse appears at both contributor and standard commercial pricing; both are eligible for the dotted frontier. Hover or tap a point for run details.</p>
         </div>
         <div class="chart-wrap">
           <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for completed v3.3 tests and carried-forward Claude results"></canvas>
@@ -230,7 +230,8 @@
               <p>Actual OpenRouter and xAI values are reported bills. Estimated values apply the public standard token rates recorded by the benchmark to captured usage:</p>
               <code class="formula">input + cache writes + cache reads + (output + separately reported reasoning)</code>
               <p>Unmetered subscription runs have no actual billed amount. Their API cost is a pay-per-token equivalent. These values are lower bounds when a provider applies a per-request long-context surcharge that aggregate token totals cannot reconstruct.</p>
-              <p>Sources: <a href="https://platform.openai.com/docs/pricing">OpenAI</a>, <a href="https://platform.claude.com/docs/en/about-claude/pricing">Anthropic</a>, <a href="https://platform.kimi.ai/docs/pricing/chat">Kimi</a>, <a href="https://platform.minimax.io/docs/guides/pricing-paygo">MiniMax</a>, <a href="https://docs.z.ai/guides/overview/pricing">Z.AI</a>, and <a href="https://openrouter.ai/">OpenRouter</a>.</p>
+              <p>GLM subscription runs use OpenRouter API-equivalent prices. GPT estimates use first-party OpenAI prices. Rates checked <span id="pricing-checked">—</span>; see the <a href="PRICING.md">pricing audit</a>.</p>
+              <p>Sources: <a href="https://developers.openai.com/api/docs/pricing">OpenAI</a>, <a href="https://platform.claude.com/docs/en/about-claude/pricing">Anthropic</a>, <a href="https://platform.kimi.ai/docs/pricing/chat">Kimi</a>, <a href="https://platform.minimax.io/docs/guides/pricing-paygo">MiniMax</a>, <a href="https://docs.z.ai/guides/overview/pricing">Z.AI</a>, <a href="https://docs.x.ai/developers/models">xAI</a>, and <a href="https://openrouter.ai/api/v1/models">OpenRouter</a>.</p>
             </div>
           </details>
           <details>
@@ -353,7 +354,7 @@
         });
         const chartResults = plottedResults.flatMap((result) => {
           if (!Number.isFinite(result.cost.standard_usd)) return [result];
-          return [{...result, paretoEligible: false, pricingLabel: "Contributor pricing; excluded from frontier"}, {
+          return [{...result, pricingLabel: "Contributor pricing"}, {
             ...result,
             model: "Muse Spark 1.3",
             model_id: result.cost.standard_model_id,
@@ -382,7 +383,7 @@
         }));
         let bestScore = -Infinity;
         const frontier = points
-           .filter((point) => point.y >= 88 && point.result.paretoEligible !== false)
+          .filter((point) => point.y >= 88)
           .sort((a, b) => a.x - b.x || b.y - a.y)
           .filter((point) => {
             if (point.y <= bestScore) return false;
@@ -488,6 +489,7 @@
                       `API cost: ${money(displayedCost)}`,
                       `Wall time: ${duration(result.wall_time.seconds)}`,
                       ...(result.score_estimated ? [`Result: Carried forward from ${result.estimate_source}`] : []),
+                      ...(!hasActualCost && result.cost.estimated_basis ? [`Pricing: ${result.cost.estimated_basis}`] : []),
                       ...(result.pricingLabel ? [`Pricing: ${result.pricingLabel}`] : [])
                     ];
                   }
@@ -564,6 +566,7 @@
         document.querySelector("#corpus-token-count").textContent = `~${Math.round(payload.suite.approximate_corpus_tokens / 1000)}k`;
         document.querySelector("#question-count").textContent = payload.suite.held_out_questions.toLocaleString("en-US");
         document.querySelector("#results-updated").textContent = new Date(`${payload.updated}T00:00:00Z`).toLocaleDateString("en-GB", {day: "numeric", month: "long", year: "numeric", timeZone: "UTC"});
+        document.querySelector("#pricing-checked").textContent = payload.pricing_checked || "not recorded";
         const incomplete = payload.incomplete || [];
         const incompleteNote = document.querySelector("#incomplete-note");
         if (incompleteNote && incomplete.length) {
