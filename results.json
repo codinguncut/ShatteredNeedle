@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-09-17",
+  "updated": "2026-09-21",
   "sorting": [
     "weighted_score descending",
     "wall_time.seconds ascending"
@@ -53,7 +53,7 @@
       "model_id": "openai/gpt-6-astra",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 1,
+      "runs": 5,
       "weighted_score": 1.0,
       "score_estimated": false,
       "score_breakdown": {
@@ -65,12 +65,12 @@
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 23.1251,
+        "estimated_usd": 24.499,
         "actual_unmetered": true,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 4002.55,
+        "seconds": 4147.77,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -176,24 +176,56 @@
       "model_id": "openai/gpt-5.6-terra",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 2,
-      "weighted_score": 0.9706,
+      "runs": 3,
+      "weighted_score": 0.9804,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.969,
-        "culprit": 0.9585,
-        "finding_provenance": 0.9415,
+        "condition": 0.9793,
+        "culprit": 0.9723,
+        "finding_provenance": 0.961,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 5.9938,
+        "estimated_usd": 5.77,
         "actual_unmetered": true,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 2556.54,
+        "seconds": 2846.0067,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
+      "id": "openrouter-moonshotai-kimi-k3",
+      "model": "Kimi K3 (OpenRouter)",
+      "model_id": "openrouter/moonshotai/kimi-k3",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 2,
+      "weighted_score": 0.9755,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 1.0,
+        "culprit": 1.0,
+        "finding_provenance": 0.9415,
+        "identity_provenance": 0.9165,
+        "resolution": 0.9375
+      },
+      "cost": {
+        "actual_usd": 4.81,
+        "estimated_usd": 4.8088,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 3052.115,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -275,24 +307,24 @@
       "model_id": "openai/gpt-5.6-sol",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 2,
-      "weighted_score": 0.954,
+      "runs": 3,
+      "weighted_score": 0.9517,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 1.0,
-        "culprit": 0.9165,
-        "finding_provenance": 0.9855,
+        "condition": 0.9793,
+        "culprit": 0.9167,
+        "finding_provenance": 0.9807,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 27.8636,
+        "estimated_usd": 35.7619,
         "actual_unmetered": true,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 4412.31,
+        "seconds": 5671.23,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -307,24 +339,24 @@
       "model_id": "openai/gpt-5.6-luna",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 2,
-      "weighted_score": 0.9318,
+      "runs": 3,
+      "weighted_score": 0.9362,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.9375,
+        "condition": 0.9377,
         "culprit": 0.917,
-        "finding_provenance": 0.9265,
+        "finding_provenance": 0.9313,
         "identity_provenance": 1.0,
-        "resolution": 0.9375
+        "resolution": 0.9583
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 1.2675,
+        "estimated_usd": 1.2894,
         "actual_unmetered": true,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 4514.06,
+        "seconds": 5263.0367,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -491,21 +523,11 @@
   ],
   "incomplete": [
     {
-      "model": "MiniMax M3",
-      "model_id": "openrouter/minimax/minimax-m3",
-      "note": "did not complete the benchmark"
-    },
-    {
-      "model": "Qwen 3.8 Flash",
-      "model_id": "openrouter/qwen/qwen3.8-flash",
-      "note": "was aborted after running too long"
-    },
-    {
       "model": "Qwen 3.8 Max",
       "model_id": "openrouter/qwen/qwen3.8-max-0902",
       "note": "was aborted after running too long"
     }
   ],
-  "measured_runs": 12,
+  "measured_runs": 13,
   "projected_rows": 3
 }
