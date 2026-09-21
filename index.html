@@ -166,12 +166,13 @@
         </div>
         <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
           <table id="results-table">
-            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="2" data-type="number">Score</button></th><th><button type="button" data-col="3" data-type="number">API cost</button></th><th><button type="button" data-col="4" data-type="number">Wall time</button></th><th><button type="button" data-col="5" data-type="text">Notes</button></th></tr></thead>
+            <thead><tr><th><button type="button" data-col="0" data-type="text">Model</button></th><th><button type="button" data-col="1" data-type="number">Runs</button></th><th aria-sort="descending"><button type="button" data-col="2" data-type="number">Score</button></th><th><button type="button" data-col="3" data-type="number">API cost</button></th><th><button type="button" data-col="4" data-type="number" aria-describedby="flex-note">Flex estimate</button></th><th><button type="button" data-col="5" data-type="number">Wall time</button></th><th><button type="button" data-col="6" data-type="text">Notes</button></th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
         <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version; the carried-forward Claude rows appear as hollow chart points. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
-        <p class="note">Across all displayed rows, including carried-forward Claude entries, values outside ±1 population standard deviation are highlighted: green for lower and red for higher. Cost is calculated in log space and includes both Muse pricing scenarios; wall time uses ordinary arithmetic values.</p>
+        <p class="note" id="flex-note">Flex estimate reprices the same recorded GPT token usage at OpenAI’s 50%-lower Flex rates. These are cost scenarios, not measured Flex runs; Flex may be slower and cache hit rates may differ. Scores and wall times describe the original runs. A dash means no Flex estimate is published. The chart uses API cost.</p>
+        <p class="note">Across all displayed rows, including carried-forward Claude entries, API cost and wall time values outside ±1 population standard deviation are highlighted: green for lower and red for higher. Cost is calculated in log space and includes both Muse pricing scenarios; wall time uses ordinary arithmetic values. Flex estimates are excluded from the comparison band.</p>
       </section>
 
       <section id="benchmark">
@@ -231,6 +232,7 @@
               <code class="formula">input + cache writes + cache reads + (output + separately reported reasoning)</code>
               <p>Unmetered subscription runs have no actual billed amount. Their API cost is a pay-per-token equivalent. These values are lower bounds when a provider applies a per-request long-context surcharge that aggregate token totals cannot reconstruct.</p>
               <p>GLM subscription runs use one median-input-price OpenRouter provider’s full rate card (Friendli). GPT estimates use first-party OpenAI prices. Rates checked <span id="pricing-checked">—</span>; see the <a href="PRICING.md">pricing audit</a>.</p>
+              <p>The separate Flex column uses first-party OpenAI Flex rates for input, cache writes, cache reads, output, and separately reported reasoning. It assumes the same recorded token usage and short-context tier, not half of a historical bill. <a href="https://developers.openai.com/api/docs/guides/flex-processing">Flex processing</a> trades lower token prices for slower responses and occasional resource unavailability; standard-tier fallback calls incur standard rates.</p>
               <p>Sources: <a href="https://developers.openai.com/api/docs/pricing">OpenAI</a>, <a href="https://platform.claude.com/docs/en/about-claude/pricing">Anthropic</a>, <a href="https://platform.kimi.ai/docs/pricing/chat">Kimi</a>, <a href="https://platform.minimax.io/docs/guides/pricing-paygo">MiniMax</a>, <a href="https://docs.z.ai/guides/overview/pricing">Z.AI</a>, <a href="https://docs.x.ai/developers/models">xAI</a>, and <a href="https://openrouter.ai/api/v1/models">OpenRouter</a>.</p>
             </div>
           </details>
@@ -324,6 +326,10 @@
           const costClass = outlierClass(displayedCost, costStats);
           const costCell = cell(money(displayedCost), costClass, displayedCost ?? undefined);
           row.append(costCell);
+          const flexCost = result.cost.flex_usd ?? null;
+          const flexCell = cell(money(flexCost), "", flexCost ?? undefined);
+          if (flexCost !== null) flexCell.title = result.cost.flex_basis;
+          row.append(flexCell);
           const wallClass = outlierClass(result.wall_time.seconds, wallStats);
           const wallCell = cell(duration(result.wall_time.seconds), wallClass, result.wall_time.seconds ?? undefined);
           row.append(wallCell);
@@ -543,6 +549,10 @@
             const left = value(a, column, type);
             const right = value(b, column, type);
             if (typeof left === "number") {
+              // Keep missing estimates below numeric values in either sort direction.
+              if (!Number.isFinite(left) || !Number.isFinite(right)) {
+                return Number(!Number.isFinite(left)) - Number(!Number.isFinite(right));
+              }
               const primary = (left - right) * direction;
               if (primary !== 0 || column !== 2) return primary;
               return Number(a.dataset.wall) - Number(b.dataset.wall);
@@ -586,7 +596,7 @@
         console.error(error);
         const row = document.createElement("tr");
         const errorCell = cell("Results could not be loaded.", "failed");
-        errorCell.colSpan = 6;
+        errorCell.colSpan = headers.length;
         row.append(errorCell);
         body.append(row);
         document.querySelector("#score-chart").hidden = true;

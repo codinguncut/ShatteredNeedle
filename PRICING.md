@@ -1,6 +1,6 @@
 # API pricing audit — 21 September 2026
 
-Prices below are USD per million tokens, at standard/short-context rates. Actual reported bills
+Prices below are USD per million tokens, at standard/short-context rates unless marked Flex. Actual reported bills
 remain the displayed cost when available. Subscription runs use a token-rate API equivalent.
 GLM coding-plan runs use **OpenRouter → Friendli**, selected at the median input-price tier;
 GPT estimates use **first-party OpenAI** prices.
@@ -34,6 +34,35 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 
 Failed or interrupted models remain outside the scored leaderboard. The free MiniMax route is
 estimated at its paid equivalent, rather than interpreting unmetered usage as a zero-cost API.
+
+## OpenAI Flex comparison
+
+The leaderboard's **Flex estimate** column reprices the recorded GPT usage at these first-party
+OpenAI **Flex / short-context** rates, verified 21 September 2026:
+
+| Model | Input | Output | Cached input | Cache writes |
+| --- | ---: | ---: | ---: | ---: |
+| GPT-6 Astra | 5 | 25 | 0.50 | 6.25 |
+| GPT-5.6 Sol | 2 | 10 | 0.20 | 2.50 |
+| GPT-5.6 Terra | 1 | 6 | 0.10 | 1.25 |
+| GPT-5.6 Luna | 0.10 | 0.60 | 0.01 | 0.125 |
+
+Each bucket is 50% below its corresponding standard rate. Calculate from each run's captured
+uncached input, cache reads, cache writes, output, and separately reported reasoning, then average
+across the same draws as the main row. Do not halve a provider bill or rounded display value.
+`results.json` retains `flex_usd`, `flex_model_id`, `flex_provider`, and `flex_basis`; a missing estimate
+renders as a dash. This comparison is limited to the four verified first-party routes above.
+
+These are **same-usage cost scenarios, not measured Flex runs**. Scores and wall times describe the
+original runs. Flex can be slower or return resource-unavailable errors, and different delays may
+change cache hit rates. Calls that fall back to standard processing incur standard rates. As with
+standard estimates, aggregate usage cannot reconstruct per-request long-context surcharges, so the
+figures can be lower bounds. Long-context Flex input/cache rates are 2× and output rates 1.5× the
+listed short-context rates.
+
+Flex estimates appear only in the table. They do not add scored runs, chart points, frontier members,
+or values to the cost comparison band. See [OpenAI Flex processing](https://developers.openai.com/api/docs/guides/flex-processing)
+and the [Flex pricing table](https://developers.openai.com/api/docs/pricing?latest-pricing=flex).
 
 ## GLM provider selection
 

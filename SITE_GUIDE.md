@@ -18,9 +18,16 @@ This file is the durable editorial and implementation contract for future `index
 - Derive the headline corpus, document, approximate-token, and held-out-question inventory from all
   committed canonical corpus bundles; do not hard-code one corpus's counts.
 - Store exact scores and seconds in JSON. Round only in presentation.
-- Retain exact cost and accounting basis in JSON. Show one API cost column: prefer actual provider
+- Retain exact cost and accounting basis in JSON. In the primary API cost column, prefer actual provider
   billing, otherwise show the token-rate equivalent without a special suffix. Round displayed costs
   to the nearest $0.10.
+- Add a separate sortable **Flex estimate** column for supported first-party GPT models. Generate it
+  from each run's captured token buckets and the verified OpenAI Flex rate card, then average across
+  the same draws; never halve an actual bill or an already rounded displayed cost. Retain the pricing
+  model, provider, and counterfactual basis in JSON. Omit estimates if any contributing draw lacks usage.
+  Show a dash for missing estimates, sorted last in either direction. These are same-usage cost scenarios,
+  not measured Flex runs: do not imply that the displayed wall time was achieved on Flex. Document slower
+  responses, resource unavailability, and potentially different cache hit rates.
 - For GLM coding-plan runs, use one OpenRouter provider at the median input-price tier and take its
   entire rate card (input, output, cache); do not combine independently calculated bucket medians.
   Count each provider once and use the upper-middle price for an even count. Record the pricing model
@@ -50,6 +57,8 @@ This file is the durable editorial and implementation contract for future `index
   result twice, once at contributor pricing and once repriced from the same token usage at standard
   commercial rates. Include both pricing scenarios in the frontier calculation; either may be dominated
   by a cheaper, higher-scoring model.
+- Keep Flex scenarios in the table only; the chart and frontier use the primary API costs and the
+  existing Muse commercial comparison.
 - Color chart points by model provider using the Artificial Analysis palette: Anthropic
   terracotta, OpenAI black, Meta/Kimi/GLM blue, xAI violet, Google green, Alibaba orange, and
   DeepSeek royal blue. Do not color points by protocol.
@@ -73,6 +82,7 @@ This file is the durable editorial and implementation contract for future `index
   population; calculate mean wall time on the ordinary arithmetic scale. Mark values below the band in
   green and values above it in red. Do not add arrows or other markers that disrupt numeric alignment.
   Describe these as values outside the comparison band rather than statistical outliers.
+  Flex estimates neither contribute to the comparison band nor receive its color highlighting.
 - Display weighted scores as whole percentages in the chart and table while sorting by exact values.
 
 ## Copy And Methodology

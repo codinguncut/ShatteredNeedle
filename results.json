@@ -68,7 +68,11 @@
         "actual_usd": null,
         "estimated_usd": 24.499,
         "actual_unmetered": true,
-        "estimated_from_prior_run": false
+        "estimated_from_prior_run": false,
+        "flex_usd": 12.2495,
+        "flex_model_id": "openai/gpt-6-astra",
+        "flex_provider": "OpenAI",
+        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
       },
       "wall_time": {
         "seconds": 4147.77,
@@ -162,7 +166,11 @@
         "actual_usd": null,
         "estimated_usd": 5.77,
         "actual_unmetered": true,
-        "estimated_from_prior_run": false
+        "estimated_from_prior_run": false,
+        "flex_usd": 2.885,
+        "flex_model_id": "openai/gpt-5.6-terra",
+        "flex_provider": "OpenAI",
+        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
       },
       "wall_time": {
         "seconds": 2846.0067,
@@ -296,7 +304,11 @@
         "actual_usd": null,
         "estimated_usd": 35.7619,
         "actual_unmetered": true,
-        "estimated_from_prior_run": false
+        "estimated_from_prior_run": false,
+        "flex_usd": 17.8809,
+        "flex_model_id": "openai/gpt-5.6-sol",
+        "flex_provider": "OpenAI",
+        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
       },
       "wall_time": {
         "seconds": 5671.23,
@@ -328,7 +340,11 @@
         "actual_usd": null,
         "estimated_usd": 1.2894,
         "actual_unmetered": true,
-        "estimated_from_prior_run": false
+        "estimated_from_prior_run": false,
+        "flex_usd": 0.6447,
+        "flex_model_id": "openai/gpt-5.6-luna",
+        "flex_provider": "OpenAI",
+        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
       },
       "wall_time": {
         "seconds": 5263.0367,
