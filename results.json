@@ -147,6 +147,38 @@
       "note": ""
     },
     {
+      "id": "openrouter-moonshotai-kimi-k3",
+      "model": "Kimi K3",
+      "model_id": "openrouter/moonshotai/kimi-k3",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 3,
+      "weighted_score": 0.9837,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 1.0,
+        "culprit": 1.0,
+        "finding_provenance": 0.961,
+        "identity_provenance": 0.9443,
+        "resolution": 0.9583
+      },
+      "cost": {
+        "actual_usd": 4.6267,
+        "estimated_usd": 4.6243,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 3467.52,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "openai-gpt-5.6-terra",
       "model": "GPT-5.6 Terra",
       "model_id": "openai/gpt-5.6-terra",
@@ -174,38 +206,6 @@
       },
       "wall_time": {
         "seconds": 2846.0067,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
-      "id": "openrouter-moonshotai-kimi-k3",
-      "model": "Kimi K3",
-      "model_id": "openrouter/moonshotai/kimi-k3",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 2,
-      "weighted_score": 0.9755,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 1.0,
-        "culprit": 1.0,
-        "finding_provenance": 0.9415,
-        "identity_provenance": 0.9165,
-        "resolution": 0.9375
-      },
-      "cost": {
-        "actual_usd": 4.81,
-        "estimated_usd": 4.8088,
-        "actual_unmetered": false,
-        "estimated_from_prior_run": false
-      },
-      "wall_time": {
-        "seconds": 3052.115,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -290,28 +290,28 @@
       "model_id": "openai/gpt-5.6-sol",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.9517,
+      "runs": 4,
+      "weighted_score": 0.9521,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.9793,
+        "condition": 0.9845,
         "culprit": 0.9167,
-        "finding_provenance": 0.9807,
+        "finding_provenance": 0.9782,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 35.7619,
+        "estimated_usd": 33.2871,
         "actual_unmetered": true,
         "estimated_from_prior_run": false,
-        "flex_usd": 17.8809,
+        "flex_usd": 16.6435,
         "flex_model_id": "openai/gpt-5.6-sol",
         "flex_provider": "OpenAI",
         "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
       },
       "wall_time": {
-        "seconds": 5671.23,
+        "seconds": 6023.9075,
         "estimated_from_prior_run": false
       },
       "status": {
