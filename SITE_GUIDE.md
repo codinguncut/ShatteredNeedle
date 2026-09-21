@@ -21,8 +21,10 @@ This file is the durable editorial and implementation contract for future `index
 - Retain exact cost and accounting basis in JSON. Show one API cost column: prefer actual provider
   billing, otherwise show the token-rate equivalent without a special suffix. Round displayed costs
   to the nearest $0.10.
-- For GLM coding-plan runs, use OpenRouter API-equivalent rates and record the pricing model separately
-  from the execution model. Keep GPT estimates at first-party OpenAI rates. Record the pricing check date
+- For GLM coding-plan runs, use one OpenRouter provider at the median input-price tier and take its
+  entire rate card (input, output, cache); do not combine independently calculated bucket medians.
+  Count each provider once and use the upper-middle price for an even count. Record the pricing model
+  and selected provider separately from the execution model. Keep GPT estimates at first-party OpenAI rates. Record the pricing check date
   in `results.json` and document verified rates and changes in `PRICING.md`.
 - Show wall-clock time in minutes, never mixed hour/minute notation.
 - Keep incomplete timing and cost measurements marked as incomplete.

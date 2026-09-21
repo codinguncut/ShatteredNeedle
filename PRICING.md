@@ -2,7 +2,8 @@
 
 Prices below are USD per million tokens, at standard/short-context rates. Actual reported bills
 remain the displayed cost when available. Subscription runs use a token-rate API equivalent.
-GLM coding-plan runs use **OpenRouter** prices; GPT estimates use **first-party OpenAI** prices.
+GLM coding-plan runs use **OpenRouter → Friendli**, selected at the median input-price tier;
+GPT estimates use **first-party OpenAI** prices.
 The recorded execution provider is retained, with GLM's pricing provider identified separately in
 `results.json`. Muse's contributor and commercial scenarios use the same measured token usage.
 
@@ -19,8 +20,8 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 | GPT-5.6 Luna | OpenAI | 0.20 | 1.20 | 0.02 |
 | Muse Spark 1.3 Contributor | OpenRouter | 0.10 | 0.20 | 0.002 |
 | Muse Spark 1.3 (commercial comparison) | OpenRouter | 1.25 | 4.25 | 0.15 |
-| GLM-5.3 | OpenRouter equivalent | 0.91 | 2.86 | 0.169 |
-| GLM-5.3 Flash | OpenRouter equivalent | 0.09 | 0.30 | 0.018 |
+| GLM-5.3 | OpenRouter → Friendli (median-input provider) | 1.26 | 3.96 | 0.234 |
+| GLM-5.3 Flash | OpenRouter → Friendli (median-input provider) | 0.15 | 0.50 | 0.03 |
 | Grok 4.6 | xAI | 2 | 6 | 0.50 |
 | Gemini 3.8 Flash | OpenRouter | 0.75 | 3.75 | 0.075 |
 | Qwen 3.8 Max (0902) | OpenRouter | 2 | 6 | 0.25 |
@@ -34,15 +35,38 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 Failed or interrupted models remain outside the scored leaderboard. The free MiniMax route is
 estimated at its paid equivalent, rather than interpreting unmetered usage as a zero-cost API.
 
+## GLM provider selection
+
+Select a **single provider by input price**, then use that provider's complete input/output/cache
+rate card. These are actual published rates from one endpoint, not independently calculated medians
+of the three token buckets, and not a median of workload-specific total costs.
+
+- Count every listed provider once, including providers with temporarily degraded endpoint health.
+  Use the published prices, including any advertised discount already embedded in them.
+- Deduplicate repeated endpoint tags. For a provider with multiple variants, take its upper-middle
+  input-price endpoint and retain that endpoint's entire rate card.
+- Sort the representative input prices across providers. For an even count, choose the upper-middle
+  price so the result is an actual provider price rather than an average of two rate cards.
+- Prefer a common provider when it lies at the selected price tier for both models.
+
+The 21 September snapshot contains **30 providers for GLM-5.3**: Friendli is 16th by input price,
+at $1.26/MTok. For **GLM-5.3 Flash, 29 providers** give a middle (15th) price of $0.15/MTok;
+Friendli is one of the providers tied at that price. Both use the `friendli` endpoint tag.
+The complete per-provider snapshot is retained with the benchmark pricing table.
+
+Provider prices and discounts may change. The benchmark ran on Z.AI's coding plan; these are
+API-equivalent estimates, not bills or measurements from a Friendli rerun.
+
 ## Changes from the previous rate table
 
-- **GLM-5.3: 35% lower** API-equivalent rates, switching from first-party Z.AI
-  ($1.40 input / $4.40 output / $0.26 cached input) to OpenRouter.
-- **GLM-5.3 Flash: 40% lower** API-equivalent rates, switching from Z.AI
-  ($0.15 / $0.50 / $0.03) to OpenRouter.
-
-  Recomputed mean run costs: GLM-5.3 **$5.2816 → $3.4330** (displayed $5.3 → $3.4),
-  GLM-5.3 Flash **$0.6525 → $0.3915** (displayed $0.7 → $0.4).
+- **GLM-5.3:** the median-input provider's rates are **10% below** Z.AI direct
+  ($1.40 input / $4.40 output / $0.26 cached input).
+- **GLM-5.3 Flash:** the median-input provider's rates **match** Z.AI direct
+  ($0.15 / $0.50 / $0.03).
+- This replaces the earlier OpenRouter catalogue-price estimates of $3.4330 and $0.3915 per run.
+  Those earlier 35%/40% differences compared provider prices, not a confirmed price drop over time.
+  The refreshed mean run estimates are **$4.7534 for GLM-5.3** (displayed $4.8) and
+  **$0.6525 for GLM-5.3 Flash** (displayed $0.7).
 
 - **Qwen 3.8 27B:** input $0.42 → $0.20 (**−52.4%**), output $3 → $2.50 (−16.7%),
   cached input $0.085 → $0.05 (−41.2%). Historical model, not on the current scored leaderboard.
@@ -59,8 +83,8 @@ estimated at its paid equivalent, rather than interpreting unmetered usage as a 
   Sonnet 5's $2/$10 introductory prices are now permanent; its planned $3/$15 increase was cancelled.
   Neither announcement causes another reduction in the stored benchmark estimates.
 
-Catalogue differences do not establish when a provider changed its prices. GLM's reductions are a
-change of comparison provider. GPT uses first-party rates even where OpenRouter advertises less.
+Catalogue differences do not establish when a provider changed its prices. GLM's comparison uses
+the selected median-input-price provider. GPT uses first-party rates even where OpenRouter advertises less.
 
 ## Cache writes and context tiers
 
@@ -100,6 +124,9 @@ Checked 21 September 2026:
 - [Anthropic pricing and cache rules](https://platform.claude.com/docs/en/about-claude/pricing)
 - [OpenRouter models API](https://openrouter.ai/api/v1/models) — `prompt`, `completion`,
   `input_cache_read`, and token-based `input_cache_write`, converted from USD/token.
+- [GLM-5.3 provider endpoints](https://openrouter.ai/api/v1/models/z-ai/glm-5.3/endpoints)
+  and [GLM-5.3 Flash provider endpoints](https://openrouter.ai/api/v1/models/z-ai/glm-5.3-flash/endpoints)
+  — provider selection and the complete Friendli rate cards.
 - [Z.AI pricing](https://docs.z.ai/guides/overview/pricing)
 - [MiniMax pay-as-you-go pricing](https://platform.minimax.io/docs/guides/pricing-paygo)
 - [xAI models and pricing](https://docs.x.ai/developers/models)

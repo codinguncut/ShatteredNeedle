@@ -125,11 +125,12 @@
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 3.433,
+        "estimated_usd": 4.7534,
         "actual_unmetered": true,
         "estimated_from_prior_run": false,
         "estimated_model_id": "openrouter/z-ai/glm-5.3",
-        "estimated_basis": "same measured usage repriced at OpenRouter standard rates"
+        "estimated_provider": "Friendli",
+        "estimated_basis": "same measured usage repriced at OpenRouter Friendli rates; provider selected by median input price"
       },
       "wall_time": {
         "seconds": 3863.8633,
@@ -223,11 +224,12 @@
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 0.3915,
+        "estimated_usd": 0.6525,
         "actual_unmetered": true,
         "estimated_from_prior_run": false,
         "estimated_model_id": "openrouter/z-ai/glm-5.3-flash",
-        "estimated_basis": "same measured usage repriced at OpenRouter standard rates"
+        "estimated_provider": "Friendli",
+        "estimated_basis": "same measured usage repriced at OpenRouter Friendli rates; provider selected by median input price"
       },
       "wall_time": {
         "seconds": 7297.7467,
