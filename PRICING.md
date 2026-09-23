@@ -1,4 +1,4 @@
-# API pricing audit — 21 September 2026
+# API pricing audit — 23 September 2026
 
 Prices below are USD per million tokens, at standard/short-context rates unless marked Flex. Actual reported bills
 remain the displayed cost when available. Subscription runs use a token-rate API equivalent.
@@ -15,6 +15,7 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 | Claude Opus 5 | Anthropic | 5 | 25 | 0.50 |
 | Claude Sonnet 5 | Anthropic | 2 | 10 | 0.20 |
 | GPT-6 Astra | OpenAI | 10 | 50 | 1 |
+| GPT-6 Luna | OpenAI | 0.10 | 0.50 | 0.01 |
 | GPT-5.6 Sol | OpenAI | 4 | 20 | 0.40 |
 | GPT-5.6 Terra | OpenAI | 2 | 12 | 0.20 |
 | GPT-5.6 Luna | OpenAI | 0.20 | 1.20 | 0.02 |
@@ -31,6 +32,8 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 | Inkling | OpenRouter | 1 | 4.05 | 0.17 |
 | Kimi K3 | OpenRouter | 1.70 | 8.50 | 0.17 |
 | Kimi K3 (first-party, archived only) | Kimi | 3 | 15 | 0.30 |
+| MiMo V2.6 Flash | OpenRouter | 0.14 | 0.28 | 0.0028 |
+| MiMo V2.6 Pro | OpenRouter | 0.435 | 0.87 | 0.0036 |
 
 Failed or interrupted models remain outside the scored leaderboard. The free MiniMax route is
 estimated at its paid equivalent, rather than interpreting unmetered usage as a zero-cost API.
@@ -38,11 +41,12 @@ estimated at its paid equivalent, rather than interpreting unmetered usage as a 
 ## OpenAI Flex comparison
 
 The leaderboard's **Flex estimate** column reprices the recorded GPT usage at these first-party
-OpenAI **Flex / short-context** rates, verified 21 September 2026:
+OpenAI **Flex / short-context** rates, verified 23 September 2026:
 
 | Model | Input | Output | Cached input | Cache writes |
 | --- | ---: | ---: | ---: | ---: |
 | GPT-6 Astra | 5 | 25 | 0.50 | 6.25 |
+| GPT-6 Luna | 0.05 | 0.25 | 0.005 | 0.0625 |
 | GPT-5.6 Sol | 2 | 10 | 0.20 | 2.50 |
 | GPT-5.6 Terra | 1 | 6 | 0.10 | 1.25 |
 | GPT-5.6 Luna | 0.10 | 0.60 | 0.01 | 0.125 |
@@ -51,7 +55,7 @@ Each bucket is 50% below its corresponding standard rate. Calculate from each ru
 uncached input, cache reads, cache writes, output, and separately reported reasoning, then average
 across the same draws as the main row. Do not halve a provider bill or rounded display value.
 `results.json` retains `flex_usd`, `flex_model_id`, `flex_provider`, and `flex_basis`; a missing estimate
-renders as a dash. This comparison is limited to the four verified first-party routes above.
+renders as a dash. This comparison is limited to the five verified first-party routes above.
 
 These are **same-usage cost scenarios, not measured Flex runs**. Scores and wall times describe the
 original runs. Flex can be slower or return resource-unavailable errors, and different delays may
@@ -147,7 +151,7 @@ the selected median-input-price provider. GPT uses first-party rates even where 
 
 ## Sources
 
-Checked 21 September 2026:
+Checked 23 September 2026:
 
 - [OpenAI API pricing](https://developers.openai.com/api/docs/pricing)
 - [Anthropic pricing and cache rules](https://platform.claude.com/docs/en/about-claude/pricing)

@@ -1,8 +1,8 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-09-21",
-  "pricing_checked": "2026-09-21",
+  "updated": "2026-09-23",
+  "pricing_checked": "2026-09-23",
   "sorting": [
     "weighted_score descending",
     "wall_time.seconds ascending"
@@ -321,6 +321,38 @@
       "note": ""
     },
     {
+      "id": "openrouter-xiaomi-mimo-v2.6-flash",
+      "model": "MiMo V2.6 Flash",
+      "model_id": "openrouter/xiaomi/mimo-v2.6-flash",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 1,
+      "weighted_score": 0.9512,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 1.0,
+        "culprit": 0.917,
+        "finding_provenance": 0.941,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": 0.71,
+        "estimated_usd": 0.7114,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 11272.23,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "openai-gpt-5.6-luna",
       "model": "GPT-5.6 Luna",
       "model_id": "openai/gpt-5.6-luna",
@@ -448,6 +480,42 @@
       "note": ""
     },
     {
+      "id": "openai-gpt-6-luna",
+      "model": "GPT-6 Luna",
+      "model_id": "openai/gpt-6-luna",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 1,
+      "weighted_score": 0.555,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.562,
+        "culprit": 0.333,
+        "finding_provenance": 0.382,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": null,
+        "estimated_usd": 0.1797,
+        "actual_unmetered": true,
+        "estimated_from_prior_run": false,
+        "flex_usd": 0.0899,
+        "flex_model_id": "openai/gpt-6-luna",
+        "flex_provider": "OpenAI",
+        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
+      },
+      "wall_time": {
+        "seconds": 2330.55,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "openrouter-google-gemini-3.8-flash",
       "model": "Gemini 3.8 Flash",
       "model_id": "openrouter/google/gemini-3.8-flash",
@@ -514,11 +582,16 @@
   ],
   "incomplete": [
     {
+      "model": "MiMo V2.6 Pro",
+      "model_id": "openrouter/xiaomi/mimo-v2.6-pro",
+      "note": "did not complete the benchmark"
+    },
+    {
       "model": "Qwen 3.8 Max",
       "model_id": "openrouter/qwen/qwen3.8-max-0902",
       "note": "was aborted after running too long"
     }
   ],
-  "measured_runs": 12,
+  "measured_runs": 14,
   "projected_rows": 3
 }
