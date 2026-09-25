@@ -244,7 +244,7 @@
         "label": "tested",
         "tone": "good"
       },
-      "note": ""
+      "note": "1 run failed to produce results"
     },
     {
       "id": "zai-coding-plan-glm-5.3-flash",
@@ -584,7 +584,7 @@
     {
       "model": "MiMo V2.6 Pro",
       "model_id": "openrouter/xiaomi/mimo-v2.6-pro",
-      "note": "was aborted after running too long"
+      "note": "failed to produce results"
     },
     {
       "model": "Qwen 3.8 Max",

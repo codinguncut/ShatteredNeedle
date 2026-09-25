@@ -66,12 +66,15 @@ This file is the durable editorial and implementation contract for future `index
 - Show the execution harness beneath the model name in small secondary type: Claude Code for Anthropic
   Claude models (`claude*`, including carried-forward estimates), OpenCode for all other models.
 - Show the recorded model variant in parentheses after the model name, not in a separate column.
-  Leave ordinary tested-run notes blank; use short notes only for the source version of a
-  carried-forward result. Do not expose resume history on the website. `variant` is the
+  Leave ordinary tested-run notes blank except when another attempt reached the question phase
+  and produced no score. Say how many runs failed to produce results. Do not use that note for a
+  weave interrupt, a usage-limit or credit rejection, or an operator stop. Use short notes for the
+  source version of a carried-forward result. Do not expose resume history on the website. `variant` is the
   reasoning-effort profile used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Omit interrupted or failed attempts from the table and chart. List them under Failed and
-  interrupted runs from `results.json` `incomplete`, with a short reason (did not complete, or
-  aborted after running too long).
+  interrupted runs from `results.json` `incomplete`, with a short reason (did not complete,
+  failed to produce results, or aborted after running too long). A query that exits without answers
+  is "failed to produce results". A weave interrupt, usage-limit rejection, or operator stop is not.
 - Plot carried-forward Claude rows as hollow points in the performance-versus-cost chart and disclose
   their source version in the tooltip. Keep any other carried-forward rows out of the chart. Give all
   carried-forward rows the same table styling and score/time formatting as other models.
