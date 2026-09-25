@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-09-23",
+  "updated": "2026-09-25",
   "pricing_checked": "2026-09-23",
   "sorting": [
     "weighted_score descending",
@@ -215,6 +215,38 @@
       "note": ""
     },
     {
+      "id": "openrouter-xiaomi-mimo-v2.6-flash",
+      "model": "MiMo V2.6 Flash",
+      "model_id": "openrouter/xiaomi/mimo-v2.6-flash",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 2,
+      "weighted_score": 0.9756,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 1.0,
+        "culprit": 0.9585,
+        "finding_provenance": 0.9705,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": 0.62,
+        "estimated_usd": 0.6229,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 9998.685,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "zai-coding-plan-glm-5.3-flash",
       "model": "GLM-5.3 Flash",
       "model_id": "zai-coding-plan/glm-5.3-flash",
@@ -312,38 +344,6 @@
       },
       "wall_time": {
         "seconds": 6023.9075,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
-      "id": "openrouter-xiaomi-mimo-v2.6-flash",
-      "model": "MiMo V2.6 Flash",
-      "model_id": "openrouter/xiaomi/mimo-v2.6-flash",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.9512,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 1.0,
-        "culprit": 0.917,
-        "finding_provenance": 0.941,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": 0.71,
-        "estimated_usd": 0.7114,
-        "actual_unmetered": false,
-        "estimated_from_prior_run": false
-      },
-      "wall_time": {
-        "seconds": 11272.23,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -485,28 +485,28 @@
       "model_id": "openai/gpt-6-luna",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.555,
+      "runs": 3,
+      "weighted_score": 0.7408,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.562,
-        "culprit": 0.333,
-        "finding_provenance": 0.382,
+        "condition": 0.854,
+        "culprit": 0.611,
+        "finding_provenance": 0.6077,
         "identity_provenance": 1.0,
-        "resolution": 1.0
+        "resolution": 0.9583
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 0.1797,
+        "estimated_usd": 0.2408,
         "actual_unmetered": true,
         "estimated_from_prior_run": false,
-        "flex_usd": 0.0899,
+        "flex_usd": 0.1204,
         "flex_model_id": "openai/gpt-6-luna",
         "flex_provider": "OpenAI",
         "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
       },
       "wall_time": {
-        "seconds": 2330.55,
+        "seconds": 2795.45,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -584,7 +584,7 @@
     {
       "model": "MiMo V2.6 Pro",
       "model_id": "openrouter/xiaomi/mimo-v2.6-pro",
-      "note": "did not complete the benchmark"
+      "note": "was aborted after running too long"
     },
     {
       "model": "Qwen 3.8 Max",
