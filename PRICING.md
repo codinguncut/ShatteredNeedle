@@ -24,6 +24,7 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 | GLM-5.3 | OpenRouter → Friendli (median-input provider) | 1.26 | 3.96 | 0.234 |
 | GLM-5.3 Flash | OpenRouter → Friendli (median-input provider) | 0.15 | 0.50 | 0.03 |
 | Grok 4.6 | xAI | 2 | 6 | 0.50 |
+| Grok 4.7 | xAI | 2 | 6 | 0.50 |
 | Gemini 3.8 Flash | OpenRouter | 0.75 | 3.75 | 0.075 |
 | Qwen 3.8 Max (0902) | OpenRouter | 2 | 6 | 0.25 |
 | Qwen 3.8 Flash | OpenRouter | 0.15 | 0.47 | 0.016 |
@@ -125,7 +126,8 @@ the selected median-input-price provider. GPT uses first-party rates even where 
   Only Fable 5.1 has the special 0.025× cache-hit rate; Fable 5 uses 0.1×.
 - OpenAI short-context cache writes: Astra $12.50, Sol $5, Terra $2.50, Luna $0.25.
   Published long-context rates double input and cache prices and multiply output by 1.5.
-- Grok 4.6 charges double across the request when prompt tokens reach 200k.
+- Grok 4.6 and Grok 4.7 charge double across the request when prompt tokens reach 200k.
+  Grok 4.7's short-context card was checked 25 September 2026 and matches Grok 4.6.
   MiniMax M3's standard tier doubles above 512k input tokens.
 - Claude 4.6 and later include their full context window at standard pricing.
 - Kimi first-party cache writes use the default five-minute rate ($3); one-hour writes cost $6.

@@ -516,6 +516,38 @@
       "note": ""
     },
     {
+      "id": "xai-grok-4.7",
+      "model": "Grok 4.7",
+      "model_id": "xai/grok-4.7",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 2,
+      "weighted_score": 0.7192,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.969,
+        "culprit": 0.5,
+        "finding_provenance": 0.882,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": 22.01,
+        "estimated_usd": 22.0093,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 5176.695,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "openrouter-google-gemini-3.8-flash",
       "model": "Gemini 3.8 Flash",
       "model_id": "openrouter/google/gemini-3.8-flash",
@@ -592,6 +624,6 @@
       "note": "was aborted after running too long"
     }
   ],
-  "measured_runs": 14,
+  "measured_runs": 15,
   "projected_rows": 3
 }
