@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-09-25",
+  "updated": "2026-09-27",
   "pricing_checked": "2026-09-23",
   "sorting": [
     "weighted_score descending",
@@ -21,6 +21,42 @@
     "held_out_questions": 177
   },
   "results": [
+    {
+      "id": "openai-gpt-6-sol",
+      "model": "GPT-6 Sol",
+      "model_id": "openai/gpt-6-sol",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 3,
+      "weighted_score": 1.0,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 1.0,
+        "culprit": 1.0,
+        "finding_provenance": 1.0,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": null,
+        "estimated_usd": 4.088,
+        "actual_unmetered": true,
+        "estimated_from_prior_run": false,
+        "flex_usd": 2.044,
+        "flex_model_id": "openai/gpt-6-sol",
+        "flex_provider": "OpenAI",
+        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
+      },
+      "wall_time": {
+        "seconds": 2276.8067,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
     {
       "id": "claude-fable-5-1",
       "model": "Claude Fable 5.1",
@@ -624,6 +660,6 @@
       "note": "was aborted after running too long"
     }
   ],
-  "measured_runs": 15,
+  "measured_runs": 16,
   "projected_rows": 3
 }
