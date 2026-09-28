@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-09-27",
+  "updated": "2026-09-28",
   "pricing_checked": "2026-09-23",
   "sorting": [
     "weighted_score descending",
@@ -516,6 +516,38 @@
       "note": ""
     },
     {
+      "id": "xai-grok-4.7",
+      "model": "Grok 4.7",
+      "model_id": "xai/grok-4.7",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 3,
+      "weighted_score": 0.7576,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.896,
+        "culprit": 0.611,
+        "finding_provenance": 0.9117,
+        "identity_provenance": 1.0,
+        "resolution": 0.9167
+      },
+      "cost": {
+        "actual_usd": 23.9533,
+        "estimated_usd": 23.9525,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 6152.95,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "openai-gpt-6-luna",
       "model": "GPT-6 Luna",
       "model_id": "openai/gpt-6-luna",
@@ -543,38 +575,6 @@
       },
       "wall_time": {
         "seconds": 2795.45,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
-      "id": "xai-grok-4.7",
-      "model": "Grok 4.7",
-      "model_id": "xai/grok-4.7",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 2,
-      "weighted_score": 0.7192,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 0.969,
-        "culprit": 0.5,
-        "finding_provenance": 0.882,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": 22.01,
-        "estimated_usd": 22.0093,
-        "actual_unmetered": false,
-        "estimated_from_prior_run": false
-      },
-      "wall_time": {
-        "seconds": 5176.695,
         "estimated_from_prior_run": false
       },
       "status": {
