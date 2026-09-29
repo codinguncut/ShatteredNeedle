@@ -22,10 +22,9 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 | GPT-6 Astra | OpenAI | 10 | 50 | 1 |
 | GPT-6 Sol | OpenAI | 2 | 10 | 0.20 |
 | GPT-6 Luna | OpenAI | 0.10 | 0.50 | 0.01 |
-| GPT-5.6 Sol | OpenAI | 4 | 20 | 0.40 |
 | GPT-5.6 Terra | OpenAI | 2 | 12 | 0.20 |
 | GPT-5.6 Luna | OpenAI | 0.20 | 1.20 | 0.02 |
-| Muse Spark 1.3 (measured contributor route) | OpenRouter | 0.10 | 0.20 | 0.002 |
+| Muse Spark 1.3 Contributor | OpenRouter | 0.10 | 0.20 | 0.002 |
 | Muse Spark 1.3 (commercial comparison) | OpenRouter | 1.25 | 4.25 | 0.15 |
 | GLM-5.3 | OpenRouter → Friendli (median-input provider) | 1.26 | 3.96 | 0.234 |
 | GLM-5.3 Flash | OpenRouter → Friendli (median-input provider) | 0.15 | 0.50 | 0.03 |
@@ -54,9 +53,10 @@ API-cost figure, rather than substituting the lower estimate.
 
 The leaderboard's **Flex estimate** column reprices the recorded GPT usage at these first-party
 OpenAI **Flex / short-context** rates. OpenAI's dedicated Flex table was checked on 29 September
-2026: all six displayed first-party GPT models are listed there at the rates below (including
-their cached-input and cache-write rates). Flex is not listed for every OpenAI model; only
-models with published Flex cards are eligible for this estimate.
+2026: the five displayed first-party GPT models are listed there at the rates below
+(including their cached-input and cache-write rates). GPT-5.6 Sol also has a published
+Flex card, but its measured result is retained only on the internal board. Flex is not
+listed for every OpenAI model; only models with published Flex cards are eligible.
 
 | Model | Input | Output | Cached input | Cache writes |
 | --- | ---: | ---: | ---: | ---: |
@@ -71,7 +71,7 @@ Each bucket is 50% below its corresponding standard rate. Calculate from each ru
 uncached input, cache reads, cache writes, output, and separately reported reasoning, then average
 across the same draws as the main row. Do not halve a provider bill or rounded display value.
 `results.json` retains `flex_usd`, `flex_model_id`, `flex_provider`, and `flex_basis`; a missing estimate
-renders as a dash. This comparison is limited to the six verified first-party routes above.
+renders as a dash. Five of the six verified first-party routes above remain on the public site.
 
 These are **same-usage cost scenarios, not measured Flex runs**. Scores and wall times describe the
 original runs. Flex can be slower or return resource-unavailable errors, and different delays may
@@ -158,6 +158,7 @@ the selected median-input-price provider. GPT uses first-party rates even where 
 
 | Model | Pricing source | Input | Output | Cached input |
 | --- | --- | ---: | ---: | ---: |
+| GPT-5.6 Sol (internal measured run) | OpenAI | 4 | 20 | 0.40 |
 | Claude Fable 5 | Anthropic | 10 | 50 | 1 |
 | Claude Opus 4.8 / 4.7 | Anthropic | 5 | 25 | 0.50 |
 | Claude Sonnet 4.6 | Anthropic | 3 | 15 | 0.30 |

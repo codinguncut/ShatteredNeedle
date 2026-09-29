@@ -35,20 +35,16 @@ This file is the durable editorial and implementation contract for future `index
   in `results.json` and document verified rates and changes in `PRICING.md`.
 - Show wall-clock time in minutes, never mixed hour/minute notation.
 - Keep incomplete timing and cost measurements marked as incomplete.
-- Keep carried-forward rows explicitly separate from completed tests in the generator. On the site,
-  identify them through `Runs = 0` and a short source-version note, not special row styling.
-- Keep the Opus 5 v3 and Sonnet 5 v2 carry-forwards in the table but exclude them from the
-  chart and frontier; measured Opus 5.5 and Sonnet 5.5 remain plotted.
-- Keep the measured GPT-5.6 Sol row (including its Flex estimate) in the table but exclude it
-  from the chart and frontier. Disclose all chart-only exclusions beside the plot.
-- An estimated row has no v3.3 actual cost. Its score, wall time, and estimated cost must name the prior run version used.
+- Keep carry-forward projections explicitly separate from measured rows in the internal
+  consolidated board. Public results include completed v3.3 draws only: omit zero-run
+  Opus 5 and Sonnet 5 projections, and the retired GPT-5.6 Sol row, from both table and
+  chart. Preserve their historical runs in the consolidated board.
 - Do not add a scored bar for a run whose `weighted_score` is `null`.
-- Retiring or superseding a run is a `results.json` edit, never a file move in the benchmark repo's
-  `runs/` archive (that archive does not feed this site). To withdraw a score from both chart and
-  table set its `weighted_score` to `null`; to keep it visible but flagged, adjust its note; to
-  remove it entirely, delete the row and decrement the displayed run count. Do this only on a
-  deliberate decision — a within-version corpus fix that leaves the gold answer key, question set, and
-  accepted answers unchanged does not by itself retire prior runs.
+- Retiring or superseding a public row is a generator curation decision, never a file move
+  in the benchmark repo's `runs/` archive (that archive does not feed this site). Regenerate
+  `results.json` after changing the public selection; retain the internal result. Do this only
+  on a deliberate decision — a within-version corpus fix that leaves the gold answer key,
+  question set, and accepted answers unchanged does not by itself retire prior runs.
 
 ## Results Presentation
 
@@ -61,8 +57,9 @@ This file is the durable editorial and implementation contract for future `index
   result twice, once at contributor pricing and once repriced from the same token usage at standard
   commercial rates. Include both pricing scenarios in the frontier calculation; either may be dominated
   by a cheaper, higher-scoring model.
-- Name both Muse pricing-scenario points simply `Muse Spark 1.3`; explain contributor versus
-  commercial pricing in the tooltip and chart description, not in the model or variant label.
+- Label the measured ~$0.4 table row `Muse Spark 1.3 Contributor`. Name both Muse chart
+  points simply `Muse Spark 1.3`; explain contributor versus commercial pricing in the
+  tooltip and chart description.
 - Keep Flex scenarios in the table only; the chart and frontier use the primary API costs and the
   existing Muse commercial comparison.
 - Use short visible point labels (model name only, without the leading `Claude `); retain full
@@ -72,22 +69,21 @@ This file is the durable editorial and implementation contract for future `index
   DeepSeek royal blue. Do not color points by protocol.
 - Keep diagnostic and failed rows clearly described in notes; never imply they are completed scores.
 - Show the execution harness beneath the model name in small secondary type: Claude Code for Anthropic
-  Claude models (`claude*`, including carried-forward estimates), OpenCode for all other models.
+  Claude models (`claude*`), OpenCode for all other models.
 - Show the recorded model variant in parentheses after the model name, not in a separate column.
   Leave ordinary tested-run notes blank except when another attempt reached the question phase
   and produced no score. Say how many runs failed to produce results. Do not use that note for a
-  weave interrupt, a usage-limit or credit rejection, or an operator stop. Use short notes for the
-  source version of a carried-forward result. Do not expose resume history on the website. `variant` is the
+  weave interrupt, a usage-limit or credit rejection, or an operator stop. Do not expose
+  resume history on the website. `variant` is the
   reasoning-effort profile used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Omit interrupted or failed attempts from the table and chart. List them under Failed and
   interrupted runs from `results.json` `incomplete`, with a short reason (did not complete,
   failed to produce results, or aborted after running too long). A query that exits without answers
   is "failed to produce results". A weave interrupt, usage-limit rejection, or operator stop is not.
-- Keep all carried-forward rows out of the chart and frontier. Give them the same table
-  styling and score/time formatting as other models, with their source version in the note.
+- Keep all carried-forward rows out of the public results; they belong on the internal board.
 - Retain the sortable table for approximate cost and time information. Protocol belongs in
   chart tooltips and methodology notes, not in bar color or the primary table.
-- For all displayed rows, including carried-forward Claude entries, calculate a ±1 population standard
+- For all displayed rows, calculate a ±1 population standard
   deviation comparison band. Calculate cost in log space and include both Muse pricing scenarios in its
   population; calculate mean wall time on the ordinary arithmetic scale. Mark values below the band in
   green and values above it in red. Do not add arrows or other markers that disrupt numeric alignment.
