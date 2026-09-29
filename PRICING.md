@@ -25,7 +25,7 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 | GPT-5.6 Sol | OpenAI | 4 | 20 | 0.40 |
 | GPT-5.6 Terra | OpenAI | 2 | 12 | 0.20 |
 | GPT-5.6 Luna | OpenAI | 0.20 | 1.20 | 0.02 |
-| Muse Spark 1.3 Contributor | OpenRouter | 0.10 | 0.20 | 0.002 |
+| Muse Spark 1.3 (measured contributor route) | OpenRouter | 0.10 | 0.20 | 0.002 |
 | Muse Spark 1.3 (commercial comparison) | OpenRouter | 1.25 | 4.25 | 0.15 |
 | GLM-5.3 | OpenRouter → Friendli (median-input provider) | 1.26 | 3.96 | 0.234 |
 | GLM-5.3 Flash | OpenRouter → Friendli (median-input provider) | 0.15 | 0.50 | 0.03 |
@@ -53,7 +53,10 @@ API-cost figure, rather than substituting the lower estimate.
 ## OpenAI Flex comparison
 
 The leaderboard's **Flex estimate** column reprices the recorded GPT usage at these first-party
-OpenAI **Flex / short-context** rates, verified 23 September 2026 (GPT-6 Sol checked 27 September):
+OpenAI **Flex / short-context** rates. OpenAI's dedicated Flex table was checked on 29 September
+2026: all six displayed first-party GPT models are listed there at the rates below (including
+their cached-input and cache-write rates). Flex is not listed for every OpenAI model; only
+models with published Flex cards are eligible for this estimate.
 
 | Model | Input | Output | Cached input | Cache writes |
 | --- | ---: | ---: | ---: | ---: |

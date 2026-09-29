@@ -22,6 +22,38 @@
   },
   "results": [
     {
+      "id": "claude-opus-5-5",
+      "model": "Claude Opus 5.5",
+      "model_id": "claude-opus-5-5",
+      "harness": "Claude Code",
+      "variant": "high",
+      "runs": 3,
+      "weighted_score": 1.0,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 1.0,
+        "culprit": 1.0,
+        "finding_provenance": 1.0,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": 9.0648,
+        "estimated_usd": 9.0648,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 1081.2933,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "openai-gpt-6-sol",
       "model": "GPT-6 Sol",
       "model_id": "openai/gpt-6-sol",
@@ -172,7 +204,7 @@
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 32.8267,
+        "actual_usd": 32.8243,
         "estimated_usd": 32.8171,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
@@ -204,7 +236,7 @@
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 17.14,
+        "actual_usd": 17.1419,
         "estimated_usd": 6.4673,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
@@ -236,7 +268,7 @@
         "resolution": 0.9583
       },
       "cost": {
-        "actual_usd": 4.6267,
+        "actual_usd": 4.6243,
         "estimated_usd": 4.6243,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
@@ -324,7 +356,7 @@
     },
     {
       "id": "openrouter-meta-muse-spark-1.3-contributor",
-      "model": "Muse Spark 1.3 Contributor",
+      "model": "Muse Spark 1.3",
       "model_id": "openrouter/meta/muse-spark-1.3-contributor",
       "harness": "OpenCode",
       "variant": "high",
@@ -339,7 +371,7 @@
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 0.4267,
+        "actual_usd": 0.4298,
         "estimated_usd": 0.4298,
         "actual_unmetered": false,
         "estimated_from_prior_run": false,
@@ -446,7 +478,7 @@
         "resolution": 0.9583
       },
       "cost": {
-        "actual_usd": 0.9633,
+        "actual_usd": 0.9666,
         "estimated_usd": 0.9666,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
@@ -478,7 +510,7 @@
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 8.9733,
+        "actual_usd": 8.973,
         "estimated_usd": 8.973,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
@@ -537,7 +569,7 @@
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 0.8867,
+        "actual_usd": 0.8868,
         "estimated_usd": 0.8581,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
@@ -569,7 +601,7 @@
         "resolution": 0.9167
       },
       "cost": {
-        "actual_usd": 23.9533,
+        "actual_usd": 23.9526,
         "estimated_usd": 23.9525,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
@@ -637,7 +669,7 @@
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 2.49,
+        "actual_usd": 2.4948,
         "estimated_usd": 2.4948,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
@@ -669,7 +701,7 @@
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 9.61,
+        "actual_usd": 9.6084,
         "estimated_usd": 9.6084,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
@@ -701,7 +733,7 @@
         "resolution": 0.0
       },
       "cost": {
-        "actual_usd": 5.36,
+        "actual_usd": 5.3644,
         "estimated_usd": 5.3644,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
@@ -719,16 +751,11 @@
   ],
   "incomplete": [
     {
-      "model": "Claude Opus 5.5",
-      "model_id": "claude-opus-5-5",
-      "note": "could not run with the installed Claude Code version"
-    },
-    {
       "model": "Qwen 3.8 Max",
       "model_id": "openrouter/qwen/qwen3.8-max-0902",
       "note": "was aborted after running too long"
     }
   ],
-  "measured_runs": 19,
+  "measured_runs": 20,
   "projected_rows": 2
 }

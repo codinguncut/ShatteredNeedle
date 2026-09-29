@@ -37,11 +37,13 @@ This file is the durable editorial and implementation contract for future `index
 - Keep incomplete timing and cost measurements marked as incomplete.
 - Keep carried-forward rows explicitly separate from completed tests in the generator. On the site,
   identify them through `Runs = 0` and a short source-version note, not special row styling.
+- Keep the Sonnet 5 v2 carry-forward in the table but exclude it from the chart and frontier;
+  Sonnet 5.5's measured v3.3 result remains plotted. This is a chart-only editorial choice.
 - An estimated row has no v3.3 actual cost. Its score, wall time, and estimated cost must name the prior run version used.
 - Do not add a scored bar for a run whose `weighted_score` is `null`.
 - Retiring or superseding a run is a `results.json` edit, never a file move in the benchmark repo's
-  `runs/` archive (that archive does not feed this site). To drop a run from the score chart set its
-  `weighted_score` to `null`; to keep it visible but flagged, adjust its note; to
+  `runs/` archive (that archive does not feed this site). To withdraw a score from both chart and
+  table set its `weighted_score` to `null`; to keep it visible but flagged, adjust its note; to
   remove it entirely, delete the row and decrement the displayed run count. Do this only on a
   deliberate decision — a within-version corpus fix that leaves the gold answer key, question set, and
   accepted answers unchanged does not by itself retire prior runs.
@@ -57,8 +59,12 @@ This file is the durable editorial and implementation contract for future `index
   result twice, once at contributor pricing and once repriced from the same token usage at standard
   commercial rates. Include both pricing scenarios in the frontier calculation; either may be dominated
   by a cheaper, higher-scoring model.
+- Name both Muse pricing-scenario points simply `Muse Spark 1.3`; explain contributor versus
+  commercial pricing in the tooltip and chart description, not in the model or variant label.
 - Keep Flex scenarios in the table only; the chart and frontier use the primary API costs and the
   existing Muse commercial comparison.
+- Use short visible point labels (model name only, without the leading `Claude `); retain full
+  model names and reasoning variants in table rows and chart tooltips.
 - Color chart points by model provider using the Artificial Analysis palette: Anthropic
   terracotta, OpenAI black, Meta/Kimi/GLM blue, xAI violet, Google green, Alibaba orange, and
   DeepSeek royal blue. Do not color points by protocol.
@@ -75,7 +81,7 @@ This file is the durable editorial and implementation contract for future `index
   interrupted runs from `results.json` `incomplete`, with a short reason (did not complete,
   failed to produce results, or aborted after running too long). A query that exits without answers
   is "failed to produce results". A weave interrupt, usage-limit rejection, or operator stop is not.
-- Plot carried-forward Claude rows as hollow points in the performance-versus-cost chart and disclose
+- Plot eligible carried-forward Claude rows as hollow points in the performance-versus-cost chart and disclose
   their source version in the tooltip. Keep any other carried-forward rows out of the chart. Give all
   carried-forward rows the same table styling and score/time formatting as other models.
 - Retain the sortable table for approximate cost and time information. Protocol belongs in
