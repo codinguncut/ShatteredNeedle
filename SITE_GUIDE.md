@@ -37,8 +37,10 @@ This file is the durable editorial and implementation contract for future `index
 - Keep incomplete timing and cost measurements marked as incomplete.
 - Keep carried-forward rows explicitly separate from completed tests in the generator. On the site,
   identify them through `Runs = 0` and a short source-version note, not special row styling.
-- Keep the Sonnet 5 v2 carry-forward in the table but exclude it from the chart and frontier;
-  Sonnet 5.5's measured v3.3 result remains plotted. This is a chart-only editorial choice.
+- Keep the Opus 5 v3 and Sonnet 5 v2 carry-forwards in the table but exclude them from the
+  chart and frontier; measured Opus 5.5 and Sonnet 5.5 remain plotted.
+- Keep the measured GPT-5.6 Sol row (including its Flex estimate) in the table but exclude it
+  from the chart and frontier. Disclose all chart-only exclusions beside the plot.
 - An estimated row has no v3.3 actual cost. Its score, wall time, and estimated cost must name the prior run version used.
 - Do not add a scored bar for a run whose `weighted_score` is `null`.
 - Retiring or superseding a run is a `results.json` edit, never a file move in the benchmark repo's
@@ -81,9 +83,8 @@ This file is the durable editorial and implementation contract for future `index
   interrupted runs from `results.json` `incomplete`, with a short reason (did not complete,
   failed to produce results, or aborted after running too long). A query that exits without answers
   is "failed to produce results". A weave interrupt, usage-limit rejection, or operator stop is not.
-- Plot eligible carried-forward Claude rows as hollow points in the performance-versus-cost chart and disclose
-  their source version in the tooltip. Keep any other carried-forward rows out of the chart. Give all
-  carried-forward rows the same table styling and score/time formatting as other models.
+- Keep all carried-forward rows out of the chart and frontier. Give them the same table
+  styling and score/time formatting as other models, with their source version in the note.
 - Retain the sortable table for approximate cost and time information. Protocol belongs in
   chart tooltips and methodology notes, not in bar color or the primary table.
 - For all displayed rows, including carried-forward Claude entries, calculate a ±1 population standard

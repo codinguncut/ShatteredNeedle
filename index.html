@@ -158,10 +158,10 @@
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
         <div class="chart-intro">
           <h3>Performance vs. API cost</h3>
-          <p>Higher and farther left is better: stronger results at lower cost. Cost is logarithmic; weighted score is linear from 88% to 100%. Hollow Claude points are carried forward from earlier benchmark versions; the earlier Sonnet 5 result appears only in the table. Muse appears at both contributor and standard commercial pricing; both are eligible for the dotted frontier. Hover or tap a point for run details.</p>
+          <p>Higher and farther left is better: stronger results at lower cost. Cost is logarithmic; weighted score is linear from 88% to 100%. Opus 5, Sonnet 5, and GPT-5.6 Sol appear only in the table. Muse appears at both contributor and standard commercial pricing; both are eligible for the dotted frontier. Hover or tap a point for run details.</p>
         </div>
         <div class="chart-wrap">
-          <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for completed v3.3 tests and carried-forward Claude results"></canvas>
+          <canvas id="score-chart" role="img" aria-label="Scatter plot of weighted score against API cost for selected completed v3.3 tests"></canvas>
           <p class="chart-error" id="chart-error">The performance and cost chart could not be loaded. The complete results remain available in the table.</p>
         </div>
         <div class="table-wrap" role="region" aria-label="Benchmark results" tabindex="0">
@@ -170,7 +170,7 @@
             <tbody></tbody>
           </table>
         </div>
-        <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version; plotted carry-forwards appear as hollow chart points. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
+        <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. Rows with 0 runs reuse results from an earlier version and appear only in the table. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
         <p class="note" id="flex-note">Flex estimate reprices the same recorded GPT token usage at OpenAI’s 50%-lower Flex rates. These are cost scenarios, not measured Flex runs; Flex may be slower and cache hit rates may differ. Scores and wall times describe the original runs. A dash means no Flex estimate is published. The chart uses API cost.</p>
         <p class="note">Across all displayed rows, including carried-forward Claude entries, API cost and wall time values outside ±1 population standard deviation are highlighted: green for lower and red for higher. Cost is calculated in log space and includes both Muse pricing scenarios; wall time uses ordinary arithmetic values. Flex estimates are excluded from the comparison band.</p>
       </section>
@@ -357,7 +357,8 @@
         if (!window.Chart) throw new Error("Chart.js did not load");
         const plottedResults = results.filter((result) => {
           const cost = Number.isFinite(result.cost.actual_usd) ? result.cost.actual_usd : result.cost.estimated_usd;
-          return result.model_id !== "claude-sonnet-5" && result.weighted_score !== null &&
+          return !result.score_estimated && result.model_id !== "openai/gpt-5.6-sol" &&
+            result.weighted_score !== null &&
             result.weighted_score >= 0.88 && Number.isFinite(cost);
         });
         const chartResults = plottedResults.flatMap((result) => {
