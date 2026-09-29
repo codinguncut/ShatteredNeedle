@@ -4,7 +4,8 @@ Prices below are USD per million tokens, at standard/short-context rates unless 
 remain the displayed cost when available. Subscription runs use a token-rate API equivalent.
 GLM coding-plan runs use **OpenRouter → Friendli**, selected at the median input-price tier;
 GPT estimates use **first-party OpenAI** prices.
-GPT-6 Sol's Standard and Flex cards were separately checked on 27 September 2026; the other
+GPT-6 Sol's Standard and Flex cards were separately checked on 27 September 2026;
+Claude Opus 5.5 and Sonnet 5.5 were checked on 29 September 2026. The other
 rate cards retain their original audit dates.
 The recorded execution provider is retained, with GLM's pricing provider identified separately in
 `results.json`. Muse's contributor and commercial scenarios use the same measured token usage.
@@ -14,7 +15,9 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 | Model | Pricing source | Input | Output | Cached input |
 | --- | --- | ---: | ---: | ---: |
 | Claude Fable 5.1 | Anthropic | 10 | 50 | 0.25 |
+| Claude Opus 5.5 | Anthropic | 4 | 20 | 0.20 |
 | Claude Opus 5 | Anthropic | 5 | 25 | 0.50 |
+| Claude Sonnet 5.5 | Anthropic | 2 | 10 | 0.20 |
 | Claude Sonnet 5 | Anthropic | 2 | 10 | 0.20 |
 | GPT-6 Astra | OpenAI | 10 | 50 | 1 |
 | GPT-6 Sol | OpenAI | 2 | 10 | 0.20 |
@@ -41,6 +44,11 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 
 Failed or interrupted models remain outside the scored leaderboard. The free MiniMax route is
 estimated at its paid equivalent, rather than interpreting unmetered usage as a zero-cost API.
+
+Sonnet 5.5's three-run captured cost averages $17.14/run, versus $6.4673/run when the recorded
+token buckets are repriced at the published rates above. The cause of this discrepancy is not
+established by the aggregate usage records; the site uses the captured amount for its primary
+API-cost figure, rather than substituting the lower estimate.
 
 ## OpenAI Flex comparison
 
@@ -126,8 +134,9 @@ the selected median-input-price provider. GPT uses first-party rates even where 
 
 ## Cache writes and context tiers
 
-- Claude runs use one-hour cache writes: Fable 5.1 $20, Opus 5 $10, Sonnet 5 $4.
-  Only Fable 5.1 has the special 0.025× cache-hit rate; Fable 5 uses 0.1×.
+- Claude runs use one-hour cache writes: Fable 5.1 $20, Opus 5.5 $8, Opus 5 $10,
+  Sonnet 5.5 / Sonnet 5 $4. Fable 5.1 has a 0.025× cache-hit rate; Opus 5.5
+  has 0.05×. Other listed Claude models use 0.1×.
 - OpenAI short-context cache writes: Astra $12.50, Sol $5, Terra $2.50, Luna $0.25.
   Published long-context rates double input and cache prices and multiply output by 1.5.
 - Grok 4.6 and Grok 4.7 charge double across the request when prompt tokens reach 200k.
@@ -157,7 +166,8 @@ the selected median-input-price provider. GPT uses first-party rates even where 
 
 ## Sources
 
-Checked 23 September 2026 except Grok 4.7 (25 September) and GPT-6 Sol (27 September):
+Checked 23 September 2026 except Grok 4.7 (25 September), GPT-6 Sol (27 September),
+and Claude Opus 5.5 / Sonnet 5.5 (29 September):
 
 - [OpenAI API pricing](https://developers.openai.com/api/docs/pricing)
 - [Anthropic pricing and cache rules](https://platform.claude.com/docs/en/about-claude/pricing)

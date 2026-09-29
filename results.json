@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-09-28",
+  "updated": "2026-09-29",
   "pricing_checked": "2026-09-23",
   "sorting": [
     "weighted_score descending",
@@ -56,33 +56,6 @@
         "tone": "good"
       },
       "note": ""
-    },
-    {
-      "id": "claude-fable-5-1",
-      "model": "Claude Fable 5.1",
-      "model_id": "claude-fable-5-1",
-      "harness": "Claude Code",
-      "variant": "high",
-      "runs": 0,
-      "weighted_score": 1.0,
-      "score_estimated": true,
-      "score_breakdown": null,
-      "cost": {
-        "actual_usd": null,
-        "estimated_usd": 32.3366,
-        "actual_unmetered": false,
-        "estimated_from_prior_run": true
-      },
-      "wall_time": {
-        "seconds": 2980.68,
-        "estimated_from_prior_run": true
-      },
-      "status": {
-        "label": "estimated",
-        "tone": "warn"
-      },
-      "note": "from v3",
-      "estimate_source": "Shattered Needle v3"
     },
     {
       "id": "openai-gpt-6-astra",
@@ -183,6 +156,70 @@
       "note": ""
     },
     {
+      "id": "claude-fable-5-1",
+      "model": "Claude Fable 5.1",
+      "model_id": "claude-fable-5-1",
+      "harness": "Claude Code",
+      "variant": "high",
+      "runs": 3,
+      "weighted_score": 0.998,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 1.0,
+        "culprit": 1.0,
+        "finding_provenance": 0.9707,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": 32.8267,
+        "estimated_usd": 32.8171,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 2928.5133,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
+      "id": "claude-sonnet-5-5",
+      "model": "Claude Sonnet 5.5",
+      "model_id": "claude-sonnet-5-5",
+      "harness": "Claude Code",
+      "variant": "high",
+      "runs": 3,
+      "weighted_score": 0.996,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.9793,
+        "culprit": 1.0,
+        "finding_provenance": 0.971,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": 17.14,
+        "estimated_usd": 6.4673,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 1277.4667,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "openrouter-moonshotai-kimi-k3",
       "model": "Kimi K3",
       "model_id": "openrouter/moonshotai/kimi-k3",
@@ -249,38 +286,6 @@
         "tone": "good"
       },
       "note": ""
-    },
-    {
-      "id": "openrouter-xiaomi-mimo-v2.6-flash",
-      "model": "MiMo V2.6 Flash",
-      "model_id": "openrouter/xiaomi/mimo-v2.6-flash",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 2,
-      "weighted_score": 0.9756,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 1.0,
-        "culprit": 0.9585,
-        "finding_provenance": 0.9705,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": 0.62,
-        "estimated_usd": 0.6229,
-        "actual_unmetered": false,
-        "estimated_from_prior_run": false
-      },
-      "wall_time": {
-        "seconds": 9998.685,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": "1 run failed to produce results"
     },
     {
       "id": "zai-coding-plan-glm-5.3-flash",
@@ -423,6 +428,38 @@
         "tone": "good"
       },
       "note": ""
+    },
+    {
+      "id": "openrouter-xiaomi-mimo-v2.6-flash",
+      "model": "MiMo V2.6 Flash",
+      "model_id": "openrouter/xiaomi/mimo-v2.6-flash",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 3,
+      "weighted_score": 0.9252,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.9373,
+        "culprit": 0.9167,
+        "finding_provenance": 0.853,
+        "identity_provenance": 0.9443,
+        "resolution": 0.9583
+      },
+      "cost": {
+        "actual_usd": 0.9633,
+        "estimated_usd": 0.9666,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 17441.2133,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": "1 run failed to produce results"
     },
     {
       "id": "xai-grok-4.6",
@@ -584,6 +621,38 @@
       "note": ""
     },
     {
+      "id": "openrouter-xiaomi-mimo-v2.6-pro",
+      "model": "MiMo V2.6 Pro",
+      "model_id": "openrouter/xiaomi/mimo-v2.6-pro",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 1,
+      "weighted_score": 0.7142,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.938,
+        "culprit": 0.5,
+        "finding_provenance": 0.853,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": 2.49,
+        "estimated_usd": 2.4948,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 15757.37,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": "2 runs failed to produce results"
+    },
+    {
       "id": "openrouter-google-gemini-3.8-flash",
       "model": "Gemini 3.8 Flash",
       "model_id": "openrouter/google/gemini-3.8-flash",
@@ -650,9 +719,9 @@
   ],
   "incomplete": [
     {
-      "model": "MiMo V2.6 Pro",
-      "model_id": "openrouter/xiaomi/mimo-v2.6-pro",
-      "note": "failed to produce results"
+      "model": "Claude Opus 5.5",
+      "model_id": "claude-opus-5-5",
+      "note": "could not run with the installed Claude Code version"
     },
     {
       "model": "Qwen 3.8 Max",
@@ -660,6 +729,6 @@
       "note": "was aborted after running too long"
     }
   ],
-  "measured_runs": 16,
-  "projected_rows": 3
+  "measured_runs": 19,
+  "projected_rows": 2
 }
