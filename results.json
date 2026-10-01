@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-09-29",
+  "updated": "2026-10-01",
   "pricing_checked": "2026-09-23",
   "sorting": [
     "weighted_score descending",
@@ -59,7 +59,7 @@
       "model_id": "openai/gpt-6-sol",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 3,
+      "runs": 4,
       "weighted_score": 1.0,
       "score_estimated": false,
       "score_breakdown": {
@@ -71,16 +71,16 @@
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 4.088,
+        "estimated_usd": 4.1813,
         "actual_unmetered": true,
         "estimated_from_prior_run": false,
-        "flex_usd": 2.044,
+        "flex_usd": 2.0907,
         "flex_model_id": "openai/gpt-6-sol",
         "flex_provider": "OpenAI",
         "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
       },
       "wall_time": {
-        "seconds": 2276.8067,
+        "seconds": 2285.105,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -131,19 +131,19 @@
       "model_id": "zai-coding-plan/glm-5.3",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.9993,
+      "runs": 4,
+      "weighted_score": 0.999,
       "score_estimated": false,
       "score_breakdown": {
         "condition": 1.0,
         "culprit": 1.0,
-        "finding_provenance": 0.9903,
+        "finding_provenance": 0.9855,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 4.7534,
+        "estimated_usd": 4.7589,
         "actual_unmetered": true,
         "estimated_from_prior_run": false,
         "estimated_model_id": "openrouter/z-ai/glm-5.3",
@@ -151,7 +151,7 @@
         "estimated_basis": "same measured usage repriced at OpenRouter Friendli rates; provider selected by median input price"
       },
       "wall_time": {
-        "seconds": 3863.8633,
+        "seconds": 3935.2225,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -225,6 +225,42 @@
       "note": ""
     },
     {
+      "id": "openai-gpt-5.6-terra",
+      "model": "GPT-5.6 Terra",
+      "model_id": "openai/gpt-5.6-terra",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 4,
+      "weighted_score": 0.9838,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.969,
+        "culprit": 0.9792,
+        "finding_provenance": 0.9708,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": null,
+        "estimated_usd": 5.5735,
+        "actual_unmetered": true,
+        "estimated_from_prior_run": false,
+        "flex_usd": 2.7868,
+        "flex_model_id": "openai/gpt-5.6-terra",
+        "flex_provider": "OpenAI",
+        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
+      },
+      "wall_time": {
+        "seconds": 2713.3025,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "openrouter-moonshotai-kimi-k3",
       "model": "Kimi K3",
       "model_id": "openrouter/moonshotai/kimi-k3",
@@ -248,42 +284,6 @@
       },
       "wall_time": {
         "seconds": 3467.52,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
-      "id": "openai-gpt-5.6-terra",
-      "model": "GPT-5.6 Terra",
-      "model_id": "openai/gpt-5.6-terra",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.9804,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 0.9793,
-        "culprit": 0.9723,
-        "finding_provenance": 0.961,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": null,
-        "estimated_usd": 5.77,
-        "actual_unmetered": true,
-        "estimated_from_prior_run": false,
-        "flex_usd": 2.885,
-        "flex_model_id": "openai/gpt-5.6-terra",
-        "flex_provider": "OpenAI",
-        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
-      },
-      "wall_time": {
-        "seconds": 2846.0067,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -325,42 +325,7 @@
         "label": "tested",
         "tone": "good"
       },
-      "note": ""
-    },
-    {
-      "id": "openrouter-meta-muse-spark-1.3-contributor",
-      "model": "Muse Spark 1.3 Contributor",
-      "model_id": "openrouter/meta/muse-spark-1.3-contributor",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.9557,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 0.8957,
-        "culprit": 0.9443,
-        "finding_provenance": 0.9413,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": 0.4298,
-        "estimated_usd": 0.4298,
-        "actual_unmetered": false,
-        "estimated_from_prior_run": false,
-        "standard_usd": 7.821,
-        "standard_model_id": "openrouter/meta/muse-spark-1.3",
-        "standard_basis": "same measured usage repriced at OpenRouter standard rates"
-      },
-      "wall_time": {
-        "seconds": 3625.1867,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
+      "note": "1 run failed to produce results"
     },
     {
       "id": "openai-gpt-5.6-luna",
@@ -368,28 +333,28 @@
       "model_id": "openai/gpt-5.6-luna",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.9362,
+      "runs": 4,
+      "weighted_score": 0.939,
       "score_estimated": false,
       "score_breakdown": {
         "condition": 0.9377,
         "culprit": 0.917,
-        "finding_provenance": 0.9313,
+        "finding_provenance": 0.9412,
         "identity_provenance": 1.0,
-        "resolution": 0.9583
+        "resolution": 0.9688
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 1.2894,
+        "estimated_usd": 1.612,
         "actual_unmetered": true,
         "estimated_from_prior_run": false,
-        "flex_usd": 0.6447,
+        "flex_usd": 0.806,
         "flex_model_id": "openai/gpt-5.6-luna",
         "flex_provider": "OpenAI",
         "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
       },
       "wall_time": {
-        "seconds": 5263.0367,
+        "seconds": 6528.78,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -404,24 +369,24 @@
       "model_id": "openrouter/xiaomi/mimo-v2.6-flash",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.9252,
+      "runs": 4,
+      "weighted_score": 0.9296,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.9373,
+        "condition": 0.9218,
         "culprit": 0.9167,
-        "finding_provenance": 0.853,
-        "identity_provenance": 0.9443,
-        "resolution": 0.9583
+        "finding_provenance": 0.8898,
+        "identity_provenance": 0.9583,
+        "resolution": 0.9688
       },
       "cost": {
-        "actual_usd": 0.9666,
-        "estimated_usd": 0.9666,
+        "actual_usd": 1.0316,
+        "estimated_usd": 1.0316,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 17441.2133,
+        "seconds": 17281.005,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -436,24 +401,59 @@
       "model_id": "xai/grok-4.6",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.9041,
+      "runs": 4,
+      "weighted_score": 0.9169,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.9793,
-        "culprit": 0.8333,
-        "finding_provenance": 0.9413,
+        "condition": 0.9845,
+        "culprit": 0.8542,
+        "finding_provenance": 0.956,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 8.973,
-        "estimated_usd": 8.973,
+        "actual_usd": 8.8169,
+        "estimated_usd": 8.8169,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 3525.73,
+        "seconds": 3341.13,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
+      "id": "openrouter-meta-muse-spark-1.3-contributor",
+      "model": "Muse Spark 1.3 Contributor",
+      "model_id": "openrouter/meta/muse-spark-1.3-contributor",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 4,
+      "weighted_score": 0.8455,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.8438,
+        "culprit": 0.8125,
+        "finding_provenance": 0.831,
+        "identity_provenance": 0.9167,
+        "resolution": 0.9062
+      },
+      "cost": {
+        "actual_usd": 0.4467,
+        "estimated_usd": 0.4467,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false,
+        "standard_usd": 7.8468,
+        "standard_model_id": "openrouter/meta/muse-spark-1.3",
+        "standard_basis": "same measured usage repriced at OpenRouter standard rates"
+      },
+      "wall_time": {
+        "seconds": 3583.17,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -468,24 +468,24 @@
       "model_id": "openrouter/deepseek/deepseek-v4.1-flash",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.8366,
+      "runs": 4,
+      "weighted_score": 0.8387,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.9587,
-        "culprit": 0.722,
-        "finding_provenance": 0.8627,
+        "condition": 0.9377,
+        "culprit": 0.729,
+        "finding_provenance": 0.8675,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 0.8868,
-        "estimated_usd": 0.8581,
+        "actual_usd": 0.9142,
+        "estimated_usd": 0.7681,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 3490.4867,
+        "seconds": 3086.48,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -532,28 +532,28 @@
       "model_id": "openai/gpt-6-luna",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.7408,
+      "runs": 4,
+      "weighted_score": 0.7516,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.854,
-        "culprit": 0.611,
-        "finding_provenance": 0.6077,
+        "condition": 0.8435,
+        "culprit": 0.625,
+        "finding_provenance": 0.6395,
         "identity_provenance": 1.0,
-        "resolution": 0.9583
+        "resolution": 0.9688
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 0.2408,
+        "estimated_usd": 0.2502,
         "actual_unmetered": true,
         "estimated_from_prior_run": false,
-        "flex_usd": 0.1204,
+        "flex_usd": 0.1251,
         "flex_model_id": "openai/gpt-6-luna",
         "flex_provider": "OpenAI",
         "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
       },
       "wall_time": {
-        "seconds": 2795.45,
+        "seconds": 2867.1325,
         "estimated_from_prior_run": false
       },
       "status": {
