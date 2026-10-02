@@ -37,8 +37,9 @@ This file is the durable editorial and implementation contract for future `index
 - Keep incomplete timing and cost measurements marked as incomplete.
 - Keep carry-forward projections explicitly separate from measured rows in the internal
   consolidated board. Public results include completed v3.3 draws only: omit zero-run
-  Opus 5 and Sonnet 5 projections, and the retired GPT-5.6 Sol row, from both table and
-  chart. Preserve their historical runs in the consolidated board.
+   Opus 5 and Sonnet 5 projections, the retired GPT-5.6 Sol row, and GPT-6 Sol
+   (superseded by GPT-6.1 Sol) from both table and chart. Preserve their historical
+   runs in the consolidated board. GPT-6.1 Sol's run variant is `high` (owner-confirmed).
 - Do not add a scored bar for a run whose `weighted_score` is `null`.
 - Retiring or superseding a public row is a generator curation decision, never a file move
   in the benchmark repo's `runs/` archive (that archive does not feed this site). Regenerate
@@ -61,7 +62,12 @@ This file is the durable editorial and implementation contract for future `index
   points simply `Muse Spark 1.3`; explain contributor versus commercial pricing in the
   tooltip and chart description.
 - Keep Flex scenarios in the table only; the chart and frontier use the primary API costs and the
-  existing Muse commercial comparison.
+   existing Muse commercial comparison.
+- Use filled provider-colored points for models with at least three completed scored runs
+  (`runs >= 3`); show models with one or two as unfilled, provider-colored outlines. Keep
+  these measured low-count models in the chart and table. Explain the distinction beside
+  the chart and include the completed scored run count in tooltips. Both Muse pricing
+  scenarios use the same measured run count; incomplete attempts never count toward it.
 - Use short visible point labels (model name only, without the leading `Claude `); retain full
   model names and reasoning variants in table rows and chart tooltips.
 - Color chart points by model provider using the Artificial Analysis palette: Anthropic

@@ -54,47 +54,11 @@
       "note": ""
     },
     {
-      "id": "openai-gpt-6-sol",
-      "model": "GPT-6 Sol",
-      "model_id": "openai/gpt-6-sol",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 4,
-      "weighted_score": 1.0,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 1.0,
-        "culprit": 1.0,
-        "finding_provenance": 1.0,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": null,
-        "estimated_usd": 4.1813,
-        "actual_unmetered": true,
-        "estimated_from_prior_run": false,
-        "flex_usd": 2.0907,
-        "flex_model_id": "openai/gpt-6-sol",
-        "flex_provider": "OpenAI",
-        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
-      },
-      "wall_time": {
-        "seconds": 2285.105,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
       "id": "openai-gpt-6.1-sol",
       "model": "GPT-6.1 Sol",
       "model_id": "openai/gpt-6.1-sol",
       "harness": "OpenCode",
-      "variant": "not recorded",
+      "variant": "high",
       "runs": 1,
       "weighted_score": 1.0,
       "score_estimated": false,
@@ -702,6 +666,6 @@
       "note": "was aborted after running too long"
     }
   ],
-  "measured_runs": 20,
+  "measured_runs": 19,
   "projected_rows": 0
 }

@@ -21,7 +21,6 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 | Claude Sonnet 5.5 | Anthropic | 2 | 10 | 0.20 |
 | Claude Sonnet 5 | Anthropic | 2 | 10 | 0.20 |
 | GPT-6 Astra | OpenAI | 10 | 50 | 1 |
-| GPT-6 Sol | OpenAI | 2 | 10 | 0.20 |
 | GPT-6.1 Sol | OpenAI | 2 | 10 | 0.10 |
 | GPT-6 Luna | OpenAI | 0.10 | 0.50 | 0.01 |
 | GPT-5.6 Terra | OpenAI | 2 | 12 | 0.20 |
@@ -55,12 +54,13 @@ API-cost figure, rather than substituting the lower estimate.
 
 The leaderboard's **Flex estimate** column reprices the recorded GPT usage at these first-party
 OpenAI **Flex / short-context** rates. OpenAI's dedicated Flex table was checked on 29 September
-2026: five displayed first-party GPT models are listed there at the rates below
+2026: four displayed first-party GPT models are listed there at the rates below
 (including their cached-input and cache-write rates). GPT-6.1 Sol's first-party
 [model card](https://developers.openai.com/api/docs/models/gpt-6.1-sol) explicitly
 quotes its Standard buckets and says Batch and Flex are 50% cheaper (checked 2 October).
-GPT-5.6 Sol also has a published Flex card, but its measured result is retained
-only on the internal board. Only models with verified Flex availability are eligible.
+GPT-5.6 Sol and the superseded GPT-6 Sol also have published Flex cards, but
+their measured results are retained only on the internal board. Only models
+with verified Flex availability are eligible.
 
 | Model | Input | Output | Cached input | Cache writes |
 | --- | ---: | ---: | ---: | ---: |
@@ -76,7 +76,7 @@ Each bucket is 50% below its corresponding standard rate. Calculate from each ru
 uncached input, cache reads, cache writes, output, and separately reported reasoning, then average
 across the same draws as the main row. Do not halve a provider bill or rounded display value.
 `results.json` retains `flex_usd`, `flex_model_id`, `flex_provider`, and `flex_basis`; a missing estimate
-renders as a dash. Six of the seven verified first-party routes above remain on the public site.
+renders as a dash. Five of the seven verified first-party routes above remain on the public site.
 
 These are **same-usage cost scenarios, not measured Flex runs**. Scores and wall times describe the
 original runs. Flex can be slower or return resource-unavailable errors, and different delays may
@@ -165,6 +165,7 @@ the selected median-input-price provider. GPT uses first-party rates even where 
 | Model | Pricing source | Input | Output | Cached input |
 | --- | --- | ---: | ---: | ---: |
 | GPT-5.6 Sol (internal measured run) | OpenAI | 4 | 20 | 0.40 |
+| GPT-6 Sol (superseded by GPT-6.1 Sol; internal only) | OpenAI | 2 | 10 | 0.20 |
 | Claude Fable 5 | Anthropic | 10 | 50 | 1 |
 | Claude Opus 4.8 / 4.7 | Anthropic | 5 | 25 | 0.50 |
 | Claude Sonnet 4.6 | Anthropic | 3 | 15 | 0.30 |
