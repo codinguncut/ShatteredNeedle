@@ -27,7 +27,7 @@
       "model_id": "claude-opus-5-5",
       "harness": "Claude Code",
       "variant": "high",
-      "runs": 3,
+      "runs": 5,
       "weighted_score": 1.0,
       "score_estimated": false,
       "score_breakdown": {
@@ -38,49 +38,13 @@
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 9.0648,
-        "estimated_usd": 9.0648,
+        "actual_usd": 9.3822,
+        "estimated_usd": 9.0148,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 1081.2933,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
-      "id": "openai-gpt-6.1-sol",
-      "model": "GPT-6.1 Sol",
-      "model_id": "openai/gpt-6.1-sol",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 1,
-      "weighted_score": 1.0,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 1.0,
-        "culprit": 1.0,
-        "finding_provenance": 1.0,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": null,
-        "estimated_usd": 2.8027,
-        "actual_unmetered": true,
-        "estimated_from_prior_run": false,
-        "flex_usd": 1.4014,
-        "flex_model_id": "openai/gpt-6.1-sol",
-        "flex_provider": "OpenAI",
-        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
-      },
-      "wall_time": {
-        "seconds": 3379.88,
+        "seconds": 1078.204,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -131,24 +95,24 @@
       "model_id": "claude-fable-5-1",
       "harness": "Claude Code",
       "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.998,
+      "runs": 5,
+      "weighted_score": 0.9988,
       "score_estimated": false,
       "score_breakdown": {
         "condition": 1.0,
         "culprit": 1.0,
-        "finding_provenance": 0.9707,
+        "finding_provenance": 0.9824,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 32.8243,
-        "estimated_usd": 32.8171,
+        "actual_usd": 33.2129,
+        "estimated_usd": 33.2086,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 2928.5133,
+        "seconds": 3011.876,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -198,24 +162,60 @@
       "model_id": "claude-sonnet-5-5",
       "harness": "Claude Code",
       "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.996,
+      "runs": 5,
+      "weighted_score": 0.9964,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.9793,
+        "condition": 0.9876,
         "culprit": 1.0,
-        "finding_provenance": 0.971,
+        "finding_provenance": 0.965,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 17.1419,
-        "estimated_usd": 6.4673,
+        "actual_usd": 12.3975,
+        "estimated_usd": 5.9928,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 1277.4667,
+        "seconds": 1070.974,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
+      "id": "openai-gpt-6.1-sol",
+      "model": "GPT-6.1 Sol",
+      "model_id": "openai/gpt-6.1-sol",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 3,
+      "weighted_score": 0.9959,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.9583,
+        "culprit": 1.0,
+        "finding_provenance": 1.0,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": null,
+        "estimated_usd": 3.7699,
+        "actual_unmetered": true,
+        "estimated_from_prior_run": false,
+        "flex_usd": 1.8849,
+        "flex_model_id": "openai/gpt-6.1-sol",
+        "flex_provider": "OpenAI",
+        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
+      },
+      "wall_time": {
+        "seconds": 4494.87,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -257,6 +257,41 @@
       "note": ""
     },
     {
+      "id": "zai-coding-plan-glm-5.3-flash",
+      "model": "GLM-5.3 Flash",
+      "model_id": "zai-coding-plan/glm-5.3-flash",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 4,
+      "weighted_score": 0.9736,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.9845,
+        "culprit": 0.9585,
+        "finding_provenance": 0.9635,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": null,
+        "estimated_usd": 0.6332,
+        "actual_unmetered": true,
+        "estimated_from_prior_run": false,
+        "estimated_model_id": "openrouter/z-ai/glm-5.3-flash",
+        "estimated_provider": "Friendli",
+        "estimated_basis": "same measured usage repriced at OpenRouter Friendli rates; provider selected by median input price"
+      },
+      "wall_time": {
+        "seconds": 6804.3825,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": "1 run failed to produce results"
+    },
+    {
       "id": "openai-gpt-5.6-terra",
       "model": "GPT-5.6 Terra",
       "model_id": "openai/gpt-5.6-terra",
@@ -291,41 +326,6 @@
         "tone": "good"
       },
       "note": ""
-    },
-    {
-      "id": "zai-coding-plan-glm-5.3-flash",
-      "model": "GLM-5.3 Flash",
-      "model_id": "zai-coding-plan/glm-5.3-flash",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.9655,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 0.9793,
-        "culprit": 0.9447,
-        "finding_provenance": 0.961,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": null,
-        "estimated_usd": 0.6525,
-        "actual_unmetered": true,
-        "estimated_from_prior_run": false,
-        "estimated_model_id": "openrouter/z-ai/glm-5.3-flash",
-        "estimated_provider": "Friendli",
-        "estimated_basis": "same measured usage repriced at OpenRouter Friendli rates; provider selected by median input price"
-      },
-      "wall_time": {
-        "seconds": 7297.7467,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": "1 run failed to produce results"
     },
     {
       "id": "openrouter-xiaomi-mimo-v2.6-flash",

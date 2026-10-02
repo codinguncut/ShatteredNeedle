@@ -45,7 +45,7 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 Failed or interrupted models remain outside the scored leaderboard. The free MiniMax route is
 estimated at its paid equivalent, rather than interpreting unmetered usage as a zero-cost API.
 
-Sonnet 5.5's three-run captured cost averages $17.14/run, versus $6.4673/run when the recorded
+Sonnet 5.5's five-run captured cost averages $12.40/run, versus $5.9928/run when the recorded
 token buckets are repriced at the published rates above. The cause of this discrepancy is not
 established by the aggregate usage records; the site uses the captured amount for its primary
 API-cost figure, rather than substituting the lower estimate.
