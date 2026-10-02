@@ -5,6 +5,7 @@ remain the displayed cost when available. Subscription runs use a token-rate API
 GLM coding-plan runs use **OpenRouter → Friendli**, selected at the median input-price tier;
 GPT estimates use **first-party OpenAI** prices.
 GPT-6 Sol's Standard and Flex cards were separately checked on 27 September 2026;
+GPT-6.1 Sol's model card was checked on 2 October 2026;
 Claude Opus 5.5 and Sonnet 5.5 were checked on 29 September 2026. The other
 rate cards retain their original audit dates.
 The recorded execution provider is retained, with GLM's pricing provider identified separately in
@@ -21,6 +22,7 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 | Claude Sonnet 5 | Anthropic | 2 | 10 | 0.20 |
 | GPT-6 Astra | OpenAI | 10 | 50 | 1 |
 | GPT-6 Sol | OpenAI | 2 | 10 | 0.20 |
+| GPT-6.1 Sol | OpenAI | 2 | 10 | 0.10 |
 | GPT-6 Luna | OpenAI | 0.10 | 0.50 | 0.01 |
 | GPT-5.6 Terra | OpenAI | 2 | 12 | 0.20 |
 | GPT-5.6 Luna | OpenAI | 0.20 | 1.20 | 0.02 |
@@ -53,15 +55,18 @@ API-cost figure, rather than substituting the lower estimate.
 
 The leaderboard's **Flex estimate** column reprices the recorded GPT usage at these first-party
 OpenAI **Flex / short-context** rates. OpenAI's dedicated Flex table was checked on 29 September
-2026: the five displayed first-party GPT models are listed there at the rates below
-(including their cached-input and cache-write rates). GPT-5.6 Sol also has a published
-Flex card, but its measured result is retained only on the internal board. Flex is not
-listed for every OpenAI model; only models with published Flex cards are eligible.
+2026: five displayed first-party GPT models are listed there at the rates below
+(including their cached-input and cache-write rates). GPT-6.1 Sol's first-party
+[model card](https://developers.openai.com/api/docs/models/gpt-6.1-sol) explicitly
+quotes its Standard buckets and says Batch and Flex are 50% cheaper (checked 2 October).
+GPT-5.6 Sol also has a published Flex card, but its measured result is retained
+only on the internal board. Only models with verified Flex availability are eligible.
 
 | Model | Input | Output | Cached input | Cache writes |
 | --- | ---: | ---: | ---: | ---: |
 | GPT-6 Astra | 5 | 25 | 0.50 | 6.25 |
 | GPT-6 Sol | 1 | 5 | 0.10 | 1.25 |
+| GPT-6.1 Sol | 1 | 5 | 0.05 | 1.25 |
 | GPT-6 Luna | 0.05 | 0.25 | 0.005 | 0.0625 |
 | GPT-5.6 Sol | 2 | 10 | 0.20 | 2.50 |
 | GPT-5.6 Terra | 1 | 6 | 0.10 | 1.25 |
@@ -71,7 +76,7 @@ Each bucket is 50% below its corresponding standard rate. Calculate from each ru
 uncached input, cache reads, cache writes, output, and separately reported reasoning, then average
 across the same draws as the main row. Do not halve a provider bill or rounded display value.
 `results.json` retains `flex_usd`, `flex_model_id`, `flex_provider`, and `flex_basis`; a missing estimate
-renders as a dash. Five of the six verified first-party routes above remain on the public site.
+renders as a dash. Six of the seven verified first-party routes above remain on the public site.
 
 These are **same-usage cost scenarios, not measured Flex runs**. Scores and wall times describe the
 original runs. Flex can be slower or return resource-unavailable errors, and different delays may
@@ -140,7 +145,8 @@ the selected median-input-price provider. GPT uses first-party rates even where 
 - Claude runs use one-hour cache writes: Fable 5.1 $20, Opus 5.5 $8, Opus 5 $10,
   Sonnet 5.5 / Sonnet 5 $4. Fable 5.1 has a 0.025× cache-hit rate; Opus 5.5
   has 0.05×. Other listed Claude models use 0.1×.
-- OpenAI short-context cache writes: Astra $12.50, Sol $5, Terra $2.50, Luna $0.25.
+- OpenAI short-context cache writes: Astra $12.50, GPT-6 Sol and GPT-6.1 Sol $2.50,
+  GPT-5.6 Sol $5, Terra $2.50, GPT-5.6 Luna $0.25, GPT-6 Luna $0.125.
   Published long-context rates double input and cache prices and multiply output by 1.5.
 - Grok 4.6 and Grok 4.7 charge double across the request when prompt tokens reach 200k.
   Grok 4.7's short-context card was checked 25 September 2026 and matches Grok 4.6.
@@ -171,9 +177,10 @@ the selected median-input-price provider. GPT uses first-party rates even where 
 ## Sources
 
 Checked 23 September 2026 except Grok 4.7 (25 September), GPT-6 Sol (27 September),
-and Claude Opus 5.5 / Sonnet 5.5 (29 September):
+Claude Opus 5.5 / Sonnet 5.5 (29 September), and GPT-6.1 Sol (2 October):
 
 - [OpenAI API pricing](https://developers.openai.com/api/docs/pricing)
+- [GPT-6.1 Sol model card (Standard buckets and Flex discount)](https://developers.openai.com/api/docs/models/gpt-6.1-sol)
 - [Anthropic pricing and cache rules](https://platform.claude.com/docs/en/about-claude/pricing)
 - [OpenRouter models API](https://openrouter.ai/api/v1/models) — `prompt`, `completion`,
   `input_cache_read`, and token-based `input_cache_write`, converted from USD/token.
