@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-10-02",
+  "updated": "2026-10-03",
   "pricing_checked": "2026-09-23",
   "sorting": [
     "weighted_score descending",
@@ -122,6 +122,42 @@
       "note": ""
     },
     {
+      "id": "openai-gpt-6.1-sol",
+      "model": "GPT-6.1 Sol",
+      "model_id": "openai/gpt-6.1-sol",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 5,
+      "weighted_score": 0.9975,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.975,
+        "culprit": 1.0,
+        "finding_provenance": 1.0,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": null,
+        "estimated_usd": 4.078,
+        "actual_unmetered": true,
+        "estimated_from_prior_run": false,
+        "flex_usd": 2.039,
+        "flex_model_id": "openai/gpt-6.1-sol",
+        "flex_provider": "OpenAI",
+        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
+      },
+      "wall_time": {
+        "seconds": 4859.026,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "zai-coding-plan-glm-5.3",
       "model": "GLM-5.3",
       "model_id": "zai-coding-plan/glm-5.3",
@@ -180,42 +216,6 @@
       },
       "wall_time": {
         "seconds": 1070.974,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
-      "id": "openai-gpt-6.1-sol",
-      "model": "GPT-6.1 Sol",
-      "model_id": "openai/gpt-6.1-sol",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.9959,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 0.9583,
-        "culprit": 1.0,
-        "finding_provenance": 1.0,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": null,
-        "estimated_usd": 3.7699,
-        "actual_unmetered": true,
-        "estimated_from_prior_run": false,
-        "flex_usd": 1.8849,
-        "flex_model_id": "openai/gpt-6.1-sol",
-        "flex_provider": "OpenAI",
-        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
-      },
-      "wall_time": {
-        "seconds": 4494.87,
         "estimated_from_prior_run": false
       },
       "status": {
