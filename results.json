@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-10-03",
+  "updated": "2026-10-04",
   "pricing_checked": "2026-09-23",
   "sorting": [
     "weighted_score descending",
@@ -254,7 +254,7 @@
         "label": "tested",
         "tone": "good"
       },
-      "note": ""
+      "note": "Kimi Code: 1 unscored attempt: 1 quota/credit stop. Scored runs use OpenRouter."
     },
     {
       "id": "zai-coding-plan-glm-5.3-flash",
@@ -289,7 +289,7 @@
         "label": "tested",
         "tone": "good"
       },
-      "note": "1 run failed to produce results"
+      "note": "4 unscored attempts: 3 WEAVE output-limit stops; 1 QUERY output-limit stop"
     },
     {
       "id": "openai-gpt-5.6-terra",
@@ -357,7 +357,7 @@
         "label": "tested",
         "tone": "good"
       },
-      "note": "1 run failed to produce results"
+      "note": "2 unscored attempts: 1 WEAVE output-limit stop; 1 QUERY interruption"
     },
     {
       "id": "openai-gpt-5.6-luna",
@@ -393,7 +393,7 @@
         "label": "tested",
         "tone": "good"
       },
-      "note": ""
+      "note": "1 unscored attempt: 1 WEAVE interruption"
     },
     {
       "id": "xai-grok-4.6",
@@ -560,7 +560,7 @@
         "label": "tested",
         "tone": "good"
       },
-      "note": "2 runs failed to produce results"
+      "note": "3 unscored attempts: 1 QUERY output-limit stop; 2 WEAVE interruptions"
     },
     {
       "id": "xai-grok-4.7",
@@ -592,7 +592,7 @@
         "label": "tested",
         "tone": "good"
       },
-      "note": ""
+      "note": "1 unscored attempt: 1 provider-capacity stop"
     },
     {
       "id": "openrouter-google-gemini-3.8-flash",
@@ -624,7 +624,7 @@
         "label": "tested",
         "tone": "good"
       },
-      "note": ""
+      "note": "2 unscored attempts: 2 quota/credit stops"
     },
     {
       "id": "openrouter-thinkingmachines-inkling",
@@ -667,5 +667,86 @@
     }
   ],
   "measured_runs": 19,
-  "projected_rows": 0
+  "projected_rows": 0,
+  "execution_cohorts": [
+    {
+      "id": "matched-65k",
+      "label": "Matched 65k settings",
+      "note": "Disclosed 65,536-token output allowance per response, including reasoning; OpenCode context/input limits of 200,000 tokens and up to two automatic output-limit continuations. Averages use only these runs.",
+      "output_tokens": 65536,
+      "opencode_context_tokens": 200000,
+      "max_length_continuations": 2,
+      "results": [
+        {
+          "id": "openrouter-moonshotai-kimi-k3",
+          "model": "Kimi K3",
+          "model_id": "openrouter/moonshotai/kimi-k3",
+          "harness": "OpenCode",
+          "variant": "high",
+          "runs": 1,
+          "weighted_score": 1.0,
+          "score_estimated": false,
+          "score_breakdown": {
+            "condition": 1.0,
+            "culprit": 1.0,
+            "finding_provenance": 1.0,
+            "identity_provenance": 1.0,
+            "resolution": 1.0
+          },
+          "cost": {
+            "actual_usd": 8.903,
+            "estimated_usd": 3.7208,
+            "actual_unmetered": false,
+            "estimated_from_prior_run": false
+          },
+          "wall_time": {
+            "seconds": 3016.91,
+            "estimated_from_prior_run": false
+          },
+          "status": {
+            "label": "tested",
+            "tone": "good"
+          },
+          "note": ""
+        },
+        {
+          "id": "zai-coding-plan-glm-5.3-flash",
+          "model": "GLM-5.3 Flash",
+          "model_id": "zai-coding-plan/glm-5.3-flash",
+          "harness": "OpenCode",
+          "variant": "high",
+          "runs": 1,
+          "weighted_score": 0.9899,
+          "score_estimated": false,
+          "score_breakdown": {
+            "condition": 0.938,
+            "culprit": 1.0,
+            "finding_provenance": 0.941,
+            "identity_provenance": 1.0,
+            "resolution": 1.0
+          },
+          "cost": {
+            "actual_usd": null,
+            "estimated_usd": 0.6886,
+            "actual_unmetered": true,
+            "estimated_from_prior_run": false,
+            "estimated_model_id": "openrouter/z-ai/glm-5.3-flash",
+            "estimated_provider": "Friendli",
+            "estimated_basis": "same measured usage repriced at OpenRouter Friendli rates; provider selected by median input price"
+          },
+          "wall_time": {
+            "seconds": 5426.78,
+            "estimated_from_prior_run": false
+          },
+          "status": {
+            "label": "tested",
+            "tone": "good"
+          },
+          "note": ""
+        }
+      ],
+      "incomplete": [],
+      "measured_runs": 2
+    }
+  ]
 }

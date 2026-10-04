@@ -53,6 +53,9 @@
     h2 { margin-bottom: 0; font-size: 27px; letter-spacing: -.025em }
     h3 { font-size: 17px }
     .section-head p { max-width: 620px; margin-bottom: 1px; color: var(--muted) }
+    .execution-selector { margin-bottom: 22px }
+    .execution-selector label { margin-right: 10px; font-weight: 650 }
+    .execution-selector select { max-width: 100%; padding: 7px 10px; color: var(--text); border: 1px solid var(--line); border-radius: 4px; background: #fff; font: inherit }
     .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px }
     table { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums }
     th, td { padding: 13px 14px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap }
@@ -156,6 +159,11 @@
           <p>These results come from one fixed investigative test. Higher scores are better. Ties are ordered by wall time.</p>
         </div>
         <noscript><p class="note">JavaScript is required to load the results table and chart from <code>results.json</code>.</p></noscript>
+        <div class="execution-selector" id="execution-selector" hidden>
+          <label for="execution-cohort">Execution settings</label>
+          <select id="execution-cohort" aria-describedby="execution-note"></select>
+          <p class="note" id="execution-note" aria-live="polite"></p>
+        </div>
         <div class="chart-intro">
           <h3>Performance vs. API cost</h3>
           <p>Higher and farther left is better: stronger results at lower cost. Cost is logarithmic; weighted score is linear from 80% to 100%. Filled points have at least three completed scored runs; outlines have fewer than three. Muse appears at both contributor and standard commercial pricing; both are eligible for the dotted frontier. Hover or tap a point for run details.</p>
@@ -171,6 +179,7 @@
           </table>
         </div>
         <p class="note">Runs is the number of completed v3.3 tests. Each run has six reading passes followed by one question session without the source documents. API cost uses the provider bill when available and a token-rate equivalent otherwise. Wall time adds the active test time and excludes gaps between sessions.</p>
+        <p class="note">Notes count finalized attempts that produced no score, with setup, quota, provider errors, and benchmark interruptions distinguished. Output-limit stops reflect that execution’s configured allowance, not necessarily a model’s native ceiling. Related-provider attempts are explicitly labelled; they do not add scored runs or change the score, cost, or time averages.</p>
         <p class="note" id="flex-note">Flex estimate reprices the same recorded GPT token usage at OpenAI’s 50%-lower Flex rates. These are cost scenarios, not measured Flex runs; Flex may be slower and cache hit rates may differ. Scores and wall times describe the original runs. A dash means no Flex estimate is published. The chart uses API cost.</p>
         <p class="note">Across all displayed rows, API cost and wall time values outside ±1 population standard deviation are highlighted: green for lower and red for higher. Cost is calculated in log space and includes both Muse pricing scenarios; wall time uses ordinary arithmetic values. Flex estimates are excluded from the comparison band.</p>
       </section>
@@ -255,6 +264,7 @@
       const table = document.querySelector("#results-table");
       const body = table.tBodies[0];
       const headers = [...table.tHead.querySelectorAll("th")];
+      let scoreChart = null;
 
       const cell = (text, className, sortValue) => {
         const item = document.createElement("td");
@@ -297,6 +307,7 @@
       };
 
       const renderTable = (results) => {
+        body.replaceChildren();
         const costOf = (result) => Number.isFinite(result.cost.actual_usd)
           ? result.cost.actual_usd
           : result.cost.estimated_usd;
@@ -342,6 +353,7 @@
 
       const renderBreakdown = (results) => {
         const breakdownBody = document.querySelector("#breakdown-body");
+        breakdownBody.replaceChildren();
         results.filter((result) => result.score_breakdown).forEach((result) => {
           const row = document.createElement("tr");
           row.append(cell(modelLabel(result), "model"));
@@ -454,7 +466,7 @@
           }
         };
 
-        new Chart(document.querySelector("#score-chart"), {
+        scoreChart = new Chart(document.querySelector("#score-chart"), {
           type: "scatter",
           data: {
             datasets: [{
@@ -574,28 +586,52 @@
         const response = await fetch("./results.json");
         if (!response.ok) throw new Error(`results.json returned ${response.status}`);
         const payload = await response.json();
-        const results = payload.results;
         document.querySelector("#corpus-count").textContent = payload.suite.corpora.toLocaleString("en-US");
         document.querySelector("#document-count").textContent = payload.suite.documents.toLocaleString("en-US");
         document.querySelector("#corpus-token-count").textContent = `~${Math.round(payload.suite.approximate_corpus_tokens / 1000)}k`;
         document.querySelector("#question-count").textContent = payload.suite.held_out_questions.toLocaleString("en-US");
         document.querySelector("#results-updated").textContent = new Date(`${payload.updated}T00:00:00Z`).toLocaleDateString("en-GB", {day: "numeric", month: "long", year: "numeric", timeZone: "UTC"});
         document.querySelector("#pricing-checked").textContent = payload.pricing_checked || "not recorded";
-        const incomplete = payload.incomplete || [];
-        const incompleteNote = document.querySelector("#incomplete-note");
-        if (incompleteNote && incomplete.length) {
-          incompleteNote.textContent = incomplete.map((item) => `${item.model} ${item.note}`).join(". ") + ".";
-        }
-        renderTable(results);
-        renderBreakdown(results);
+        const cohorts = [{
+          id: "historical", label: "Historical settings", results: payload.results,
+          incomplete: payload.incomplete || [],
+          note: "Earlier runs used the recorded model-specific execution limits. Select matched 65k settings to view the latest runs; results from different settings are not averaged together."
+        }, ...(payload.execution_cohorts || [])];
+        const selector = document.querySelector("#execution-cohort");
+        const renderCohort = (cohort) => {
+          document.querySelector("#execution-note").textContent = cohort.note;
+          const incomplete = cohort.incomplete || [];
+          document.querySelector("#incomplete-note").textContent = incomplete.length
+            ? incomplete.map((item) => `${item.model} ${item.note}`).join(". ") + "."
+            : "No failed or interrupted runs are recorded for these execution settings.";
+          headers.forEach((item) => item.removeAttribute("aria-sort"));
+          headers[2].setAttribute("aria-sort", "descending");
+          renderTable(cohort.results);
+          renderBreakdown(cohort.results);
+          if (scoreChart) {
+            scoreChart.destroy();
+            scoreChart = null;
+          }
+          document.querySelector("#score-chart").hidden = false;
+          document.querySelector("#chart-error").style.display = "none";
+          try {
+            renderChart(cohort.results);
+          } catch (error) {
+            console.error(error);
+            document.querySelector("#score-chart").hidden = true;
+            document.querySelector("#chart-error").style.display = "block";
+          }
+        };
+        cohorts.forEach((cohort) => {
+          const option = document.createElement("option");
+          option.value = cohort.id;
+          option.textContent = `${cohort.label} (${cohort.results.length} models)`;
+          selector.append(option);
+        });
+        document.querySelector("#execution-selector").hidden = cohorts.length < 2;
+        selector.addEventListener("change", () => renderCohort(cohorts.find((cohort) => cohort.id === selector.value)));
         bindSorting();
-        try {
-          renderChart(results);
-        } catch (error) {
-          console.error(error);
-          document.querySelector("#score-chart").hidden = true;
-          document.querySelector("#chart-error").style.display = "block";
-        }
+        renderCohort(cohorts[0]);
       } catch (error) {
         console.error(error);
         const row = document.createElement("tr");

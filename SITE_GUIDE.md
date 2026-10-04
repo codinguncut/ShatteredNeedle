@@ -77,10 +77,17 @@ This file is the durable editorial and implementation contract for future `index
 - Show the execution harness beneath the model name in small secondary type: Claude Code for Anthropic
   Claude models (`claude*`), OpenCode for all other models.
 - Show the recorded model variant in parentheses after the model name, not in a separate column.
-  Leave ordinary tested-run notes blank except when another attempt reached the question phase
-  and produced no score. Say how many runs failed to produce results. Do not use that note for a
-  weave interrupt, a usage-limit or credit rejection, or an operator stop. Do not expose
-  resume history on the website. `variant` is the
+   Generate notes from finalized unscored attempt artifacts, reporting counts and distinguishing
+   WEAVE/QUERY output-limit stops, interruptions, quota/credit stops, provider errors, and
+   setup blocks. Do not describe setup or provider/quota failures as model-performance failures.
+   Exclude the owner-voided Kimi Code invalid-endpoint attempts and Opus 5.5 outdated-client
+   attempts from the generated record and all notes; keep genuine quota stops recorded.
+   Do not infer a timeout/operator cause from an interruption alone. Count each failed execution
+   once, not each child session, retry, or copied transcript; completed/resumed cells are not
+   unscored attempts. For Kimi K3, explicitly label related Kimi Code attempts and say the
+   scored row uses OpenRouter; never merge those routes' scores, costs, or times. Keep notes
+   blank when no unscored attempts exist. Do not expose private paths or raw errors, or
+   resume history on the website. `variant` is the
   reasoning-effort profile used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Omit interrupted or failed attempts from the table and chart. List them under Failed and
   interrupted runs from `results.json` `incomplete`, with a short reason (did not complete,
@@ -88,7 +95,15 @@ This file is the durable editorial and implementation contract for future `index
   is "failed to produce results". A weave interrupt, usage-limit rejection, or operator stop is not.
 - Keep all carried-forward rows out of the public results; they belong on the internal board.
 - Retain the sortable table for approximate cost and time information. Protocol belongs in
-  chart tooltips and methodology notes, not in bar color or the primary table.
+   chart tooltips and methodology notes, not in bar color or the primary table.
+- Generation-budget changes are versioned execution cohorts. Keep `generation64k-v1`
+  (and mixed legacy/new resumes) separate from the historical public averages. Publish
+  fresh matched-budget draws under `results.json` `execution_cohorts`, selectable as
+  **Matched 65k settings**. The historical full-roster view remains the default.
+  Changing settings must replace the table, chart, breakdown and incomplete-run notes
+  together; do not silently pool cohorts or carry old rows into the matched view.
+  Mixed legacy/new resumes remain internal diagnostics. Keep internal profile IDs and
+  run paths out of public copy; disclose the exact allowance and continuation policy.
 - For all displayed rows, calculate a ±1 population standard
   deviation comparison band. Calculate cost in log space and include both Muse pricing scenarios in its
   population; calculate mean wall time on the ordinary arithmetic scale. Mark values below the band in
