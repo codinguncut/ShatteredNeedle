@@ -228,7 +228,11 @@
           </details>
           <details>
             <summary>Run comparability</summary>
-            <div><p>All listed results are completed v3.3 tests on the same frozen investigative corpus. Runs is the number of independent completed draws for each model.</p></div>
+            <div>
+              <p>All listed results are completed v3.3 tests on the same frozen investigative corpus. Runs is the number of independent completed draws for each model.</p>
+              <p>Historical and matched 65k settings are separate execution cohorts. Their scores, costs, and times are not averaged together.</p>
+              <p>OpenRouter run records identify the requested model, but do not capture the serving provider or its precision. Score differences between these cohorts do not isolate a provider or precision effect.</p>
+            </div>
           </details>
           <details>
             <summary>Failed and interrupted runs</summary>

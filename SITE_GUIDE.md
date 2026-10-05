@@ -77,16 +77,17 @@ This file is the durable editorial and implementation contract for future `index
 - Show the execution harness beneath the model name in small secondary type: Claude Code for Anthropic
   Claude models (`claude*`), OpenCode for all other models.
 - Show the recorded model variant in parentheses after the model name, not in a separate column.
-   Generate notes from finalized unscored attempt artifacts, reporting counts and distinguishing
-   WEAVE/QUERY output-limit stops, interruptions, quota/credit stops, provider errors, and
-   setup blocks. Do not describe setup or provider/quota failures as model-performance failures.
+   Generate notes from finalized unscored attempt artifacts, distinguishing interruptions,
+   provider errors and setup blocks. Omit WEAVE/QUERY output-limit and quota/credit stops
+   from table notes, including their contribution to displayed attempt counts; retain their
+   classifications internally. Do not describe setup or provider failures as model-performance failures.
    Exclude the owner-voided Kimi Code invalid-endpoint attempts and Opus 5.5 outdated-client
    attempts from the generated record and all notes; keep genuine quota stops recorded.
    Do not infer a timeout/operator cause from an interruption alone. Count each failed execution
    once, not each child session, retry, or copied transcript; completed/resumed cells are not
-   unscored attempts. For Kimi K3, explicitly label related Kimi Code attempts and say the
-   scored row uses OpenRouter; never merge those routes' scores, costs, or times. Keep notes
-   blank when no unscored attempts exist. Do not expose private paths or raw errors, or
+   unscored attempts. Omit Kimi's OpenRouter/related Kimi Code route annotation from table notes;
+   never merge those routes' scores, costs, or times. Keep notes blank when no publicly
+   displayed attempt reasons remain. Do not expose private paths or raw errors, or
    resume history on the website. `variant` is the
   reasoning-effort profile used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Omit interrupted or failed attempts from the table and chart. List them under Failed and
@@ -104,6 +105,13 @@ This file is the durable editorial and implementation contract for future `index
   together; do not silently pool cohorts or carry old rows into the matched view.
   Mixed legacy/new resumes remain internal diagnostics. Keep internal profile IDs and
   run paths out of public copy; disclose the exact allowance and continuation policy.
+- The October 5 comparison retains historical results: observed changes do not establish a
+  provider/precision effect. Recent OpenRouter transcripts record gateway/model IDs, not
+  serving-provider or quantization metadata. Keep that distinction in Run comparability;
+  never infer a historical backend from the current config, endpoint list, or price estimate.
+  The derived comparison and read-only audit are retained in the benchmark repository.
+  Mark prior runs questionable only when evidence justifies a deliberate curation decision,
+  not because a single fresh draw improves or regresses.
 - For all displayed rows, calculate a ±1 population standard
   deviation comparison band. Calculate cost in log space and include both Muse pricing scenarios in its
   population; calculate mean wall time on the ordinary arithmetic scale. Mark values below the band in
