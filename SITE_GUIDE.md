@@ -108,6 +108,13 @@ This file is the durable editorial and implementation contract for future `index
   and draw count, retain their raw artifacts and internal archive, and show their public
   count/reason under Archived runs. A future compliant run may restore the model's scored
   row. Do not use a permanent model exclusion or misclassify these as failed attempts.
+- On October 6 the owner also archived the single legacy Gemini 3.8 Flash draw and
+  single legacy MiMo V2.6 Pro draw, plus all five legacy MiMo V2.6 Flash draws.
+  Exclude each execution and its copies from all averages and completed-run counts;
+  keep current-setting draws scored and display
+  the archived counts (Gemini Flash: 1; MiMo Pro: 1; MiMo Flash: 5).
+  This is owner-directed curation, not a claim that the small-sample comparison
+  proves a causal execution-window effect.
 - Recent OpenRouter transcripts record gateway/model IDs, not serving-provider or precision
   metadata. Keep that distinction in Run comparability; never infer a historical backend
   from the current config, endpoint list, or price estimate. Claude Code has no OpenCode

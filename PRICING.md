@@ -1,13 +1,14 @@
-# API pricing audit — 23 September 2026
+# API pricing audit — 6 October 2026
 
 Prices below are USD per million tokens, at standard/short-context rates unless marked Flex. Actual reported bills
 remain the displayed cost when available. Subscription runs use a token-rate API equivalent.
 GLM coding-plan runs use **OpenRouter → Friendli**, selected at the median input-price tier;
 GPT estimates use **first-party OpenAI** prices.
-GPT-6 Sol's Standard and Flex cards were separately checked on 27 September 2026;
-GPT-6.1 Sol's model card was checked on 2 October 2026;
-Claude Opus 5.5 and Sonnet 5.5 were checked on 29 September 2026. The other
-rate cards retain their original audit dates.
+All supported rate cards were rechecked on 6 October 2026 against the official
+first-party pages, the live OpenRouter catalogue, and the GLM provider endpoints.
+OpenAI's live Standard and Flex tables confirm all seven stored GPT cards unchanged,
+including GPT-5.6 Sol's promotional Standard pricing and corresponding Flex rates.
+Direct page retrieval supersedes older cached search extracts with conflicting prices.
 The recorded execution provider is retained, with GLM's pricing provider identified separately in
 `results.json`. Muse's contributor and commercial scenarios use the same measured token usage.
 
@@ -34,10 +35,10 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 | Gemini 3.8 Flash | OpenRouter | 0.75 | 3.75 | 0.075 |
 | Qwen 3.8 Max (0902) | OpenRouter | 2 | 6 | 0.25 |
 | Qwen 3.8 Flash | OpenRouter | 0.15 | 0.47 | 0.016 |
-| DeepSeek V4.1 Flash | OpenRouter | 0.15 | 0.60 | 0.003 |
+| DeepSeek V4.1 Flash | OpenRouter | 0.045 | 1.20 | 0.015 |
 | MiniMax M3 (paid equivalent) | MiniMax / OpenRouter | 0.30 | 1.20 | 0.06 |
-| Inkling | OpenRouter | 1 | 4.05 | 0.17 |
-| Kimi K3 | OpenRouter | 1.70 | 8.50 | 0.17 |
+| Inkling | OpenRouter | 0.95 | 4.05 | 0.16 |
+| Kimi K3 | OpenRouter | 0.99 | 14 | 0.33 |
 | Kimi K3 (first-party, archived only) | Kimi | 3 | 15 | 0.30 |
 | MiMo V2.6 Flash | OpenRouter | 0.14 | 0.28 | 0.0028 |
 | MiMo V2.6 Pro | OpenRouter | 0.435 | 0.87 | 0.0036 |
@@ -53,11 +54,9 @@ API-cost figure, rather than substituting the lower estimate.
 ## OpenAI Flex comparison
 
 The leaderboard's **Flex estimate** column reprices the recorded GPT usage at these first-party
-OpenAI **Flex / short-context** rates. OpenAI's dedicated Flex table was checked on 29 September
-2026: four displayed first-party GPT models are listed there at the rates below
-(including their cached-input and cache-write rates). GPT-6.1 Sol's first-party
-[model card](https://developers.openai.com/api/docs/models/gpt-6.1-sol) explicitly
-quotes its Standard buckets and says Batch and Flex are 50% cheaper (checked 2 October).
+OpenAI **Flex / short-context** rates. OpenAI's live dedicated Flex table was rechecked
+on 6 October 2026: all seven supported first-party GPT models are listed at the rates
+below, including their cached-input and cache-write rates. These cards are unchanged.
 GPT-5.6 Sol and the superseded GPT-6 Sol also have published Flex cards, but
 their measured results are retained only on the internal board. Only models
 with verified Flex availability are eligible.
@@ -103,15 +102,46 @@ of the three token buckets, and not a median of workload-specific total costs.
   price so the result is an actual provider price rather than an average of two rate cards.
 - Prefer a common provider when it lies at the selected price tier for both models.
 
-The 21 September snapshot contains **30 providers for GLM-5.3**: Friendli is 16th by input price,
-at $1.26/MTok. For **GLM-5.3 Flash, 29 providers** give a middle (15th) price of $0.15/MTok;
+The 6 October snapshot contains **32 providers for GLM-5.3**: Friendli is 17th by input price,
+at $1.26/MTok. For **GLM-5.3 Flash, 31 providers** give a middle (16th) price of $0.15/MTok;
 Friendli is one of the providers tied at that price. Both use the `friendli` endpoint tag.
 The complete per-provider snapshot is retained with the benchmark pricing table.
+Nebius's GLM-5.3 endpoint discloses no cache-read price; its snapshot value is `null`,
+not zero. It still counts toward the input-price median. Both selected Friendli
+endpoints disclose all priced buckets; their rate cards remain unchanged.
 
 Provider prices and discounts may change. The benchmark ran on Z.AI's coding plan; these are
 API-equivalent estimates, not bills or measurements from a Friendli rerun.
 
-## Changes from the previous rate table
+## Changes verified on 6 October
+
+The live OpenRouter catalogue differs from the previously stored rates as follows.
+Columns are input / output / cached input, in USD per million tokens.
+
+| Model | Previously stored | Current catalogue |
+| --- | --- | --- |
+| Kimi K3 (OpenRouter) | 1.70 / 8.50 / 0.17 | 0.99 / 14 / 0.33 |
+| DeepSeek V4.1 Flash | 0.15 / 0.60 / 0.003 | 0.045 / 1.20 / 0.015 |
+| Inkling | 1 / 4.05 / 0.17 | 0.95 / 4.05 / 0.16 |
+| Qwen 3.8 27B (historical) | 0.20 / 2.50 / 0.05 | 0.425 / 2.55 / 0.085 |
+| DeepSeek V4 Flash 0731 (historical) | 0.04 / 0.16 / 0.016 | 0.0134 / 1.28 / 0.0134 |
+
+Qwen 27B's published token cache-write price is $0.53125/MTok. For other changed
+cards without a token cache-write price, the input-rate fallback tracks the new input
+rate. Gemini's cache-storage price remains duration-based and is not converted into
+a one-off token cache-write charge.
+
+All other supported cards, including both MiMo models, both GLM equivalents,
+first-party Kimi, Claude, xAI, MiniMax, Muse, and OpenAI Standard/Flex, remain unchanged.
+Z.AI's Flash launch discount expired on 9 September; its current list rate remains
+$0.15 / $0.50 / $0.03. The refreshed GLM provider inventory still selects Friendli.
+Historical captured bills remain authoritative; current repricing changes estimates,
+not the recorded execution provider, serving-backend evidence, or actual charges.
+
+## September audit history
+
+These are earlier audit decisions, not additional October price changes or current
+run-average estimates.
 
 - **GLM-5.3:** the median-input provider's rates are **10% below** Z.AI direct
   ($1.40 input / $4.40 output / $0.26 cached input).
@@ -119,7 +149,7 @@ API-equivalent estimates, not bills or measurements from a Friendli rerun.
   ($0.15 / $0.50 / $0.03).
 - This replaces the earlier OpenRouter catalogue-price estimates of $3.4330 and $0.3915 per run.
   Those earlier 35%/40% differences compared provider prices, not a confirmed price drop over time.
-  The refreshed mean run estimates are **$4.7534 for GLM-5.3** (displayed $4.8) and
+  The September mean run estimates were **$4.7534 for GLM-5.3** (displayed $4.8) and
   **$0.6525 for GLM-5.3 Flash** (displayed $0.7).
 
 - **Qwen 3.8 27B:** input $0.42 → $0.20 (**−52.4%**), output $3 → $2.50 (−16.7%),
@@ -149,7 +179,7 @@ the selected median-input-price provider. GPT uses first-party rates even where 
   GPT-5.6 Sol $5, Terra $2.50, GPT-5.6 Luna $0.25, GPT-6 Luna $0.125.
   Published long-context rates double input and cache prices and multiply output by 1.5.
 - Grok 4.6 and Grok 4.7 charge double across the request when prompt tokens reach 200k.
-  Grok 4.7's short-context card was checked 25 September 2026 and matches Grok 4.6.
+  Grok 4.7's full short/long-context card was rechecked 6 October and matches Grok 4.6.
   MiniMax M3's standard tier doubles above 512k input tokens.
 - Claude 4.6 and later include their full context window at standard pricing.
 - Kimi first-party cache writes use the default five-minute rate ($3); one-hour writes cost $6.
@@ -171,16 +201,17 @@ the selected median-input-price provider. GPT uses first-party rates even where 
 | Claude Sonnet 4.6 | Anthropic | 3 | 15 | 0.30 |
 | Claude Haiku 4.5 | Anthropic | 1 | 5 | 0.10 |
 | Qwen 3.8 2.4T A95B | OpenRouter | 2 | 6 | 0.25 |
-| Qwen 3.8 27B | OpenRouter | 0.20 | 2.50 | 0.05 |
+| Qwen 3.8 27B | OpenRouter | 0.425 | 2.55 | 0.085 |
 | DeepSeek V4 Pro 0813 | OpenRouter | 0.66 | 1.98 | 0.022 |
-| DeepSeek V4 Flash 0731 | OpenRouter | 0.04 | 0.16 | 0.016 |
+| DeepSeek V4 Flash 0731 | OpenRouter | 0.0134 | 1.28 | 0.0134 |
 
 ## Sources
 
-Checked 23 September 2026 except Grok 4.7 (25 September), GPT-6 Sol (27 September),
-Claude Opus 5.5 / Sonnet 5.5 (29 September), and GPT-6.1 Sol (2 October):
+Rechecked 6 October 2026:
 
 - [OpenAI API pricing](https://developers.openai.com/api/docs/pricing)
+- [OpenAI live Flex pricing](https://developers.openai.com/api/docs/pricing?latest-pricing=flex)
+- [GPT-5.6 Sol promotional model card](https://developers.openai.com/api/docs/models/gpt-5.6-sol)
 - [GPT-6.1 Sol model card (Standard buckets and Flex discount)](https://developers.openai.com/api/docs/models/gpt-6.1-sol)
 - [Anthropic pricing and cache rules](https://platform.claude.com/docs/en/about-claude/pricing)
 - [OpenRouter models API](https://openrouter.ai/api/v1/models) — `prompt`, `completion`,
@@ -191,4 +222,5 @@ Claude Opus 5.5 / Sonnet 5.5 (29 September), and GPT-6.1 Sol (2 October):
 - [Z.AI pricing](https://docs.z.ai/guides/overview/pricing)
 - [MiniMax pay-as-you-go pricing](https://platform.minimax.io/docs/guides/pricing-paygo)
 - [xAI models and pricing](https://docs.x.ai/developers/models)
+- [Grok 4.7 short/long-context prices](https://docs.x.ai/developers/models/grok-4.7)
 - [Kimi pricing](https://platform.kimi.ai/docs/pricing/chat)
