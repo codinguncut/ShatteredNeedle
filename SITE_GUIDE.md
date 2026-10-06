@@ -97,21 +97,23 @@ This file is the durable editorial and implementation contract for future `index
 - Keep all carried-forward rows out of the public results; they belong on the internal board.
 - Retain the sortable table for approximate cost and time information. Protocol belongs in
    chart tooltips and methodology notes, not in bar color or the primary table.
-- Generation-budget changes are versioned execution cohorts. Keep `generation64k-v1`
-  (and mixed legacy/new resumes) separate from the historical public averages. Publish
-  fresh matched-budget draws under `results.json` `execution_cohorts`, selectable as
-  **Matched 65k settings**. The historical full-roster view remains the default.
-  Changing settings must replace the table, chart, breakdown and incomplete-run notes
-  together; do not silently pool cohorts or carry old rows into the matched view.
-  Mixed legacy/new resumes remain internal diagnostics. Keep internal profile IDs and
-  run paths out of public copy; disclose the exact allowance and continuation policy.
-- The October 5 comparison retains historical results: observed changes do not establish a
-  provider/precision effect. Recent OpenRouter transcripts record gateway/model IDs, not
-  serving-provider or quantization metadata. Keep that distinction in Run comparability;
-  never infer a historical backend from the current config, endpoint list, or price estimate.
-  The derived comparison and read-only audit are retained in the benchmark repository.
-  Mark prior runs questionable only when evidence justifies a deliberate curation decision,
-  not because a single fresh draw improves or regresses.
+- Owner policy, October 5: **one rolling leaderboard**, with no historical/matched dropdown.
+  Average all eligible completed draws for each model across execution-setting changes,
+  including completed mixed-setting resumes. Recompute scores, costs, times and counts
+  from individual executions, never from rounded cohort means. Retain settings metadata
+  internally. Models do not need blanket reruns; selective reruns can inform a later
+  model-specific archival decision if a meaningful deviation is observed.
+- Five past GPT-6.1 Sol draws are explicitly owner-invalidated because the required 200k
+  context clamp was absent. Exclude those executions and their copies from every average
+  and draw count, retain their raw artifacts and internal archive, and show their public
+  count/reason under Archived runs. A future compliant run may restore the model's scored
+  row. Do not use a permanent model exclusion or misclassify these as failed attempts.
+- Recent OpenRouter transcripts record gateway/model IDs, not serving-provider or precision
+  metadata. Keep that distinction in Run comparability; never infer a historical backend
+  from the current config, endpoint list, or price estimate. Claude Code has no OpenCode
+  context clamp; unknown historical windows are not confirmed violations. Keep private
+  paths and internal profile IDs out of public copy. The earlier derived comparison is an
+  audit snapshot, not the current publication policy.
 - For all displayed rows, calculate a ±1 population standard
   deviation comparison band. Calculate cost in log space and include both Muse pricing scenarios in its
   population; calculate mean wall time on the ordinary arithmetic scale. Mark values below the band in

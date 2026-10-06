@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-10-05",
+  "updated": "2026-10-06",
   "pricing_checked": "2026-09-23",
   "sorting": [
     "weighted_score descending",
@@ -90,6 +90,42 @@
       "note": ""
     },
     {
+      "id": "openai-gpt-6.1-sol",
+      "model": "GPT-6.1 Sol",
+      "model_id": "openai/gpt-6.1-sol",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 5,
+      "weighted_score": 1.0,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 1.0,
+        "culprit": 1.0,
+        "finding_provenance": 1.0,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": null,
+        "estimated_usd": 5.2573,
+        "actual_unmetered": true,
+        "estimated_from_prior_run": false,
+        "flex_usd": 2.6287,
+        "flex_model_id": "openai/gpt-6.1-sol",
+        "flex_provider": "OpenAI",
+        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
+      },
+      "wall_time": {
+        "seconds": 6395.134,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
       "id": "claude-fable-5-1",
       "model": "Claude Fable 5.1",
       "model_id": "claude-fable-5-1",
@@ -113,42 +149,6 @@
       },
       "wall_time": {
         "seconds": 3011.876,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
-    },
-    {
-      "id": "openai-gpt-6.1-sol",
-      "model": "GPT-6.1 Sol",
-      "model_id": "openai/gpt-6.1-sol",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 5,
-      "weighted_score": 0.9975,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 0.975,
-        "culprit": 1.0,
-        "finding_provenance": 1.0,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": null,
-        "estimated_usd": 4.078,
-        "actual_unmetered": true,
-        "estimated_from_prior_run": false,
-        "flex_usd": 2.039,
-        "flex_model_id": "openai/gpt-6.1-sol",
-        "flex_provider": "OpenAI",
-        "flex_basis": "same measured usage repriced at first-party OpenAI Flex short-context rates; not a measured Flex run"
-      },
-      "wall_time": {
-        "seconds": 4859.026,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -230,24 +230,24 @@
       "model_id": "openrouter/moonshotai/kimi-k3",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 3,
-      "weighted_score": 0.9837,
+      "runs": 8,
+      "weighted_score": 0.9931,
       "score_estimated": false,
       "score_breakdown": {
         "condition": 1.0,
         "culprit": 1.0,
-        "finding_provenance": 0.961,
-        "identity_provenance": 0.9443,
-        "resolution": 0.9583
+        "finding_provenance": 0.9745,
+        "identity_provenance": 0.9791,
+        "resolution": 0.9844
       },
       "cost": {
-        "actual_usd": 4.6243,
-        "estimated_usd": 4.6243,
+        "actual_usd": 6.8842,
+        "estimated_usd": 4.2587,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 3467.52,
+        "seconds": 3265.3688,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -262,19 +262,19 @@
       "model_id": "zai-coding-plan/glm-5.3-flash",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 4,
-      "weighted_score": 0.9736,
+      "runs": 9,
+      "weighted_score": 0.9858,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.9845,
-        "culprit": 0.9585,
-        "finding_provenance": 0.9635,
+        "condition": 0.9793,
+        "culprit": 0.9816,
+        "finding_provenance": 0.9674,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
         "actual_usd": null,
-        "estimated_usd": 0.6332,
+        "estimated_usd": 0.67,
         "actual_unmetered": true,
         "estimated_from_prior_run": false,
         "estimated_model_id": "openrouter/z-ai/glm-5.3-flash",
@@ -282,7 +282,7 @@
         "estimated_basis": "same measured usage repriced at OpenRouter Friendli rates; provider selected by median input price"
       },
       "wall_time": {
-        "seconds": 6804.3825,
+        "seconds": 6295.7078,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -333,24 +333,24 @@
       "model_id": "openrouter/xiaomi/mimo-v2.6-flash",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 5,
-      "weighted_score": 0.9433,
+      "runs": 8,
+      "weighted_score": 0.9628,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.9374,
-        "culprit": 0.9334,
-        "finding_provenance": 0.906,
-        "identity_provenance": 0.9666,
-        "resolution": 0.975
+        "condition": 0.9531,
+        "culprit": 0.9584,
+        "finding_provenance": 0.9266,
+        "identity_provenance": 0.9791,
+        "resolution": 0.9844
       },
       "cost": {
-        "actual_usd": 0.9698,
-        "estimated_usd": 0.9698,
+        "actual_usd": 0.8749,
+        "estimated_usd": 0.8749,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 17007.744,
+        "seconds": 16848.0363,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -428,36 +428,36 @@
       "note": ""
     },
     {
-      "id": "openrouter-deepseek-deepseek-v4.1-flash",
-      "model": "DeepSeek V4.1 Flash",
-      "model_id": "openrouter/deepseek/deepseek-v4.1-flash",
+      "id": "openrouter-xiaomi-mimo-v2.6-pro",
+      "model": "MiMo V2.6 Pro",
+      "model_id": "openrouter/xiaomi/mimo-v2.6-pro",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 5,
-      "weighted_score": 0.862,
+      "runs": 3,
+      "weighted_score": 0.8558,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.9502,
-        "culprit": 0.7666,
-        "finding_provenance": 0.894,
+        "condition": 0.9587,
+        "culprit": 0.75,
+        "finding_provenance": 0.9217,
         "identity_provenance": 1.0,
         "resolution": 1.0
       },
       "cost": {
-        "actual_usd": 0.8653,
-        "estimated_usd": 0.7455,
+        "actual_usd": 1.4845,
+        "estimated_usd": 1.4845,
         "actual_unmetered": false,
         "estimated_from_prior_run": false
       },
       "wall_time": {
-        "seconds": 2926.932,
+        "seconds": 8940.67,
         "estimated_from_prior_run": false
       },
       "status": {
         "label": "tested",
         "tone": "good"
       },
-      "note": ""
+      "note": "2 unscored attempts: 2 WEAVE interruptions"
     },
     {
       "id": "openrouter-meta-muse-spark-1.3-contributor",
@@ -486,6 +486,70 @@
       },
       "wall_time": {
         "seconds": 3583.17,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
+      "id": "openrouter-deepseek-deepseek-v4.1-flash",
+      "model": "DeepSeek V4.1 Flash",
+      "model_id": "openrouter/deepseek/deepseek-v4.1-flash",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 8,
+      "weighted_score": 0.8291,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.9064,
+        "culprit": 0.7188,
+        "finding_provenance": 0.8529,
+        "identity_provenance": 1.0,
+        "resolution": 1.0
+      },
+      "cost": {
+        "actual_usd": 0.9471,
+        "estimated_usd": 0.6543,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 2730.4812,
+        "estimated_from_prior_run": false
+      },
+      "status": {
+        "label": "tested",
+        "tone": "good"
+      },
+      "note": ""
+    },
+    {
+      "id": "openrouter-google-gemini-3.8-flash",
+      "model": "Gemini 3.8 Flash",
+      "model_id": "openrouter/google/gemini-3.8-flash",
+      "harness": "OpenCode",
+      "variant": "high",
+      "runs": 4,
+      "weighted_score": 0.8106,
+      "score_estimated": false,
+      "score_breakdown": {
+        "condition": 0.875,
+        "culprit": 0.729,
+        "finding_provenance": 0.8455,
+        "identity_provenance": 0.9167,
+        "resolution": 0.9375
+      },
+      "cost": {
+        "actual_usd": 8.605,
+        "estimated_usd": 8.605,
+        "actual_unmetered": false,
+        "estimated_from_prior_run": false
+      },
+      "wall_time": {
+        "seconds": 4057.9625,
         "estimated_from_prior_run": false
       },
       "status": {
@@ -531,38 +595,6 @@
       "note": ""
     },
     {
-      "id": "openrouter-xiaomi-mimo-v2.6-pro",
-      "model": "MiMo V2.6 Pro",
-      "model_id": "openrouter/xiaomi/mimo-v2.6-pro",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.7142,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 0.938,
-        "culprit": 0.5,
-        "finding_provenance": 0.853,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": 2.4948,
-        "estimated_usd": 2.4948,
-        "actual_unmetered": false,
-        "estimated_from_prior_run": false
-      },
-      "wall_time": {
-        "seconds": 15757.37,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": "2 unscored attempts: 2 WEAVE interruptions"
-    },
-    {
       "id": "xai-grok-4.7",
       "model": "Grok 4.7",
       "model_id": "xai/grok-4.7",
@@ -593,38 +625,6 @@
         "tone": "good"
       },
       "note": "1 unscored attempt: 1 provider-capacity stop"
-    },
-    {
-      "id": "openrouter-google-gemini-3.8-flash",
-      "model": "Gemini 3.8 Flash",
-      "model_id": "openrouter/google/gemini-3.8-flash",
-      "harness": "OpenCode",
-      "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.4709,
-      "score_estimated": false,
-      "score_breakdown": {
-        "condition": 0.75,
-        "culprit": 0.083,
-        "finding_provenance": 0.853,
-        "identity_provenance": 1.0,
-        "resolution": 1.0
-      },
-      "cost": {
-        "actual_usd": 9.6084,
-        "estimated_usd": 9.6084,
-        "actual_unmetered": false,
-        "estimated_from_prior_run": false
-      },
-      "wall_time": {
-        "seconds": 8331.0,
-        "estimated_from_prior_run": false
-      },
-      "status": {
-        "label": "tested",
-        "tone": "good"
-      },
-      "note": ""
     },
     {
       "id": "openrouter-thinkingmachines-inkling",
@@ -668,187 +668,12 @@
   ],
   "measured_runs": 19,
   "projected_rows": 0,
-  "execution_cohorts": [
+  "archived_runs": [
     {
-      "id": "matched-65k",
-      "label": "Matched 65k settings",
-      "note": "Disclosed 65,536-token output allowance per response, including reasoning; OpenCode context/input limits of 200,000 tokens and up to two automatic output-limit continuations. Averages use only these runs.",
-      "output_tokens": 65536,
-      "opencode_context_tokens": 200000,
-      "max_length_continuations": 2,
-      "results": [
-        {
-          "id": "openrouter-moonshotai-kimi-k3",
-          "model": "Kimi K3",
-          "model_id": "openrouter/moonshotai/kimi-k3",
-          "harness": "OpenCode",
-          "variant": "high",
-          "runs": 3,
-          "weighted_score": 0.9993,
-          "score_estimated": false,
-          "score_breakdown": {
-            "condition": 1.0,
-            "culprit": 1.0,
-            "finding_provenance": 0.9903,
-            "identity_provenance": 1.0,
-            "resolution": 1.0
-          },
-          "cost": {
-            "actual_usd": 9.4831,
-            "estimated_usd": 4.0849,
-            "actual_unmetered": false,
-            "estimated_from_prior_run": false
-          },
-          "wall_time": {
-            "seconds": 2833.74,
-            "estimated_from_prior_run": false
-          },
-          "status": {
-            "label": "tested",
-            "tone": "good"
-          },
-          "note": ""
-        },
-        {
-          "id": "openrouter-xiaomi-mimo-v2.6-flash",
-          "model": "MiMo V2.6 Flash",
-          "model_id": "openrouter/xiaomi/mimo-v2.6-flash",
-          "harness": "OpenCode",
-          "variant": "high",
-          "runs": 1,
-          "weighted_score": 0.994,
-          "score_estimated": false,
-          "score_breakdown": {
-            "condition": 1.0,
-            "culprit": 1.0,
-            "finding_provenance": 0.912,
-            "identity_provenance": 1.0,
-            "resolution": 1.0
-          },
-          "cost": {
-            "actual_usd": 0.8017,
-            "estimated_usd": 0.8017,
-            "actual_unmetered": false,
-            "estimated_from_prior_run": false
-          },
-          "wall_time": {
-            "seconds": 14576.8,
-            "estimated_from_prior_run": false
-          },
-          "status": {
-            "label": "tested",
-            "tone": "good"
-          },
-          "note": ""
-        },
-        {
-          "id": "zai-coding-plan-glm-5.3-flash",
-          "model": "GLM-5.3 Flash",
-          "model_id": "zai-coding-plan/glm-5.3-flash",
-          "harness": "OpenCode",
-          "variant": "high",
-          "runs": 3,
-          "weighted_score": 0.9933,
-          "score_estimated": false,
-          "score_breakdown": {
-            "condition": 0.9587,
-            "culprit": 1.0,
-            "finding_provenance": 0.9607,
-            "identity_provenance": 1.0,
-            "resolution": 1.0
-          },
-          "cost": {
-            "actual_usd": null,
-            "estimated_usd": 0.7001,
-            "actual_unmetered": true,
-            "estimated_from_prior_run": false,
-            "estimated_model_id": "openrouter/z-ai/glm-5.3-flash",
-            "estimated_provider": "Friendli",
-            "estimated_basis": "same measured usage repriced at OpenRouter Friendli rates; provider selected by median input price"
-          },
-          "wall_time": {
-            "seconds": 5857.3867,
-            "estimated_from_prior_run": false
-          },
-          "status": {
-            "label": "tested",
-            "tone": "good"
-          },
-          "note": ""
-        },
-        {
-          "id": "openrouter-google-gemini-3.8-flash",
-          "model": "Gemini 3.8 Flash",
-          "model_id": "openrouter/google/gemini-3.8-flash",
-          "harness": "OpenCode",
-          "variant": "high",
-          "runs": 1,
-          "weighted_score": 0.7715,
-          "score_estimated": false,
-          "score_breakdown": {
-            "condition": 0.75,
-            "culprit": 0.833,
-            "finding_provenance": 0.529,
-            "identity_provenance": 0.667,
-            "resolution": 0.75
-          },
-          "cost": {
-            "actual_usd": 10.3015,
-            "estimated_usd": 10.3015,
-            "actual_unmetered": false,
-            "estimated_from_prior_run": false
-          },
-          "wall_time": {
-            "seconds": 3349.36,
-            "estimated_from_prior_run": false
-          },
-          "status": {
-            "label": "tested",
-            "tone": "good"
-          },
-          "note": ""
-        },
-        {
-          "id": "openrouter-deepseek-deepseek-v4.1-flash",
-          "model": "DeepSeek V4.1 Flash",
-          "model_id": "openrouter/deepseek/deepseek-v4.1-flash",
-          "harness": "OpenCode",
-          "variant": "high",
-          "runs": 1,
-          "weighted_score": 0.5691,
-          "score_estimated": false,
-          "score_breakdown": {
-            "condition": 0.562,
-            "culprit": 0.333,
-            "finding_provenance": 0.588,
-            "identity_provenance": 1.0,
-            "resolution": 1.0
-          },
-          "cost": {
-            "actual_usd": 0.9762,
-            "estimated_usd": 0.4082,
-            "actual_unmetered": false,
-            "estimated_from_prior_run": false
-          },
-          "wall_time": {
-            "seconds": 2034.6,
-            "estimated_from_prior_run": false
-          },
-          "status": {
-            "label": "tested",
-            "tone": "good"
-          },
-          "note": ""
-        }
-      ],
-      "incomplete": [
-        {
-          "model": "MiMo V2.6 Pro",
-          "model_id": "openrouter/xiaomi/mimo-v2.6-pro",
-          "note": "failed to produce results"
-        }
-      ],
-      "measured_runs": 5
+      "model": "GPT-6.1 Sol",
+      "model_id": "openai/gpt-6.1-sol",
+      "runs": 5,
+      "reason": "Required 200k context window was not applied; owner-invalidated on 2026-10-05"
     }
   ]
 }
