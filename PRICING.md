@@ -45,6 +45,11 @@ The recorded execution provider is retained, with GLM's pricing provider identif
 
 Failed or interrupted models remain outside the scored leaderboard. The free MiniMax route is
 estimated at its paid equivalent, rather than interpreting unmetered usage as a zero-cost API.
+All four Muse Spark v3.3 draws were owner-archived on 6 October, so neither pricing
+scenario currently appears in the scored results. Its rates remain available for
+future eligible executions. Following the 7 October results refresh, DeepSeek Flash's cost
+averages five retained draws: $0.9844 captured versus $1.1749 at the verified rate card.
+The primary API-cost figure uses the captured bills, not the repriced estimate.
 
 Sonnet 5.5's five-run captured cost averages $12.40/run, versus $5.9928/run when the recorded
 token buckets are repriced at the published rates above. The cause of this discrepancy is not

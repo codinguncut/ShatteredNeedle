@@ -92,7 +92,9 @@ This file is the durable editorial and implementation contract for future `index
   reasoning-effort profile used for the run (e.g. `high`, `xhigh`, or a named thinking budget).
 - Omit interrupted or failed attempts from the table and chart. List them under Failed and
   interrupted runs from `results.json` `incomplete`, with a short reason (did not complete,
-  failed to produce results, or aborted after running too long). A query that exits without answers
+  failed to produce results, or aborted after running too long). Use captured terminal provider
+  errors/capacity stops when available, rather than describing them as slow model runs.
+  A query that exits without answers
   is "failed to produce results". A weave interrupt, usage-limit rejection, or operator stop is not.
 - Keep all carried-forward rows out of the public results; they belong on the internal board.
 - Retain the sortable table for approximate cost and time information. Protocol belongs in
@@ -115,6 +117,13 @@ This file is the durable editorial and implementation contract for future `index
   the archived counts (Gemini Flash: 1; MiMo Pro: 1; MiMo Flash: 5).
   This is owner-directed curation, not a claim that the small-sample comparison
   proves a causal execution-window effect.
+- The owner subsequently archived five legacy DeepSeek V4.1 Flash draws and all four
+  legacy Muse Spark v3.3 draws. After the October 7 refresh, DeepSeek retains five draws
+  at 84.37% and returns to the chart above its 80% floor. Muse has no eligible completed
+  v3.3 draw: remove its scored row and both pricing-scenario points, retaining its
+  archive count/reason. These are completed archived measurements, not failed attempts;
+  future eligible Muse executions may restore its row and both pricing scenarios.
+  Its two new backend-overload attempts are unscored capacity stops, separate from archives.
 - Recent OpenRouter transcripts record gateway/model IDs, not serving-provider or precision
   metadata. Keep that distinction in Run comparability; never infer a historical backend
   from the current config, endpoint list, or price estimate. Claude Code has no OpenCode
