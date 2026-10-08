@@ -119,12 +119,14 @@ This file is the durable editorial and implementation contract for future `index
   proves a causal execution-window effect.
 - The owner subsequently archived five legacy DeepSeek V4.1 Flash draws and all four
   legacy Muse Spark v3.3 draws. After the October 7 refresh, DeepSeek retains five draws
-  at 84.37% and returns to the chart above its 80% floor. The newest eligible Muse draw
-  restores its scored table/breakdown row at 24.88% (one run). It submitted 22 of 76
-  answers; missing answers receive zero credit over the full question set. Both Muse
+  at 84.37% and returns to the chart above its 80% floor. After the October 8 refresh,
+  Muse's scored table/breakdown row averages 62.00% over four eligible runs. The first
+  submitted 22 of 76 answers; missing answers receive zero credit over the full question
+  set. The three latest scored runs each submitted all 76 answers. Both Muse
   pricing scenarios stay outside the chart because its score is below 80%; retain the
   commercial equivalent in JSON and the cost comparison band. Its four older archives
-  and two unscored backend-overload capacity stops remain separate from the scored run.
+  and three unscored attempts (two backend-overload capacity stops and one query without
+  answers) remain separate from the scored runs.
 - Recent OpenRouter transcripts record gateway/model IDs, not serving-provider or precision
   metadata. Keep that distinction in Run comparability; never infer a historical backend
   from the current config, endpoint list, or price estimate. Claude Code has no OpenCode

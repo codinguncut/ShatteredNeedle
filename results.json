@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "benchmark": "Shattered Needle v3.3",
-  "updated": "2026-10-07",
+  "updated": "2026-10-08",
   "pricing_checked": "2026-10-06",
   "sorting": [
     "weighted_score descending",
@@ -597,34 +597,34 @@
       "model_id": "openrouter/meta/muse-spark-1.3-contributor",
       "harness": "OpenCode",
       "variant": "high",
-      "runs": 1,
-      "weighted_score": 0.2488,
+      "runs": 4,
+      "weighted_score": 0.62,
       "score_estimated": false,
       "score_breakdown": {
-        "condition": 0.5,
-        "culprit": 0.333,
-        "finding_provenance": 0.294,
-        "identity_provenance": 0.0,
-        "resolution": 0.0
+        "condition": 0.6875,
+        "culprit": 0.5833,
+        "finding_provenance": 0.5515,
+        "identity_provenance": 0.6667,
+        "resolution": 0.6875
       },
       "cost": {
-        "actual_usd": 1.7789,
-        "estimated_usd": 1.7789,
+        "actual_usd": 1.1341,
+        "estimated_usd": 1.1341,
         "actual_unmetered": false,
         "estimated_from_prior_run": false,
-        "standard_usd": 23.7283,
+        "standard_usd": 15.3973,
         "standard_model_id": "openrouter/meta/muse-spark-1.3",
         "standard_basis": "same measured usage repriced at OpenRouter standard rates"
       },
       "wall_time": {
-        "seconds": 12248.57,
+        "seconds": 5894.8175,
         "estimated_from_prior_run": false
       },
       "status": {
         "label": "tested",
         "tone": "good"
       },
-      "note": "2 unscored attempts: 2 provider-capacity stops"
+      "note": "3 unscored attempts: 2 provider-capacity stops; 1 QUERY without answers"
     },
     {
       "id": "openrouter-thinkingmachines-inkling",
